@@ -1,0 +1,54 @@
+// TankLevelPI_run_all.mos — C12
+system("mkdir build 2>NUL");
+cd("build"); loadFile("../TankLevelPI.mo"); getErrorString();
+buildModel(TankLevelPI, stopTime=600, stepSize=0.01, tolerance=1e-6, method="dassl", outputFormat="mat"); getErrorString();
+cd("..");
+
+// Run 01: h_ref=0.3
+system("mkdir C12_run_01 2>NUL"); system("copy TankLevelPI.mo C12_run_01\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C12_run_01/TankLevelPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h_ref\\s*=\\s*)[\\d.]+', '$1 0.3'; [IO.File]::WriteAllText('C12_run_01/TankLevelPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("TankLevelPI.exe -override h_ref=0.3 -outputPath ../C12_run_01"); cd(".."); getErrorString();
+
+// Run 02: h_ref=0.5
+system("mkdir C12_run_02 2>NUL"); system("copy TankLevelPI.mo C12_run_02\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C12_run_02/TankLevelPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h_ref\\s*=\\s*)[\\d.]+', '$1 0.5'; [IO.File]::WriteAllText('C12_run_02/TankLevelPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("TankLevelPI.exe -override h_ref=0.5 -outputPath ../C12_run_02"); cd(".."); getErrorString();
+
+// Run 03: h_ref=0.7
+system("mkdir C12_run_03 2>NUL"); system("copy TankLevelPI.mo C12_run_03\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C12_run_03/TankLevelPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h_ref\\s*=\\s*)[\\d.]+', '$1 0.7'; [IO.File]::WriteAllText('C12_run_03/TankLevelPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("TankLevelPI.exe -override h_ref=0.7 -outputPath ../C12_run_03"); cd(".."); getErrorString();
+
+// Run 04: h_ref=0.9
+system("mkdir C12_run_04 2>NUL"); system("copy TankLevelPI.mo C12_run_04\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C12_run_04/TankLevelPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h_ref\\s*=\\s*)[\\d.]+', '$1 0.9'; [IO.File]::WriteAllText('C12_run_04/TankLevelPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("TankLevelPI.exe -override h_ref=0.9 -outputPath ../C12_run_04"); cd(".."); getErrorString();
+
+// Run 05: h_ref=1.0 (baseline)
+system("mkdir C12_run_05 2>NUL"); system("copy TankLevelPI.mo C12_run_05\\ >NUL");
+cd("build"); system("TankLevelPI.exe -override h_ref=1.0 -outputPath ../C12_run_05"); cd(".."); getErrorString();
+
+// Run 06: h_ref=1.2
+system("mkdir C12_run_06 2>NUL"); system("copy TankLevelPI.mo C12_run_06\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C12_run_06/TankLevelPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h_ref\\s*=\\s*)[\\d.]+', '$1 1.2'; [IO.File]::WriteAllText('C12_run_06/TankLevelPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("TankLevelPI.exe -override h_ref=1.2 -outputPath ../C12_run_06"); cd(".."); getErrorString();
+
+// Run 07: h_ref=1.4
+system("mkdir C12_run_07 2>NUL"); system("copy TankLevelPI.mo C12_run_07\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C12_run_07/TankLevelPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h_ref\\s*=\\s*)[\\d.]+', '$1 1.4'; [IO.File]::WriteAllText('C12_run_07/TankLevelPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("TankLevelPI.exe -override h_ref=1.4 -outputPath ../C12_run_07"); cd(".."); getErrorString();
+
+// Run 08: h_ref=1.6
+system("mkdir C12_run_08 2>NUL"); system("copy TankLevelPI.mo C12_run_08\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C12_run_08/TankLevelPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h_ref\\s*=\\s*)[\\d.]+', '$1 1.6'; [IO.File]::WriteAllText('C12_run_08/TankLevelPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("TankLevelPI.exe -override h_ref=1.6 -outputPath ../C12_run_08"); cd(".."); getErrorString();
+
+// Run 09: h_ref=1.8
+system("mkdir C12_run_09 2>NUL"); system("copy TankLevelPI.mo C12_run_09\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C12_run_09/TankLevelPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h_ref\\s*=\\s*)[\\d.]+', '$1 1.8'; [IO.File]::WriteAllText('C12_run_09/TankLevelPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("TankLevelPI.exe -override h_ref=1.8 -outputPath ../C12_run_09"); cd(".."); getErrorString();
+
+// Run 10: h_ref=2.0
+system("mkdir C12_run_10 2>NUL"); system("copy TankLevelPI.mo C12_run_10\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C12_run_10/TankLevelPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h_ref\\s*=\\s*)[\\d.]+', '$1 2.0'; [IO.File]::WriteAllText('C12_run_10/TankLevelPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("TankLevelPI.exe -override h_ref=2.0 -outputPath ../C12_run_10"); cd(".."); getErrorString();

@@ -1,0 +1,21 @@
+{
+  "case_root": "C:/Users/FST/Desktop/AFM/cases",
+  "case_id": "20260410_130109_DualSpringMass",
+  "case_dir": "C:/Users/FST/Desktop/AFM/cases/20260410_130109_DualSpringMass",
+  "model_name": "DualSpringMass",
+  "run_tag": "20260410_130416",
+  "timestamp": "2026-04-10T13:04:19",
+  "saved_sources": [
+    "C:/Users/FST/Desktop/AFM/cases/20260410_130109_DualSpringMass/model/DualSpringMass.mo"
+  ],
+  "result_mat": "C:/Users/FST/Desktop/AFM/cases/20260410_130109_DualSpringMass/results/DualSpringMass_20260410_130416_res.mat",
+  "init_xml": "C:/Users/FST/Desktop/AFM/cases/20260410_130109_DualSpringMass/results/DualSpringMass_20260410_130416_init.xml",
+  "overrides": {
+    "stop_time": 10.0,
+    "parameter_overrides": {}
+  },
+  "debug": {
+    "cmd": "C:/Users/FST/Desktop/AFM/cases/20260410_130109_DualSpringMass/build/DualSpringMass.exe -override=stopTime=10,numberOfIntervals=5000,tolerance=1e-08,method=dassl",
+    "exit_code": 0
+  }
+}

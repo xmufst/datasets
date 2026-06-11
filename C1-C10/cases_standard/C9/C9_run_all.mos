@@ -1,0 +1,58 @@
+// C9_run_all.mos — C9
+// Build artifacts → build/    Runtime output → C9_run_XX/
+// Usage: cd to C9热传导冷却/, then: omc C9_run_all.mos
+
+system("mkdir build 2>NUL");
+cd("build");
+loadFile("../NewtonCooling.mo"); getErrorString();
+buildModel(NewtonCooling, stopTime=10, stepSize=0.01, method="dassl", tolerance=1e-6, outputFormat="mat"); getErrorString();
+cd("..");
+
+// Run 01: Baseline (tau=5s, T: 100->30.8 degC in 10s)
+system("mkdir C9_run_01 2>NUL"); system("copy NewtonCooling.mo C9_run_01\\ >NUL");
+cd("build"); system("NewtonCooling.exe -override m=1.0,cp=500.0,hA=100.0,T0=100.0,T_env=20.0 -outputPath ../C9_run_01"); cd(".."); getErrorString();
+
+// Run 02: Lower initial temperature
+system("mkdir C9_run_02 2>NUL"); system("copy NewtonCooling.mo C9_run_02\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C9_run_02/NewtonCooling.mo', [Text.Encoding]::UTF8); $content = $content -replace '(T0\\s*=\\s*)[\\d.]+', '$1 60.0'; [IO.File]::WriteAllText('C9_run_02/NewtonCooling.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("NewtonCooling.exe -override T0=60.0 -outputPath ../C9_run_02"); cd(".."); getErrorString();
+
+// Run 03: Higher initial temperature
+system("mkdir C9_run_03 2>NUL"); system("copy NewtonCooling.mo C9_run_03\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C9_run_03/NewtonCooling.mo', [Text.Encoding]::UTF8); $content = $content -replace '(T0\\s*=\\s*)[\\d.]+', '$1 200.0'; [IO.File]::WriteAllText('C9_run_03/NewtonCooling.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("NewtonCooling.exe -override T0=200.0 -outputPath ../C9_run_03"); cd(".."); getErrorString();
+
+// Run 04: Fast cooling (tau=2.5s)
+system("mkdir C9_run_04 2>NUL"); system("copy NewtonCooling.mo C9_run_04\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C9_run_04/NewtonCooling.mo', [Text.Encoding]::UTF8); $content = $content -replace '(hA\\s*=\\s*)[\\d.]+', '$1 200.0'; [IO.File]::WriteAllText('C9_run_04/NewtonCooling.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("NewtonCooling.exe -override hA=200.0 -outputPath ../C9_run_04"); cd(".."); getErrorString();
+
+// Run 05: Slow cooling (tau=10s)
+system("mkdir C9_run_05 2>NUL"); system("copy NewtonCooling.mo C9_run_05\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C9_run_05/NewtonCooling.mo', [Text.Encoding]::UTF8); $content = $content -replace '(hA\\s*=\\s*)[\\d.]+', '$1 50.0'; [IO.File]::WriteAllText('C9_run_05/NewtonCooling.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("NewtonCooling.exe -override hA=50.0 -outputPath ../C9_run_05"); cd(".."); getErrorString();
+
+// Run 06: Cold environment (T_env=0)
+system("mkdir C9_run_06 2>NUL"); system("copy NewtonCooling.mo C9_run_06\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C9_run_06/NewtonCooling.mo', [Text.Encoding]::UTF8); $content = $content -replace '(T_env\\s*=\\s*)[\\d.]+', '$1 0.0'; [IO.File]::WriteAllText('C9_run_06/NewtonCooling.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("NewtonCooling.exe -override T_env=0.0 -outputPath ../C9_run_06"); cd(".."); getErrorString();
+
+// Run 07: Warm environment (T_env=50)
+system("mkdir C9_run_07 2>NUL"); system("copy NewtonCooling.mo C9_run_07\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C9_run_07/NewtonCooling.mo', [Text.Encoding]::UTF8); $content = $content -replace '(T_env\\s*=\\s*)[\\d.]+', '$1 50.0'; [IO.File]::WriteAllText('C9_run_07/NewtonCooling.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("NewtonCooling.exe -override T_env=50.0 -outputPath ../C9_run_07"); cd(".."); getErrorString();
+
+// Run 08: Heavy mass (tau=10s)
+system("mkdir C9_run_08 2>NUL"); system("copy NewtonCooling.mo C9_run_08\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C9_run_08/NewtonCooling.mo', [Text.Encoding]::UTF8); $content = $content -replace '(m\\s*=\\s*)[\\d.]+', '$1 2.0'; [IO.File]::WriteAllText('C9_run_08/NewtonCooling.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("NewtonCooling.exe -override m=2.0 -outputPath ../C9_run_08"); cd(".."); getErrorString();
+
+// Run 09: High specific heat (tau=10s)
+system("mkdir C9_run_09 2>NUL"); system("copy NewtonCooling.mo C9_run_09\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C9_run_09/NewtonCooling.mo', [Text.Encoding]::UTF8); $content = $content -replace '(cp\\s*=\\s*)[\\d.]+', '$1 1000.0'; [IO.File]::WriteAllText('C9_run_09/NewtonCooling.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("NewtonCooling.exe -override cp=1000.0 -outputPath ../C9_run_09"); cd(".."); getErrorString();
+
+// Run 10: Combined (light, fast cooling, large temp difference)
+system("mkdir C9_run_10 2>NUL"); system("copy NewtonCooling.mo C9_run_10\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C9_run_10/NewtonCooling.mo', [Text.Encoding]::UTF8); $content = $content -replace '(m\\s*=\\s*)[\\d.]+', '$1 0.5' -replace '(hA\\s*=\\s*)[\\d.]+', '$1 150.0' -replace '(T0\\s*=\\s*)[\\d.]+', '$1 150.0' -replace '(T_env\\s*=\\s*)[\\d.]+', '$1 10.0'; [IO.File]::WriteAllText('C9_run_10/NewtonCooling.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("NewtonCooling.exe -override m=0.5,hA=150.0,T0=150.0,T_env=10.0 -outputPath ../C9_run_10"); cd(".."); getErrorString();

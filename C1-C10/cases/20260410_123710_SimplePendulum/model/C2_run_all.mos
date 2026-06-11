@@ -1,0 +1,58 @@
+// C2_run_all.mos — C2
+// Build artifacts → build/    Runtime output → C2_run_XX/
+// Usage: cd to C2单摆/, then: omc C2_run_all.mos
+
+system("mkdir build 2>NUL");
+cd("build");
+loadFile("../SimplePendulum.mo"); getErrorString();
+buildModel(SimplePendulum, stopTime=10, stepSize=0.01, method="dassl", tolerance=1e-6, outputFormat="mat"); getErrorString();
+cd("..");
+
+// Run 01: Baseline (theta0=0.5 rad, L=1.0 m)
+system("mkdir C2_run_01 2>NUL"); system("copy SimplePendulum.mo C2_run_01\\ >NUL");
+cd("build"); system("SimplePendulum.exe -override g=9.81,L=1.0,theta0=0.5,omega0=0.0 -outputPath ../C2_run_01"); cd(".."); getErrorString();
+
+// Run 02: Small angle (near-linear regime)
+system("mkdir C2_run_02 2>NUL"); system("copy SimplePendulum.mo C2_run_02\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C2_run_02/SimplePendulum.mo', [Text.Encoding]::UTF8); $content = $content -replace '(theta0\\s*=\\s*)[\\d.]+', '$1 0.1'; [IO.File]::WriteAllText('C2_run_02/SimplePendulum.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("SimplePendulum.exe -override theta0=0.1 -outputPath ../C2_run_02"); cd(".."); getErrorString();
+
+// Run 03: Medium angle
+system("mkdir C2_run_03 2>NUL"); system("copy SimplePendulum.mo C2_run_03\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C2_run_03/SimplePendulum.mo', [Text.Encoding]::UTF8); $content = $content -replace '(theta0\\s*=\\s*)[\\d.]+', '$1 1.0'; [IO.File]::WriteAllText('C2_run_03/SimplePendulum.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("SimplePendulum.exe -override theta0=1.0 -outputPath ../C2_run_03"); cd(".."); getErrorString();
+
+// Run 04: Large angle (strongly nonlinear)
+system("mkdir C2_run_04 2>NUL"); system("copy SimplePendulum.mo C2_run_04\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C2_run_04/SimplePendulum.mo', [Text.Encoding]::UTF8); $content = $content -replace '(theta0\\s*=\\s*)[\\d.]+', '$1 1.5'; [IO.File]::WriteAllText('C2_run_04/SimplePendulum.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("SimplePendulum.exe -override theta0=1.5 -outputPath ../C2_run_04"); cd(".."); getErrorString();
+
+// Run 05: Short pendulum
+system("mkdir C2_run_05 2>NUL"); system("copy SimplePendulum.mo C2_run_05\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C2_run_05/SimplePendulum.mo', [Text.Encoding]::UTF8); $content = $content -replace '(L\\s*=\\s*)[\\d.]+', '$1 0.5'; [IO.File]::WriteAllText('C2_run_05/SimplePendulum.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("SimplePendulum.exe -override L=0.5 -outputPath ../C2_run_05"); cd(".."); getErrorString();
+
+// Run 06: Long pendulum
+system("mkdir C2_run_06 2>NUL"); system("copy SimplePendulum.mo C2_run_06\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C2_run_06/SimplePendulum.mo', [Text.Encoding]::UTF8); $content = $content -replace '(L\\s*=\\s*)[\\d.]+', '$1 2.0'; [IO.File]::WriteAllText('C2_run_06/SimplePendulum.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("SimplePendulum.exe -override L=2.0 -outputPath ../C2_run_06"); cd(".."); getErrorString();
+
+// Run 07: Low gravity
+system("mkdir C2_run_07 2>NUL"); system("copy SimplePendulum.mo C2_run_07\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C2_run_07/SimplePendulum.mo', [Text.Encoding]::UTF8); $content = $content -replace '(g\\s*=\\s*)[\\d.]+', '$1 5.0'; [IO.File]::WriteAllText('C2_run_07/SimplePendulum.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("SimplePendulum.exe -override g=5.0 -outputPath ../C2_run_07"); cd(".."); getErrorString();
+
+// Run 08: Initial velocity (not from rest)
+system("mkdir C2_run_08 2>NUL"); system("copy SimplePendulum.mo C2_run_08\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C2_run_08/SimplePendulum.mo', [Text.Encoding]::UTF8); $content = $content -replace '(theta0\\s*=\\s*)[\\d.]+', '$1 0.0' -replace '(omega0\\s*=\\s*)[\\d.]+', '$1 3.0'; [IO.File]::WriteAllText('C2_run_08/SimplePendulum.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("SimplePendulum.exe -override theta0=0.0,omega0=3.0 -outputPath ../C2_run_08"); cd(".."); getErrorString();
+
+// Run 09: Combined A (short pendulum, large angle)
+system("mkdir C2_run_09 2>NUL"); system("copy SimplePendulum.mo C2_run_09\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C2_run_09/SimplePendulum.mo', [Text.Encoding]::UTF8); $content = $content -replace '(L\\s*=\\s*)[\\d.]+', '$1 0.5' -replace '(theta0\\s*=\\s*)[\\d.]+', '$1 1.2'; [IO.File]::WriteAllText('C2_run_09/SimplePendulum.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("SimplePendulum.exe -override L=0.5,theta0=1.2 -outputPath ../C2_run_09"); cd(".."); getErrorString();
+
+// Run 10: Combined B (long pendulum, low gravity)
+system("mkdir C2_run_10 2>NUL"); system("copy SimplePendulum.mo C2_run_10\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C2_run_10/SimplePendulum.mo', [Text.Encoding]::UTF8); $content = $content -replace '(g\\s*=\\s*)[\\d.]+', '$1 5.0' -replace '(L\\s*=\\s*)[\\d.]+', '$1 2.0' -replace '(theta0\\s*=\\s*)[\\d.]+', '$1 0.8'; [IO.File]::WriteAllText('C2_run_10/SimplePendulum.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("SimplePendulum.exe -override g=5.0,L=2.0,theta0=0.8 -outputPath ../C2_run_10"); cd(".."); getErrorString();

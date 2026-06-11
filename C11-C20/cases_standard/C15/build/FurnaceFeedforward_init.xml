@@ -1,0 +1,415 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+
+<!-- description of the model interface using an extention of the FMI standard -->
+<fmiModelDescription
+  fmiVersion                          = "1.0"
+
+  modelName                           = "FurnaceFeedforward"
+  modelIdentifier                     = "FurnaceFeedforward"
+
+  OPENMODELICAHOME                    = "D:/software/OpenModelica1.25.5-64bit"
+
+  guid                                = "{0ba142a2-8d50-49d8-9462-07d4a88dcf98}"
+
+  description                         = "Furnace temperature control with pure feedforward compensation"
+  generationTool                      = "OpenModelica Compiler OpenModelica v1.25.5 (64-bit)"
+  generationDateAndTime               = "2026-04-08T16:45:00Z"
+
+  variableNamingConvention            = "structured"
+
+  numberOfEventIndicators             = "1"  cmt_numberOfEventIndicators             = "NG:       number of zero crossings,                           FMI"
+  numberOfTimeEvents                  = "0"  cmt_numberOfTimeEvents                  = "NG_SAM:   number of zero crossings that are samples,          OMC"
+
+  numberOfInputVariables              = "0"  cmt_numberOfInputVariables              = "NI:       number of inputvar on topmodel,                     OMC"
+  numberOfOutputVariables             = "0"  cmt_numberOfOutputVariables             = "NO:       number of outputvar on topmodel,                    OMC"
+
+  numberOfExternalObjects             = "0"  cmt_numberOfExternalObjects             = "NEXT:     number of external objects,                         OMC"
+  numberOfFunctions                   = "0"  cmt_numberOfFunctions                   = "NFUNC:    number of functions used by the simulation,         OMC"
+
+  numberOfContinuousStates            = "1"  cmt_numberOfContinuousStates            = "NX:       number of states,                                   FMI"
+  numberOfRealAlgebraicVariables      = "4"  cmt_numberOfRealAlgebraicVariables      = "NY:       number of real variables,                           OMC"
+  numberOfRealAlgebraicAliasVariables = "5"  cmt_numberOfRealAlgebraicAliasVariables = "NA:       number of alias variables,                          OMC"
+  numberOfRealParameters              = "18"  cmt_numberOfRealParameters              = "NP:       number of parameters,                               OMC"
+
+  numberOfIntegerAlgebraicVariables   = "0"  cmt_numberOfIntegerAlgebraicVariables   = "NYINT:    number of alg. int variables,                       OMC"
+  numberOfIntegerAliasVariables       = "0"  cmt_numberOfIntegerAliasVariables       = "NAINT:    number of alias int variables,                      OMC"
+  numberOfIntegerParameters           = "0"  cmt_numberOfIntegerParameters           = "NPINT:    number of int parameters,                           OMC"
+
+  numberOfStringAlgebraicVariables    = "0"  cmt_numberOfStringAlgebraicVariables    = "NYSTR:    number of alg. string variables,                    OMC"
+  numberOfStringAliasVariables        = "0"  cmt_numberOfStringAliasVariables        = "NASTR:    number of alias string variables,                   OMC"
+  numberOfStringParameters            = "0"  cmt_numberOfStringParameters            = "NPSTR:    number of string parameters,                        OMC"
+
+  numberOfBooleanAlgebraicVariables   = "0"  cmt_numberOfBooleanAlgebraicVariables   = "NYBOOL:   number of alg. bool variables,                      OMC"
+  numberOfBooleanAliasVariables       = "0"  cmt_numberOfBooleanAliasVariables       = "NABOOL:   number of alias bool variables,                     OMC"
+  numberOfBooleanParameters           = "0"  cmt_numberOfBooleanParameters           = "NPBOOL:   number of bool parameters,                          OMC" >
+
+
+  <!-- startTime, stopTime, tolerance are FMI specific, all others are OMC specific -->
+  <DefaultExperiment
+    startTime      = "0"
+    stopTime       = "300"
+    stepSize       = "0.01"
+    tolerance      = "1e-06"
+    solver         = "dassl"
+    outputFormat   = "mat"
+    variableFilter = ".*" />
+
+  <!-- variables in the model -->
+  <ModelVariables>
+
+  <ScalarVariable
+    name = "T"
+    valueReference = "1000"
+    description = "Furnace temperature"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "33" startColumn = "3" endLine = "33" endColumn = "72" fileWritable = "true">
+    <Real fixed="true" useNominal="false" unit="degC" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(T)"
+    valueReference = "1001"
+    description = "der(Furnace temperature)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "33" startColumn = "3" endLine = "33" endColumn = "72" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="s-1.K" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Q_disturbance"
+    valueReference = "1002"
+    description = "Disturbance heat load"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "38" startColumn = "3" endLine = "38" endColumn = "57" fileWritable = "true">
+    <Real start="0.0" fixed="false" useNominal="false" unit="W" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Q_heater"
+    valueReference = "1003"
+    description = "Total heating power"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "36" startColumn = "3" endLine = "36" endColumn = "50" fileWritable = "true">
+    <Real start="300.0" fixed="false" useNominal="false" unit="W" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Q_loss"
+    valueReference = "1004"
+    description = "Heat loss to ambient"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "37" startColumn = "3" endLine = "37" endColumn = "49" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="W" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "u_ff"
+    valueReference = "1005"
+    description = "Feedforward compensation signal"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "3" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "39" startColumn = "3" endLine = "39" endColumn = "46" fileWritable = "true">
+    <Real start="0.0" fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "C_furnace"
+    valueReference = "1006"
+    description = "Furnace thermal capacity (J/K)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "8" startColumn = "3" endLine = "8" endColumn = "69" fileWritable = "true">
+    <Real start="5000.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "K_ff"
+    valueReference = "1007"
+    description = "Feedforward gain (1.0 = ideal compensation)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "1" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "20" startColumn = "3" endLine = "20" endColumn = "74" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "K_heater"
+    valueReference = "1008"
+    description = "Heater power gain (W/unit)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "2" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "9" startColumn = "3" endLine = "9" endColumn = "63" fileWritable = "true">
+    <Real start="100.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Q_dist"
+    valueReference = "1009"
+    description = "Disturbance power step magnitude (W)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "3" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "16" startColumn = "3" endLine = "16" endColumn = "71" fileWritable = "true">
+    <Real start="200.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Q_ss"
+    valueReference = "1010"
+    description = "Steady-state heating power without disturbance (W)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "4" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "12" startColumn = "3" endLine = "12" endColumn = "83" fileWritable = "true">
+    <Real start="300.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "T0"
+    valueReference = "1011"
+    description = "Initial furnace temperature (degC)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "5" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "13" startColumn = "3" endLine = "13" endColumn = "64" fileWritable = "true">
+    <Real start="80.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "T_amb"
+    valueReference = "1012"
+    description = "Ambient temperature (degC)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "6" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "11" startColumn = "3" endLine = "11" endColumn = "59" fileWritable = "true">
+    <Real start="20.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "UA"
+    valueReference = "1013"
+    description = "Heat loss coefficient to ambient (W/K)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "7" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "10" startColumn = "3" endLine = "10" endColumn = "67" fileWritable = "true">
+    <Real start="5.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "disturbanceSignal.height"
+    valueReference = "1014"
+    description = "Height of step"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "8" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Sources.mo" startLine = "205" startColumn = "5" endLine = "206" endColumn = "98" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "disturbanceSignal.offset"
+    valueReference = "1015"
+    description = "Offset of output signal y"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "9" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "479" startColumn = "5" endLine = "479" endColumn = "56" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "disturbanceSignal.startTime"
+    valueReference = "1016"
+    description = "Output y = offset for time &lt; startTime"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "10" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "480" startColumn = "5" endLine = "480" endColumn = "75" fileWritable = "true">
+    <Real fixed="true" useNominal="false" unit="s" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "feedforwardGain.k"
+    valueReference = "1017"
+    description = "Gain value multiplied with input signal"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "11" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Math.mo" startLine = "543" startColumn = "5" endLine = "544" endColumn = "48" fileWritable = "true">
+    <Real fixed="true" useNominal="false" unit="1" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "heaterSum.k1"
+    valueReference = "1018"
+    description = "Gain of input signal 1"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "12" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Math.mo" startLine = "876" startColumn = "5" endLine = "876" endColumn = "50" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "heaterSum.k2"
+    valueReference = "1019"
+    description = "Gain of input signal 2"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "13" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Math.mo" startLine = "877" startColumn = "5" endLine = "877" endColumn = "50" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "heaterSum.u1"
+    valueReference = "1020"
+    description = "Connector of Real input signal 1"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "14" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "342" startColumn = "5" endLine = "343" endColumn = "57" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "steadyStateHeat.k"
+    valueReference = "1021"
+    description = "Constant output value"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "15" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Sources.mo" startLine = "165" startColumn = "5" endLine = "166" endColumn = "102" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "steadyStateHeat.y"
+    valueReference = "1022"
+    description = "Connector of Real output signal"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "16" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "300" startColumn = "5" endLine = "301" endColumn = "56" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "t_dist"
+    valueReference = "1023"
+    description = "Disturbance step time (s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "17" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/C15/FurnaceFeedforward.mo" startLine = "17" startColumn = "3" endLine = "17" endColumn = "60" fileWritable = "true">
+    <Real start="100.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "disturbanceSignal.y"
+    valueReference = "1024"
+    description = "Connector of Real output signal"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="Q_disturbance" aliasVariableId="2"
+    classIndex = "0" classType = "rAli"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "300" startColumn = "5" endLine = "301" endColumn = "56" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "feedforwardGain.u"
+    valueReference = "1025"
+    description = "Input signal connector"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="Q_disturbance" aliasVariableId="2"
+    classIndex = "1" classType = "rAli"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Math.mo" startLine = "546" startColumn = "5" endLine = "547" endColumn = "58" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "feedforwardGain.y"
+    valueReference = "1026"
+    description = "Output signal connector"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="u_ff" aliasVariableId="5"
+    classIndex = "2" classType = "rAli"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Math.mo" startLine = "548" startColumn = "5" endLine = "549" endColumn = "56" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "heaterSum.u2"
+    valueReference = "1027"
+    description = "Connector of Real input signal 2"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="u_ff" aliasVariableId="5"
+    classIndex = "3" classType = "rAli"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "344" startColumn = "5" endLine = "345" endColumn = "59" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "heaterSum.y"
+    valueReference = "1028"
+    description = "Connector of Real output signal"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="Q_heater" aliasVariableId="3"
+    classIndex = "4" classType = "rAli"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "346" startColumn = "5" endLine = "347" endColumn = "56" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+
+
+
+  </ModelVariables>
+
+
+</fmiModelDescription>
+

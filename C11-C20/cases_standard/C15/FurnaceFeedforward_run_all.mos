@@ -1,0 +1,54 @@
+// FurnaceFeedforward_run_all.mos — C15
+system("mkdir build 2>NUL");
+cd("build"); loadFile("../FurnaceFeedforward.mo"); getErrorString();
+buildModel(FurnaceFeedforward, stopTime=300, stepSize=0.01, tolerance=1e-6, method="dassl", outputFormat="mat"); getErrorString();
+cd("..");
+
+// Run 01: K_ff=0.0
+system("mkdir C15_run_01 2>NUL"); system("copy FurnaceFeedforward.mo C15_run_01\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C15_run_01/FurnaceFeedforward.mo', [Text.Encoding]::UTF8); $content = $content -replace '(K_ff\\s*=\\s*)[\\d.]+', '$1 0.0'; [IO.File]::WriteAllText('C15_run_01/FurnaceFeedforward.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FurnaceFeedforward.exe -override K_ff=0.0,feedforwardGain.k=0.0 -outputPath ../C15_run_01"); cd(".."); getErrorString();
+
+// Run 02: K_ff=0.2
+system("mkdir C15_run_02 2>NUL"); system("copy FurnaceFeedforward.mo C15_run_02\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C15_run_02/FurnaceFeedforward.mo', [Text.Encoding]::UTF8); $content = $content -replace '(K_ff\\s*=\\s*)[\\d.]+', '$1 0.2'; [IO.File]::WriteAllText('C15_run_02/FurnaceFeedforward.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FurnaceFeedforward.exe -override K_ff=0.2,feedforwardGain.k=0.2 -outputPath ../C15_run_02"); cd(".."); getErrorString();
+
+// Run 03: K_ff=0.4
+system("mkdir C15_run_03 2>NUL"); system("copy FurnaceFeedforward.mo C15_run_03\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C15_run_03/FurnaceFeedforward.mo', [Text.Encoding]::UTF8); $content = $content -replace '(K_ff\\s*=\\s*)[\\d.]+', '$1 0.4'; [IO.File]::WriteAllText('C15_run_03/FurnaceFeedforward.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FurnaceFeedforward.exe -override K_ff=0.4,feedforwardGain.k=0.4 -outputPath ../C15_run_03"); cd(".."); getErrorString();
+
+// Run 04: K_ff=0.5
+system("mkdir C15_run_04 2>NUL"); system("copy FurnaceFeedforward.mo C15_run_04\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C15_run_04/FurnaceFeedforward.mo', [Text.Encoding]::UTF8); $content = $content -replace '(K_ff\\s*=\\s*)[\\d.]+', '$1 0.5'; [IO.File]::WriteAllText('C15_run_04/FurnaceFeedforward.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FurnaceFeedforward.exe -override K_ff=0.5,feedforwardGain.k=0.5 -outputPath ../C15_run_04"); cd(".."); getErrorString();
+
+// Run 05: K_ff=0.6
+system("mkdir C15_run_05 2>NUL"); system("copy FurnaceFeedforward.mo C15_run_05\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C15_run_05/FurnaceFeedforward.mo', [Text.Encoding]::UTF8); $content = $content -replace '(K_ff\\s*=\\s*)[\\d.]+', '$1 0.6'; [IO.File]::WriteAllText('C15_run_05/FurnaceFeedforward.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FurnaceFeedforward.exe -override K_ff=0.6,feedforwardGain.k=0.6 -outputPath ../C15_run_05"); cd(".."); getErrorString();
+
+// Run 06: K_ff=0.8
+system("mkdir C15_run_06 2>NUL"); system("copy FurnaceFeedforward.mo C15_run_06\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C15_run_06/FurnaceFeedforward.mo', [Text.Encoding]::UTF8); $content = $content -replace '(K_ff\\s*=\\s*)[\\d.]+', '$1 0.8'; [IO.File]::WriteAllText('C15_run_06/FurnaceFeedforward.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FurnaceFeedforward.exe -override K_ff=0.8,feedforwardGain.k=0.8 -outputPath ../C15_run_06"); cd(".."); getErrorString();
+
+// Run 07: K_ff=0.9
+system("mkdir C15_run_07 2>NUL"); system("copy FurnaceFeedforward.mo C15_run_07\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C15_run_07/FurnaceFeedforward.mo', [Text.Encoding]::UTF8); $content = $content -replace '(K_ff\\s*=\\s*)[\\d.]+', '$1 0.9'; [IO.File]::WriteAllText('C15_run_07/FurnaceFeedforward.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FurnaceFeedforward.exe -override K_ff=0.9,feedforwardGain.k=0.9 -outputPath ../C15_run_07"); cd(".."); getErrorString();
+
+// Run 08: K_ff=1.0 (baseline)
+system("mkdir C15_run_08 2>NUL"); system("copy FurnaceFeedforward.mo C15_run_08\\ >NUL");
+cd("build"); system("FurnaceFeedforward.exe -override K_ff=1.0,feedforwardGain.k=1.0 -outputPath ../C15_run_08"); cd(".."); getErrorString();
+
+// Run 09: K_ff=1.2
+system("mkdir C15_run_09 2>NUL"); system("copy FurnaceFeedforward.mo C15_run_09\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C15_run_09/FurnaceFeedforward.mo', [Text.Encoding]::UTF8); $content = $content -replace '(K_ff\\s*=\\s*)[\\d.]+', '$1 1.2'; [IO.File]::WriteAllText('C15_run_09/FurnaceFeedforward.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FurnaceFeedforward.exe -override K_ff=1.2,feedforwardGain.k=1.2 -outputPath ../C15_run_09"); cd(".."); getErrorString();
+
+// Run 10: K_ff=1.5
+system("mkdir C15_run_10 2>NUL"); system("copy FurnaceFeedforward.mo C15_run_10\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C15_run_10/FurnaceFeedforward.mo', [Text.Encoding]::UTF8); $content = $content -replace '(K_ff\\s*=\\s*)[\\d.]+', '$1 1.5'; [IO.File]::WriteAllText('C15_run_10/FurnaceFeedforward.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FurnaceFeedforward.exe -override K_ff=1.5,feedforwardGain.k=1.5 -outputPath ../C15_run_10"); cd(".."); getErrorString();

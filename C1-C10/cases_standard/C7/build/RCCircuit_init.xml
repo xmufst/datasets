@@ -1,0 +1,235 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+
+<!-- description of the model interface using an extention of the FMI standard -->
+<fmiModelDescription
+  fmiVersion                          = "1.0"
+
+  modelName                           = "RCCircuit"
+  modelIdentifier                     = "RCCircuit"
+
+  OPENMODELICAHOME                    = "D:/software/OpenModelica1.25.5-64bit"
+
+  guid                                = "{c90d8ac6-15e3-4625-8ae2-a581eec54054}"
+
+  description                         = "RC circuit with step voltage source for charge and discharge"
+  generationTool                      = "OpenModelica Compiler OpenModelica v1.25.5 (64-bit)"
+  generationDateAndTime               = "2026-04-09T13:39:22Z"
+
+  variableNamingConvention            = "structured"
+
+  numberOfEventIndicators             = "1"  cmt_numberOfEventIndicators             = "NG:       number of zero crossings,                           FMI"
+  numberOfTimeEvents                  = "0"  cmt_numberOfTimeEvents                  = "NG_SAM:   number of zero crossings that are samples,          OMC"
+
+  numberOfInputVariables              = "0"  cmt_numberOfInputVariables              = "NI:       number of inputvar on topmodel,                     OMC"
+  numberOfOutputVariables             = "0"  cmt_numberOfOutputVariables             = "NO:       number of outputvar on topmodel,                    OMC"
+
+  numberOfExternalObjects             = "0"  cmt_numberOfExternalObjects             = "NEXT:     number of external objects,                         OMC"
+  numberOfFunctions                   = "0"  cmt_numberOfFunctions                   = "NFUNC:    number of functions used by the simulation,         OMC"
+
+  numberOfContinuousStates            = "2"  cmt_numberOfContinuousStates            = "NX:       number of states,                                   FMI"
+  numberOfRealAlgebraicVariables      = "4"  cmt_numberOfRealAlgebraicVariables      = "NY:       number of real variables,                           OMC"
+  numberOfRealAlgebraicAliasVariables = "0"  cmt_numberOfRealAlgebraicAliasVariables = "NA:       number of alias variables,                          OMC"
+  numberOfRealParameters              = "6"  cmt_numberOfRealParameters              = "NP:       number of parameters,                               OMC"
+
+  numberOfIntegerAlgebraicVariables   = "0"  cmt_numberOfIntegerAlgebraicVariables   = "NYINT:    number of alg. int variables,                       OMC"
+  numberOfIntegerAliasVariables       = "0"  cmt_numberOfIntegerAliasVariables       = "NAINT:    number of alias int variables,                      OMC"
+  numberOfIntegerParameters           = "0"  cmt_numberOfIntegerParameters           = "NPINT:    number of int parameters,                           OMC"
+
+  numberOfStringAlgebraicVariables    = "0"  cmt_numberOfStringAlgebraicVariables    = "NYSTR:    number of alg. string variables,                    OMC"
+  numberOfStringAliasVariables        = "0"  cmt_numberOfStringAliasVariables        = "NASTR:    number of alias string variables,                   OMC"
+  numberOfStringParameters            = "0"  cmt_numberOfStringParameters            = "NPSTR:    number of string parameters,                        OMC"
+
+  numberOfBooleanAlgebraicVariables   = "0"  cmt_numberOfBooleanAlgebraicVariables   = "NYBOOL:   number of alg. bool variables,                      OMC"
+  numberOfBooleanAliasVariables       = "0"  cmt_numberOfBooleanAliasVariables       = "NABOOL:   number of alias bool variables,                     OMC"
+  numberOfBooleanParameters           = "0"  cmt_numberOfBooleanParameters           = "NPBOOL:   number of bool parameters,                          OMC" >
+
+
+  <!-- startTime, stopTime, tolerance are FMI specific, all others are OMC specific -->
+  <DefaultExperiment
+    startTime      = "0"
+    stopTime       = "10"
+    stepSize       = "0.01"
+    tolerance      = "1e-06"
+    solver         = "dassl"
+    outputFormat   = "mat"
+    variableFilter = ".*" />
+
+  <!-- variables in the model -->
+  <ModelVariables>
+
+  <ScalarVariable
+    name = "E_dissipated"
+    valueReference = "1000"
+    description = "Cumulative energy dissipated in resistor (J)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "20" startColumn = "3" endLine = "20" endColumn = "92" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Vc"
+    valueReference = "1001"
+    description = "Capacitor voltage (V)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "13" startColumn = "3" endLine = "13" endColumn = "61" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(E_dissipated)"
+    valueReference = "1002"
+    description = "der(Cumulative energy dissipated in resistor (J))"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "20" startColumn = "3" endLine = "20" endColumn = "92" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(Vc)"
+    valueReference = "1003"
+    description = "der(Capacitor voltage (V))"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "13" startColumn = "3" endLine = "13" endColumn = "61" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "E_capacitor"
+    valueReference = "1004"
+    description = "Energy stored in capacitor (J)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "19" startColumn = "3" endLine = "19" endColumn = "52" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "P_resistor"
+    valueReference = "1005"
+    description = "Power dissipated in resistor (W)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "18" startColumn = "3" endLine = "18" endColumn = "53" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "V_in"
+    valueReference = "1006"
+    description = "Applied input voltage (V)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "16" startColumn = "3" endLine = "16" endColumn = "40" fileWritable = "true">
+    <Real start="10.0" fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "i"
+    valueReference = "1007"
+    description = "Circuit current (A)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "3" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "17" startColumn = "3" endLine = "17" endColumn = "31" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "C"
+    valueReference = "1008"
+    description = "Capacitance (F)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "4" startColumn = "3" endLine = "4" endColumn = "45" fileWritable = "true">
+    <Real start="0.001" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "R"
+    valueReference = "1009"
+    description = "Resistance (Ohm)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "1" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "3" startColumn = "3" endLine = "3" endColumn = "47" fileWritable = "true">
+    <Real start="1000.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "V_source"
+    valueReference = "1010"
+    description = "Source voltage amplitude (V)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "2" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "5" startColumn = "3" endLine = "5" endColumn = "64" fileWritable = "true">
+    <Real start="10.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Vc0"
+    valueReference = "1011"
+    description = "Initial capacitor voltage (V)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "3" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "7" startColumn = "3" endLine = "7" endColumn = "59" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "t_switch"
+    valueReference = "1012"
+    description = "Time to disconnect source, start discharge (s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "4" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "6" startColumn = "3" endLine = "6" endColumn = "81" fileWritable = "true">
+    <Real start="5.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "tau"
+    valueReference = "1013"
+    description = "Time constant (s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "5" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "G:/数据/第一类/C7/RCCircuit.mo" startLine = "10" startColumn = "3" endLine = "10" endColumn = "49" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+
+
+
+  </ModelVariables>
+
+
+</fmiModelDescription>
+

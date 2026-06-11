@@ -1,0 +1,21 @@
+{
+  "case_root": "C:/Users/FST/Desktop/AFM/cases",
+  "case_id": "20260330_153931_FallingWithDrag",
+  "case_dir": "C:/Users/FST/Desktop/AFM/cases/20260330_153931_FallingWithDrag",
+  "model_name": "FallingWithDrag",
+  "run_tag": "20260330_154826",
+  "timestamp": "2026-03-30T15:48:29",
+  "saved_sources": [
+    "C:/Users/FST/Desktop/AFM/cases/20260330_153931_FallingWithDrag/model/FallingWithDrag.mo"
+  ],
+  "result_mat": "C:/Users/FST/Desktop/AFM/cases/20260330_153931_FallingWithDrag/results/FallingWithDrag_20260330_154826_res.mat",
+  "init_xml": "C:/Users/FST/Desktop/AFM/cases/20260330_153931_FallingWithDrag/results/FallingWithDrag_20260330_154826_init.xml",
+  "overrides": {
+    "stop_time": null,
+    "parameter_overrides": {}
+  },
+  "debug": {
+    "cmd": "C:/Users/FST/Desktop/AFM/cases/20260330_153931_FallingWithDrag/build/FallingWithDrag.exe",
+    "exit_code": 0
+  }
+}

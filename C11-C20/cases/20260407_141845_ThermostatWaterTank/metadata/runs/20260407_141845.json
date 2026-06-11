@@ -1,0 +1,21 @@
+{
+  "case_root": "C:/Users/FST/Desktop/AFM/cases",
+  "case_id": "20260407_141845_ThermostatWaterTank",
+  "case_dir": "C:/Users/FST/Desktop/AFM/cases/20260407_141845_ThermostatWaterTank",
+  "model_name": "ThermostatWaterTank",
+  "run_tag": "20260407_141845",
+  "timestamp": "2026-04-07T14:18:50",
+  "saved_sources": [
+    "C:/Users/FST/Desktop/AFM/cases/20260407_141845_ThermostatWaterTank/model/ThermostatWaterTank.mo"
+  ],
+  "result_mat": "C:/Users/FST/Desktop/AFM/cases/20260407_141845_ThermostatWaterTank/results/ThermostatWaterTank_20260407_141845_res.mat",
+  "init_xml": "C:/Users/FST/Desktop/AFM/cases/20260407_141845_ThermostatWaterTank/results/ThermostatWaterTank_20260407_141845_init.xml",
+  "overrides": {
+    "stop_time": 500.0,
+    "parameter_overrides": {}
+  },
+  "debug": {
+    "cmd": "C:/Users/FST/Desktop/AFM/cases/20260407_141845_ThermostatWaterTank/build/ThermostatWaterTank.exe -override=stopTime=500",
+    "exit_code": 0
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "case_root": "C:/Users/FST/Desktop/AFM/cases",
+  "case_id": "20260407_152647_DCMotorStateFeedback",
+  "case_dir": "C:/Users/FST/Desktop/AFM/cases/20260407_152647_DCMotorStateFeedback",
+  "model_name": "DCMotorStateFeedback",
+  "run_tag": "20260407_152759",
+  "timestamp": "2026-04-07T15:28:04",
+  "saved_sources": [
+    "C:/Users/FST/Desktop/AFM/cases/20260407_152647_DCMotorStateFeedback/model/DCMotorStateFeedback.mo"
+  ],
+  "result_mat": "C:/Users/FST/Desktop/AFM/cases/20260407_152647_DCMotorStateFeedback/results/DCMotorStateFeedback_20260407_152759_res.mat",
+  "init_xml": "C:/Users/FST/Desktop/AFM/cases/20260407_152647_DCMotorStateFeedback/results/DCMotorStateFeedback_20260407_152759_init.xml",
+  "overrides": {
+    "stop_time": 10.0,
+    "parameter_overrides": {}
+  },
+  "debug": {
+    "cmd": "C:/Users/FST/Desktop/AFM/cases/20260407_152647_DCMotorStateFeedback/build/DCMotorStateFeedback.exe -override=stopTime=10,stepSize=0.01,tolerance=1e-06,method=dassl",
+    "exit_code": 0
+  }
+}

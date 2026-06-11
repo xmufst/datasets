@@ -1,0 +1,21 @@
+{
+  "case_root": "C:/Users/FST/Desktop/AFM/cases",
+  "case_id": "20260413_203655_SmithPredictorTemp",
+  "case_dir": "C:/Users/FST/Desktop/AFM/cases/20260413_203655_SmithPredictorTemp",
+  "model_name": "SmithPredictorTemp",
+  "run_tag": "20260413_203655",
+  "timestamp": "2026-04-13T20:37:00",
+  "saved_sources": [
+    "C:/Users/FST/Desktop/AFM/cases/20260413_203655_SmithPredictorTemp/model/SmithPredictorTemp.mo"
+  ],
+  "result_mat": "C:/Users/FST/Desktop/AFM/cases/20260413_203655_SmithPredictorTemp/results/SmithPredictorTemp_20260413_203655_res.mat",
+  "init_xml": "C:/Users/FST/Desktop/AFM/cases/20260413_203655_SmithPredictorTemp/results/SmithPredictorTemp_20260413_203655_init.xml",
+  "overrides": {
+    "stop_time": 300.0,
+    "parameter_overrides": {}
+  },
+  "debug": {
+    "cmd": "C:/Users/FST/Desktop/AFM/cases/20260413_203655_SmithPredictorTemp/build/SmithPredictorTemp.exe -override=stopTime=300,stepSize=0.01,tolerance=1e-06,method=dassl",
+    "exit_code": 0
+  }
+}

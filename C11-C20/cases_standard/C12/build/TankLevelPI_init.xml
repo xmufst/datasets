@@ -1,0 +1,474 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+
+<!-- description of the model interface using an extention of the FMI standard -->
+<fmiModelDescription
+  fmiVersion                          = "1.0"
+
+  modelName                           = "TankLevelPI"
+  modelIdentifier                     = "TankLevelPI"
+
+  OPENMODELICAHOME                    = "D:/software/OpenModelica1.25.5-64bit"
+
+  guid                                = "{11f900f2-7948-4cc5-8e3b-4c3d99e09b61}"
+
+  description                         = "Water tank level control using MSL PI controller, Limiter, and Feedback blocks"
+  generationTool                      = "OpenModelica Compiler OpenModelica v1.25.5 (64-bit)"
+  generationDateAndTime               = "2026-04-10T17:03:04Z"
+
+  variableNamingConvention            = "structured"
+
+  numberOfEventIndicators             = "0"  cmt_numberOfEventIndicators             = "NG:       number of zero crossings,                           FMI"
+  numberOfTimeEvents                  = "0"  cmt_numberOfTimeEvents                  = "NG_SAM:   number of zero crossings that are samples,          OMC"
+
+  numberOfInputVariables              = "0"  cmt_numberOfInputVariables              = "NI:       number of inputvar on topmodel,                     OMC"
+  numberOfOutputVariables             = "0"  cmt_numberOfOutputVariables             = "NO:       number of outputvar on topmodel,                    OMC"
+
+  numberOfExternalObjects             = "0"  cmt_numberOfExternalObjects             = "NEXT:     number of external objects,                         OMC"
+  numberOfFunctions                   = "0"  cmt_numberOfFunctions                   = "NFUNC:    number of functions used by the simulation,         OMC"
+
+  numberOfContinuousStates            = "2"  cmt_numberOfContinuousStates            = "NX:       number of states,                                   FMI"
+  numberOfRealAlgebraicVariables      = "5"  cmt_numberOfRealAlgebraicVariables      = "NY:       number of real variables,                           OMC"
+  numberOfRealAlgebraicAliasVariables = "6"  cmt_numberOfRealAlgebraicAliasVariables = "NA:       number of alias variables,                          OMC"
+  numberOfRealParameters              = "16"  cmt_numberOfRealParameters              = "NP:       number of parameters,                               OMC"
+
+  numberOfIntegerAlgebraicVariables   = "0"  cmt_numberOfIntegerAlgebraicVariables   = "NYINT:    number of alg. int variables,                       OMC"
+  numberOfIntegerAliasVariables       = "0"  cmt_numberOfIntegerAliasVariables       = "NAINT:    number of alias int variables,                      OMC"
+  numberOfIntegerParameters           = "2"  cmt_numberOfIntegerParameters           = "NPINT:    number of int parameters,                           OMC"
+
+  numberOfStringAlgebraicVariables    = "0"  cmt_numberOfStringAlgebraicVariables    = "NYSTR:    number of alg. string variables,                    OMC"
+  numberOfStringAliasVariables        = "0"  cmt_numberOfStringAliasVariables        = "NASTR:    number of alias string variables,                   OMC"
+  numberOfStringParameters            = "0"  cmt_numberOfStringParameters            = "NPSTR:    number of string parameters,                        OMC"
+
+  numberOfBooleanAlgebraicVariables   = "0"  cmt_numberOfBooleanAlgebraicVariables   = "NYBOOL:   number of alg. bool variables,                      OMC"
+  numberOfBooleanAliasVariables       = "0"  cmt_numberOfBooleanAliasVariables       = "NABOOL:   number of alias bool variables,                     OMC"
+  numberOfBooleanParameters           = "1"  cmt_numberOfBooleanParameters           = "NPBOOL:   number of bool parameters,                          OMC" >
+
+
+  <!-- startTime, stopTime, tolerance are FMI specific, all others are OMC specific -->
+  <DefaultExperiment
+    startTime      = "0"
+    stopTime       = "500"
+    stepSize       = "0.01"
+    tolerance      = "1e-06"
+    solver         = "dassl"
+    outputFormat   = "mat"
+    variableFilter = ".*" />
+
+  <!-- variables in the model -->
+  <ModelVariables>
+
+  <ScalarVariable
+    name = "h"
+    valueReference = "1000"
+    description = "Water level"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "32" startColumn = "3" endLine = "32" endColumn = "61" fileWritable = "true">
+    <Real fixed="true" useNominal="false" unit="m" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "piController.x"
+    valueReference = "1001"
+    description = "State of block"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Continuous.mo" startLine = "524" startColumn = "5" endLine = "524" endColumn = "50" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(h)"
+    valueReference = "1002"
+    description = "der(Water level)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "32" startColumn = "3" endLine = "32" endColumn = "61" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="m.s-1" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(piController.x)"
+    valueReference = "1003"
+    description = "der(State of block)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Continuous.mo" startLine = "524" startColumn = "5" endLine = "524" endColumn = "50" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Q_in"
+    valueReference = "1004"
+    description = "Inflow rate"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "36" startColumn = "3" endLine = "36" endColumn = "41" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="m3/s" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Q_out"
+    valueReference = "1005"
+    description = "Outflow rate"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "37" startColumn = "3" endLine = "37" endColumn = "43" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="m3/s" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "h_error"
+    valueReference = "1006"
+    description = "Level tracking error"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "35" startColumn = "3" endLine = "35" endColumn = "50" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="m" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "limiter.y"
+    valueReference = "1007"
+    description = "Connector of Real output signal"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "3" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "329" startColumn = "5" endLine = "330" endColumn = "56" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "u_pi"
+    valueReference = "1008"
+    description = "PI controller raw output"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "4" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "38" startColumn = "3" endLine = "38" endColumn = "39" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "A_tank"
+    valueReference = "1009"
+    description = "Tank cross-section area (m2)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "10" startColumn = "3" endLine = "10" endColumn = "61" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Kp"
+    valueReference = "1010"
+    description = "PI proportional gain"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "1" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "15" startColumn = "3" endLine = "15" endColumn = "49" fileWritable = "true">
+    <Real start="2.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Q_in_max"
+    valueReference = "1011"
+    description = "Maximum inflow rate (m3/s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "2" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "12" startColumn = "3" endLine = "12" endColumn = "62" fileWritable = "true">
+    <Real start="0.05" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Ti"
+    valueReference = "1012"
+    description = "PI integral time (s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "3" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "16" startColumn = "3" endLine = "16" endColumn = "49" fileWritable = "true">
+    <Real start="4.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "feedback.u1"
+    valueReference = "1013"
+    description = "Commanded input"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "4" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Math.mo" startLine = "822" startColumn = "5" endLine = "823" endColumn = "32" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "h0"
+    valueReference = "1014"
+    description = "Initial water level (m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "5" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "14" startColumn = "3" endLine = "14" endColumn = "52" fileWritable = "true">
+    <Real start="0.5" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "h_ref"
+    valueReference = "1015"
+    description = "Level setpoint (m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "6" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "13" startColumn = "3" endLine = "13" endColumn = "50" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "k_out"
+    valueReference = "1016"
+    description = "Outlet flow coefficient (m2.5/s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "7" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/第二类数据/cases_standard/C12/TankLevelPI.mo" startLine = "11" startColumn = "3" endLine = "11" endColumn = "65" fileWritable = "true">
+    <Real start="0.01" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "limiter.uMax"
+    valueReference = "1017"
+    description = "Upper limits of input signals"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "8" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Nonlinear.mo" startLine = "8" startColumn = "9" endLine = "8" endColumn = "69" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "limiter.uMin"
+    valueReference = "1018"
+    description = "Lower limits of input signals"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "9" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Nonlinear.mo" startLine = "9" startColumn = "9" endLine = "9" endColumn = "67" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "piController.T"
+    valueReference = "1019"
+    description = "Time Constant (T&gt;0 required)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "10" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Continuous.mo" startLine = "511" startColumn = "5" endLine = "512" endColumn = "37" fileWritable = "true">
+    <Real fixed="true" useNominal="false" min="1e-60" unit="s" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "piController.k"
+    valueReference = "1020"
+    description = "Gain"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "11" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Continuous.mo" startLine = "510" startColumn = "5" endLine = "510" endColumn = "40" fileWritable = "true">
+    <Real fixed="true" useNominal="false" unit="1" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "piController.x_start"
+    valueReference = "1021"
+    description = "Initial or guess value of state"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "12" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Continuous.mo" startLine = "517" startColumn = "5" endLine = "518" endColumn = "50" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "piController.y_start"
+    valueReference = "1022"
+    description = "Initial value of output"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "13" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Continuous.mo" startLine = "519" startColumn = "5" endLine = "521" endColumn = "31" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "setpoint.k"
+    valueReference = "1023"
+    description = "Constant output value"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "14" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Sources.mo" startLine = "165" startColumn = "5" endLine = "166" endColumn = "102" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "setpoint.y"
+    valueReference = "1024"
+    description = "Connector of Real output signal"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "15" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "300" startColumn = "5" endLine = "301" endColumn = "56" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "feedback.u2"
+    valueReference = "1025"
+    description = "Feedback input"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="h" aliasVariableId="0"
+    classIndex = "0" classType = "rAli"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Math.mo" startLine = "824" startColumn = "5" endLine = "827" endColumn = "25" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "feedback.y"
+    valueReference = "1026"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="h_error" aliasVariableId="6"
+    classIndex = "1" classType = "rAli"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Math.mo" startLine = "828" startColumn = "5" endLine = "829" endColumn = "27" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "limiter.simplifiedExpr"
+    valueReference = "1027"
+    description = "Simplified expression for homotopy-based initialization"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="u_pi" aliasVariableId="8"
+    classIndex = "2" classType = "rAli"
+    isProtected = "true" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Nonlinear.mo" startLine = "16" startColumn = "9" endLine = "16" endColumn = "86" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "limiter.u"
+    valueReference = "1028"
+    description = "Connector of Real input signal"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="u_pi" aliasVariableId="8"
+    classIndex = "3" classType = "rAli"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "327" startColumn = "5" endLine = "328" endColumn = "58" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "piController.u"
+    valueReference = "1029"
+    description = "Connector of Real input signal"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="h_error" aliasVariableId="6"
+    classIndex = "4" classType = "rAli"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "327" startColumn = "5" endLine = "328" endColumn = "58" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "piController.y"
+    valueReference = "1030"
+    description = "Connector of Real output signal"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="u_pi" aliasVariableId="8"
+    classIndex = "5" classType = "rAli"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "329" startColumn = "5" endLine = "330" endColumn = "56" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "limiter.homotopyType"
+    valueReference = "1031"
+    description = "Simplified model for homotopy-based initialization"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "iPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Nonlinear.mo" startLine = "12" startColumn = "9" endLine = "13" endColumn = "69" fileWritable = "true">
+    <Integer start="2" fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "piController.initType"
+    valueReference = "1032"
+    description = "Type of initialization (1: no init, 2: steady state, 3: initial state, 4: initial output)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "iPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Continuous.mo" startLine = "513" startColumn = "5" endLine = "516" endColumn = "40" fileWritable = "true">
+    <Integer start="3" fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "limiter.strict"
+    valueReference = "1033"
+    description = "= true, if strict limits with noEvent(..)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "bPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Nonlinear.mo" startLine = "10" startColumn = "9" endLine = "11" endColumn = "85" fileWritable = "true">
+    <Boolean start="false" fixed="true" />
+  </ScalarVariable>
+
+
+
+  </ModelVariables>
+
+
+</fmiModelDescription>
+

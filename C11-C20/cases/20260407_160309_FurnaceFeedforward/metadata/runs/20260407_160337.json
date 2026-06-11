@@ -1,0 +1,21 @@
+{
+  "case_root": "C:/Users/FST/Desktop/AFM/cases",
+  "case_id": "20260407_160309_FurnaceFeedforward",
+  "case_dir": "C:/Users/FST/Desktop/AFM/cases/20260407_160309_FurnaceFeedforward",
+  "model_name": "FurnaceFeedforward",
+  "run_tag": "20260407_160337",
+  "timestamp": "2026-04-07T16:03:42",
+  "saved_sources": [
+    "C:/Users/FST/Desktop/AFM/cases/20260407_160309_FurnaceFeedforward/model/FurnaceFeedforward.mo"
+  ],
+  "result_mat": "C:/Users/FST/Desktop/AFM/cases/20260407_160309_FurnaceFeedforward/results/FurnaceFeedforward_20260407_160337_res.mat",
+  "init_xml": "C:/Users/FST/Desktop/AFM/cases/20260407_160309_FurnaceFeedforward/results/FurnaceFeedforward_20260407_160337_init.xml",
+  "overrides": {
+    "stop_time": 300.0,
+    "parameter_overrides": {}
+  },
+  "debug": {
+    "cmd": "C:/Users/FST/Desktop/AFM/cases/20260407_160309_FurnaceFeedforward/build/FurnaceFeedforward.exe -override=stopTime=300,stepSize=0.01,tolerance=1e-06,method=dassl",
+    "exit_code": 0
+  }
+}

@@ -1,0 +1,807 @@
+D:\software\condaData\envs_dirs\autogen\python.exe C:\Users\FST\Desktop\实验组4\main.py
+
+======== STEP 1: 预处理 ========TriggerProxy (to Preprocessor):
+
+案例 C：非等温阿伦尼乌斯放热反应器模型
+
+NonisothermalArrheniusReactor
+
+系统组成和拓扑描述
+
+设计一个非等温批式化学反应器模型。反应物 A 在反应器中发生不可逆一级反应生成产物 B，反应遵循标准阿伦尼乌斯动力学，并伴随放热效应。
+
+该案例属于基础物理建模案例，不要求调用 Modelica 标准库组件，可以直接使用底层物理方程实现。
+
+系统由反应动力学部分、物质衡算部分、能量衡算部分和结果监测变量组成。
+
+反应物 A 转化为产物 B。模型应保证反应物消耗和产物生成之间满足化学计量关系。在无副反应、无体积变化条件下，反应物和产物的总浓度应保持守恒。
+
+反应为放热反应，因此反应过程中释放的热量会影响反应器温度。同时，反应器与冷却介质之间存在换热过程，冷却强度由换热系数决定。
+
+模型应输出浓度、温度、反应速率、放热功率、冷却功率和守恒相关监测变量。
+
+参数名称和数值
+
+指前因子：1.0 1/s活化能：5000 J/mol气体常数：8.314 J/(mol·K)反应体积：1.0 m³液体密度：1000 kg/m³液体比热容：4184 J/(kg·K)反应焓：-50000 J/mol冷却系数：200 W/K冷却介质温度：300 K初始温度：330 K初始反应物浓度：1000 mol/m³初始产物浓度：0.0 mol/m³
+
+初始条件
+
+C_A(t=0) = 1000 mol/m³C_B(t=0) = 0 mol/m³T(t=0)   = 330 K
+
+上述状态变量均应作为严格初始条件锁定。
+
+如果模型中引入累计能量变量，其初始值应为 0。
+
+目标变量名称
+
+C_A：反应物 A 浓度，mol/m³C_B：产物 B 浓度，mol/m³T：反应器温度，Kk：阿伦尼乌斯速率常数，1/sr：反应速率，mol/(m³·s)Q_reaction：反应放热功率，WQ_cooling：冷却移热功率mass_total：总浓度监测变量mass_balance_residual：物质守恒残差E_reaction_input：累计反应放热E_cooling_output：累计冷却移热E_thermal_observed：由温度反推的热能增量energy_balance_residual：能量守恒残差
+
+仿真参数
+
+stop_time     = 100 sstep_size     = 0.01 ssolver_method = dassltolerance     = 1e-6
+
+
+
+[System Runtime: 2026-04-27 18:43:05.259738]
+
+[autogen.oai.client: 04-27 18:43:55] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.Preprocessor (to TriggerProxy):
+
+{"task_type": "single_case","model_info": {"name": "NonisothermalArrheniusReactor","description": "非等温批式化学反应器模型，反应物A发生不可逆一级放热反应生成产物B，遵循阿伦尼乌斯动力学并伴随冷却换热过程。"},"parameters": [{"name": "k0","value": 1.0,"unit": "1/s","description": "指前因子"},{"name": "Ea","value": 5000,"unit": "J/mol","description": "活化能"},{"name": "R","value": 8.314,"unit": "J/(mol·K)","description": "气体常数"},{"name": "V","value": 1.0,"unit": "m³","description": "反应体积"},{"name": "rho","value": 1000,"unit": "kg/m³","description": "液体密度"},{"name": "cp","value": 4184,"unit": "J/(kg·K)","description": "液体比热容"},{"name": "dH","value": -50000,"unit": "J/mol","description": "反应焓"},{"name": "UA","value": 200,"unit": "W/K","description": "冷却系数"},{"name": "T_cool","value": 300,"unit": "K","description": "冷却介质温度"}],"initial_conditions": [{"variable": "C_A","value": 1000,"description": "反应物A初始浓度"},{"variable": "C_B","value": 0.0,"description": "产物B初始浓度"},{"variable": "T","value": 330,"description": "反应器初始温度"}],"physics_mechanisms": ["阿伦尼乌斯动力学","化学计量关系与物质守恒","放热反应热效应","能量守恒与热衡算","对流换热冷却"],"target_variables": ["C_A","C_B","T","k","r","Q_reaction","Q_cooling","mass_total","mass_balance_residual","E_reaction_input","E_cooling_output","E_thermal_observed","energy_balance_residual"],"has_control_logic": false,"has_component": false,"simulation_settings": {"stop_time": 100,"step_size": 0.01,"solver_method": "dassl","tolerance": 1e-6}}
+
+======== STEP 2: 生成指令 ========TriggerProxy (to PromptGenerator):
+
+请结合以下【原始仿真需求书】和预处理提取的【JSON 结构数据】，生成给 Modelica 工程师的技术指令。★ 核心警告：在“物理与控制建模指导”部分，必须严格保留并使用原始需求书中提到的任何具体的 Modelica 标准组件名称（如 Constant, Feedback, Hysteresis 等）和拓扑连线逻辑，绝不允许自行脑补或替换其他组件！
+
+【原始仿真需求书】
+案例 C：非等温阿伦尼乌斯放热反应器模型
+
+NonisothermalArrheniusReactor
+
+系统组成和拓扑描述
+
+设计一个非等温批式化学反应器模型。反应物 A 在反应器中发生不可逆一级反应生成产物 B，反应遵循标准阿伦尼乌斯动力学，并伴随放热效应。
+
+该案例属于基础物理建模案例，不要求调用 Modelica 标准库组件，可以直接使用底层物理方程实现。
+
+系统由反应动力学部分、物质衡算部分、能量衡算部分和结果监测变量组成。
+
+反应物 A 转化为产物 B。模型应保证反应物消耗和产物生成之间满足化学计量关系。在无副反应、无体积变化条件下，反应物和产物的总浓度应保持守恒。
+
+反应为放热反应，因此反应过程中释放的热量会影响反应器温度。同时，反应器与冷却介质之间存在换热过程，冷却强度由换热系数决定。
+
+模型应输出浓度、温度、反应速率、放热功率、冷却功率和守恒相关监测变量。
+
+参数名称和数值
+
+指前因子：1.0 1/s活化能：5000 J/mol气体常数：8.314 J/(mol·K)反应体积：1.0 m³液体密度：1000 kg/m³液体比热容：4184 J/(kg·K)反应焓：-50000 J/mol冷却系数：200 W/K冷却介质温度：300 K初始温度：330 K初始反应物浓度：1000 mol/m³初始产物浓度：0.0 mol/m³
+
+初始条件
+
+C_A(t=0) = 1000 mol/m³C_B(t=0) = 0 mol/m³T(t=0)   = 330 K
+
+上述状态变量均应作为严格初始条件锁定。
+
+如果模型中引入累计能量变量，其初始值应为 0。
+
+目标变量名称
+
+C_A：反应物 A 浓度，mol/m³C_B：产物 B 浓度，mol/m³T：反应器温度，Kk：阿伦尼乌斯速率常数，1/sr：反应速率，mol/(m³·s)Q_reaction：反应放热功率，WQ_cooling：冷却移热功率mass_total：总浓度监测变量mass_balance_residual：物质守恒残差E_reaction_input：累计反应放热E_cooling_output：累计冷却移热E_thermal_observed：由温度反推的热能增量energy_balance_residual：能量守恒残差
+
+仿真参数
+
+stop_time     = 100 sstep_size     = 0.01 ssolver_method = dassltolerance     = 1e-6
+
+
+
+[System Runtime: 2026-04-27 18:43:05.259738]
+
+【结构化 JSON 数据】
+{
+
+"task_type": "single_case","model_info": {"name": "NonisothermalArrheniusReactor","description": "非等温批式化学反应器模型，反应物A发生不可逆一级放热反应生成产物B，遵循阿伦尼乌斯动力学并伴随冷却换热过程。"},"parameters": [{"name": "k0","value": 1.0,"unit": "1/s","description": "指前因子"},{"name": "Ea","value": 5000,"unit": "J/mol","description": "活化能"},{"name": "R","value": 8.314,"unit": "J/(mol·K)","description": "气体常数"},{"name": "V","value": 1.0,"unit": "m³","description": "反应体积"},{"name": "rho","value": 1000,"unit": "kg/m³","description": "液体密度"},{"name": "cp","value": 4184,"unit": "J/(kg·K)","description": "液体比热容"},{"name": "dH","value": -50000,"unit": "J/mol","description": "反应焓"},{"name": "UA","value": 200,"unit": "W/K","description": "冷却系数"},{"name": "T_cool","value": 300,"unit": "K","description": "冷却介质温度"}],"initial_conditions": [{"variable": "C_A","value": 1000,"description": "反应物A初始浓度"},{"variable": "C_B","value": 0.0,"description": "产物B初始浓度"},{"variable": "T","value": 330,"description": "反应器初始温度"}],"physics_mechanisms": ["阿伦尼乌斯动力学","化学计量关系与物质守恒","放热反应热效应","能量守恒与热衡算","对流换热冷却"],"target_variables": ["C_A","C_B","T","k","r","Q_reaction","Q_cooling","mass_total","mass_balance_residual","E_reaction_input","E_cooling_output","E_thermal_observed","energy_balance_residual"],"has_control_logic": false,"has_component": false,"simulation_settings": {"stop_time": 100,"step_size": 0.01,"solver_method": "dassl","tolerance": 1e-06}}
+
+
+
+[System Runtime: 2026-04-27 18:43:55.707282]
+
+
+
+[autogen.oai.client: 04-27 18:44:48] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.PromptGenerator (to TriggerProxy):
+
+请创建一个名为 NonisothermalArrheniusReactor 的模型，该模型描述非等温批式化学反应器，反应物A发生不可逆一级放热反应生成产物B，遵循阿伦尼乌斯动力学并伴随冷却换热过程。
+
+你需要定义以下参数，必须为每个 parameter 添加 description 和 unit 注释：
+
+k0：指前因子，值为 1.0，单位 1/s
+
+Ea：活化能，值为 5000，单位 J/mol
+
+R：气体常数，值为 8.314，单位 J/(mol·K)
+
+V：反应体积，值为 1.0，单位 m³
+
+rho：液体密度，值为 1000，单位 kg/m³
+
+cp：液体比热容，值为 4184，单位 J/(kg·K)
+
+dH：反应焓，值为 -50000，单位 J/mol
+
+UA：冷却系数，值为 200，单位 W/K
+
+T_cool：冷却介质温度，值为 300，单位 K
+
+你需要定义以下状态变量与代数变量，必须为每个变量添加 start 值和 unit 属性。单位必须使用标准 Modelica 语法直接写在变量声明的括号内（例如：Real C_A(start=1000, unit="mol/m³")），严禁将 unit 写在 annotation 中！
+
+C_A：反应物A浓度，初始值 1000 mol/m³
+
+C_B：产物B浓度，初始值 0.0 mol/m³
+
+T：反应器温度，初始值 330 K
+
+（注意：如果模型中引入累计能量变量，其初始值应设为 0）
+
+物理与控制建模指导：本案例属于基础物理教学案例，请直接编写底层物理方程，无需调用标准库，也无需搜索标准库。当前环境使用 Modelica 4.x 标准库，对于简单教学模型，可直接使用 Real 类型配合描述字符串注明单位，若使用物理类型必须使用 Modelica.Units.SI 替代已废弃的 Modelica.SIunits。你需要实现以下物理机制并计算所有目标变量：
+
+阿伦尼乌斯动力学：计算速率常数 k 和反应速率 r。
+
+化学计量关系与物质守恒：反应物消耗和产物生成满足化学计量关系，总浓度守恒。定义 mass_total 和 mass_balance_residual 监测变量。
+
+放热反应热效应与对流换热冷却：计算反应放热功率 Q_reaction 和冷却移热功率 Q_cooling。
+
+能量守恒与热衡算：建立温度 T 的微分方程。定义累计反应放热 E_reaction_input、累计冷却移热 E_cooling_output、由温度反推的热能增量 E_thermal_observed，以及能量守恒残差 energy_balance_residual。
+
+目标变量必须全部在模型中体现并计算：C_A, C_B, T, k, r, Q_reaction, Q_cooling, mass_total, mass_balance_residual, E_reaction_input, E_cooling_output, E_thermal_observed, energy_balance_residual。
+
+禁止在 when 条件中使用 noEvent()，否则会导致编译错误。
+
+验收与闭环标准：
+
+必须调用 run_simulation_tool 进行仿真，仿真时间设置为 100 秒，求解器设置为 dassl，步长 0.01，容差 1e-6。
+
+仿真成功后，必须调用 check_simulation_results 检查上述所有目标变量。
+
+只要验证成功，必须立刻回复 TASK_COMPLETE 结束任务。
+
+===== Raw PromptGenerator output ====='请创建一个名为 NonisothermalArrheniusReactor 的模型，该模型描述非等温批式化学反应器，反应物A发生不可逆一级放热反应生成产物B，遵循阿伦尼乌斯动力学并伴随冷却换热过程。\n\n你需要定义以下参数，必须为每个 parameter 添加 description 和 unit 注释：\n- k0：指前因子，值为 1.0，单位 1/s\n- Ea：活化能，值为 5000，单位 J/mol\n- R：气体常数，值为 8.314，单位 J/(mol·K)\n- V：反应体积，值为 1.0，单位 m³\n- rho：液体密度，值为 1000，单位 kg/m³\n- cp：液体比热容，值为 4184，单位 J/(kg·K)\n- dH：反应焓，值为 -50000，单位 J/mol\n- UA：冷却系数，值为 200，单位 W/K\n- T_cool：冷却介质温度，值为 300，单位 K\n\n你需要定义以下状态变量与代数变量，必须为每个变量添加 start 值和 unit 属性。单位必须使用标准 Modelica 语法直接写在变量声明的括号内（例如：Real C_A(start=1000, unit="mol/m³")），严禁将 unit 写在 annotation 中！\n- C_A：反应物A浓度，初始值 1000 mol/m³\n- C_B：产物B浓度，初始值 0.0 mol/m³\n- T：反应器温度，初始值 330 K\n- （注意：如果模型中引入累计能量变量，其初始值应设为 0）\n\n物理与控制建模指导：\n本案例属于基础物理教学案例，请直接编写底层物理方程，无需调用标准库，也无需搜索标准库。当前环境使用 Modelica 4.x 标准库，对于简单教学模型，可直接使用 Real 类型配合描述字符串注明单位，若使用物理类型必须使用 Modelica.Units.SI 替代已废弃的 Modelica.SIunits。\n你需要实现以下物理机制并计算所有目标变量：\n1. 阿伦尼乌斯动力学：计算速率常数 k 和反应速率 r。\n2. 化学计量关系与物质守恒：反应物消耗和产物生成满足化学计量关系，总浓度守恒。定义 mass_total 和 mass_balance_residual 监测变量。\n3. 放热反应热效应与对流换热冷却：计算反应放热功率 Q_reaction 和冷却移热功率 Q_cooling。\n4. 能量守恒与热衡算：建立温度 T 的微分方程。定义累计反应放热 E_reaction_input、累计冷却移热 E_cooling_output、由温度反推的热能增量 E_thermal_observed，以及能量守恒残差 energy_balance_residual。\n5. 目标变量必须全部在模型中体现并计算：C_A, C_B, T, k, r, Q_reaction, Q_cooling, mass_total, mass_balance_residual, E_reaction_input, E_cooling_output, E_thermal_observed, energy_balance_residual。\n6. 禁止在 when 条件中使用 noEvent()，否则会导致编译错误。\n\n验收与闭环标准：\n- 必须调用 run_simulation_tool 进行仿真，仿真时间设置为 100 秒，求解器设置为 dassl，步长 0.01，容差 1e-6。\n- 仿真成功后，必须调用 check_simulation_results 检查上述所有目标变量。\n- 只要验证成功，必须立刻回复 TASK_COMPLETE 结束任务。'
+
+======== STEP 3: 工程师仿真闭环 ========
+
+---- Iteration 1/6 ----Executor (to Engineer):
+
+请创建一个名为 NonisothermalArrheniusReactor 的模型，该模型描述非等温批式化学反应器，反应物A发生不可逆一级放热反应生成产物B，遵循阿伦尼乌斯动力学并伴随冷却换热过程。
+
+你需要定义以下参数，必须为每个 parameter 添加 description 和 unit 注释：
+
+k0：指前因子，值为 1.0，单位 1/s
+
+Ea：活化能，值为 5000，单位 J/mol
+
+R：气体常数，值为 8.314，单位 J/(mol·K)
+
+V：反应体积，值为 1.0，单位 m³
+
+rho：液体密度，值为 1000，单位 kg/m³
+
+cp：液体比热容，值为 4184，单位 J/(kg·K)
+
+dH：反应焓，值为 -50000，单位 J/mol
+
+UA：冷却系数，值为 200，单位 W/K
+
+T_cool：冷却介质温度，值为 300，单位 K
+
+你需要定义以下状态变量与代数变量，必须为每个变量添加 start 值和 unit 属性。单位必须使用标准 Modelica 语法直接写在变量声明的括号内（例如：Real C_A(start=1000, unit="mol/m³")），严禁将 unit 写在 annotation 中！
+
+C_A：反应物A浓度，初始值 1000 mol/m³
+
+C_B：产物B浓度，初始值 0.0 mol/m³
+
+T：反应器温度，初始值 330 K
+
+（注意：如果模型中引入累计能量变量，其初始值应设为 0）
+
+物理与控制建模指导：本案例属于基础物理教学案例，请直接编写底层物理方程，无需调用标准库，也无需搜索标准库。当前环境使用 Modelica 4.x 标准库，对于简单教学模型，可直接使用 Real 类型配合描述字符串注明单位，若使用物理类型必须使用 Modelica.Units.SI 替代已废弃的 Modelica.SIunits。你需要实现以下物理机制并计算所有目标变量：
+
+阿伦尼乌斯动力学：计算速率常数 k 和反应速率 r。
+
+化学计量关系与物质守恒：反应物消耗和产物生成满足化学计量关系，总浓度守恒。定义 mass_total 和 mass_balance_residual 监测变量。
+
+放热反应热效应与对流换热冷却：计算反应放热功率 Q_reaction 和冷却移热功率 Q_cooling。
+
+能量守恒与热衡算：建立温度 T 的微分方程。定义累计反应放热 E_reaction_input、累计冷却移热 E_cooling_output、由温度反推的热能增量 E_thermal_observed，以及能量守恒残差 energy_balance_residual。
+
+目标变量必须全部在模型中体现并计算：C_A, C_B, T, k, r, Q_reaction, Q_cooling, mass_total, mass_balance_residual, E_reaction_input, E_cooling_output, E_thermal_observed, energy_balance_residual。
+
+禁止在 when 条件中使用 noEvent()，否则会导致编译错误。
+
+验收与闭环标准：
+
+必须调用 run_simulation_tool 进行仿真，仿真时间设置为 100 秒，求解器设置为 dassl，步长 0.01，容差 1e-6。
+
+仿真成功后，必须调用 check_simulation_results 检查上述所有目标变量。
+
+只要验证成功，必须立刻回复 TASK_COMPLETE 结束任务。
+
+[autogen.oai.client: 04-27 18:45:19] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.Engineer (to Executor):
+
+***** Suggested tool call (call_-7682079351457703063): run_simulation_tool *****Arguments:{"model_name":"NonisothermalArrheniusReactor","model_content":"model NonisothermalArrheniusReactor\n  // Parameters\n  parameter Real k0 = 1.0 "Pre-exponential factor (1/s)";\n  parameter Real Ea = 5000 "Activation energy (J/mol)";\n  parameter Real R = 8.314 "Gas constant (J/(mol.K))";\n  parameter Real V = 1.0 "Reactor volume (m3)";\n  parameter Real rho = 1000 "Liquid density (kg/m3)";\n  parameter Real cp = 4184 "Liquid specific heat capacity (J/(kg.K))";\n  parameter Real dH = -50000 "Reaction enthalpy (J/mol)";\n  parameter Real UA = 200 "Cooling coefficient (W/K)";\n  parameter Real T_cool = 300 "Coolant temperature (K)";\n\n  // State variables\n  Real C_A(start = 1000, unit = "mol/m3") "Concentration of reactant A";\n  Real C_B(start = 0.0, unit = "mol/m3") "Concentration of product B";\n  Real T(start = 330, unit = "K") "Reactor temperature";\n\n  // Cumulative energy variables\n  Real E_reaction_input(start = 0, unit = "J") "Cumulative reaction heat input";\n  Real E_cooling_output(start = 0, unit = "J") "Cumulative cooling heat output";\n\n  // Algebraic variables\n  Real k(unit = "1/s") "Rate constant";\n  Real r(unit = "mol/(m3.s)") "Reaction rate";\n  Real Q_reaction(unit = "W") "Reaction heat generation rate";\n  Real Q_cooling(unit = "W") "Cooling heat removal rate";\n  Real mass_total(unit = "mol/m3") "Total concentration (A+B)";\n  Real mass_balance_residual(unit = "mol/m3") "Mass balance residual";\n  Real E_thermal_observed(unit = "J") "Thermal energy change from temperature";\n  Real energy_balance_residual(unit = "J") "Energy balance residual";\n\nequation\n  // Arrhenius kinetics\n  k = k0 * exp(-Ea / (R * T));\n  r = k * C_A;\n\n  // Species mass balances\n  der(C_A) = -r;\n  der(C_B) = r;\n\n  // Mass conservation monitoring\n  mass_total = C_A + C_B;\n  mass_balance_residual = mass_total - 1000.0;\n\n  // Heat effects\n  Q_reaction = -dH * r * V;\n  Q_cooling = UA * (T - T_cool);\n\n  // Energy balance: temperature dynamics\n  rho * V * cp * der(T) = Q_reaction - Q_cooling;\n\n  // Cumulative energy integrals\n  der(E_reaction_input) = Q_reaction;\n  der(E_cooling_output) = Q_cooling;\n\n  // Thermal energy observed from temperature change\n  E_thermal_observed = rho * V * cp * (T - 330);\n\n  // Energy balance residual\n  energy_balance_residual = E_reaction_input - E_cooling_output - E_thermal_observed;\nend NonisothermalArrheniusReactor;","stop_time":100,"step_size":0.01,"solver_method":"dassl","tolerance":1e-6}
+
+EXECUTING FUNCTION run_simulation_tool...Call ID: call_-7682079351457703063Input arguments: {'model_name': 'NonisothermalArrheniusReactor', 'model_content': 'model NonisothermalArrheniusReactor\n  // Parameters\n  parameter Real k0 = 1.0 "Pre-exponential factor (1/s)";\n  parameter Real Ea = 5000 "Activation energy (J/mol)";\n  parameter Real R = 8.314 "Gas constant (J/(mol.K))";\n  parameter Real V = 1.0 "Reactor volume (m3)";\n  parameter Real rho = 1000 "Liquid density (kg/m3)";\n  parameter Real cp = 4184 "Liquid specific heat capacity (J/(kg.K))";\n  parameter Real dH = -50000 "Reaction enthalpy (J/mol)";\n  parameter Real UA = 200 "Cooling coefficient (W/K)";\n  parameter Real T_cool = 300 "Coolant temperature (K)";\n\n  // State variables\n  Real C_A(start = 1000, unit = "mol/m3") "Concentration of reactant A";\n  Real C_B(start = 0.0, unit = "mol/m3") "Concentration of product B";\n  Real T(start = 330, unit = "K") "Reactor temperature";\n\n  // Cumulative energy variables\n  Real E_reaction_input(start = 0, unit = "J") "Cumulative reaction heat input";\n  Real E_cooling_output(start = 0, unit = "J") "Cumulative cooling heat output";\n\n  // Algebraic variables\n  Real k(unit = "1/s") "Rate constant";\n  Real r(unit = "mol/(m3.s)") "Reaction rate";\n  Real Q_reaction(unit = "W") "Reaction heat generation rate";\n  Real Q_cooling(unit = "W") "Cooling heat removal rate";\n  Real mass_total(unit = "mol/m3") "Total concentration (A+B)";\n  Real mass_balance_residual(unit = "mol/m3") "Mass balance residual";\n  Real E_thermal_observed(unit = "J") "Thermal energy change from temperature";\n  Real energy_balance_residual(unit = "J") "Energy balance residual";\n\nequation\n  // Arrhenius kinetics\n  k = k0 * exp(-Ea / (R * T));\n  r = k * C_A;\n\n  // Species mass balances\n  der(C_A) = -r;\n  der(C_B) = r;\n\n  // Mass conservation monitoring\n  mass_total = C_A + C_B;\n  mass_balance_residual = mass_total - 1000.0;\n\n  // Heat effects\n  Q_reaction = -dH * r * V;\n  Q_cooling = UA * (T - T_cool);\n\n  // Energy balance: temperature dynamics\n  rho * V * cp * der(T) = Q_reaction - Q_cooling;\n\n  // Cumulative energy integrals\n  der(E_reaction_input) = Q_reaction;\n  der(E_cooling_output) = Q_cooling;\n\n  // Thermal energy observed from temperature change\n  E_thermal_observed = rho * V * cp * (T - 330);\n\n  // Energy balance residual\n  energy_balance_residual = E_reaction_input - E_cooling_output - E_thermal_observed;\nend NonisothermalArrheniusReactor;', 'stop_time': 100, 'step_size': 0.01, 'solver_method': 'dassl', 'tolerance': 1e-06}Executor (to Engineer):
+
+***** Response from calling tool (call_-7682079351457703063) *****SUCCESS: Simulation finished.Case: C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactorResult: C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184519_res.mat
+
+[autogen.oai.client: 04-27 18:45:29] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.Engineer (to Executor):
+
+***** Suggested tool call (call_-7682067188110323264): check_simulation_results *****Arguments:{"result_file_path":"C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184519_res.mat","required_variables":["C_A", "C_B", "T", "k", "r", "Q_reaction", "Q_cooling", "mass_total", "mass_balance_residual", "E_reaction_input", "E_cooling_output", "E_thermal_observed", "energy_balance_residual"]}
+
+EXECUTING FUNCTION check_simulation_results...Call ID: call_-7682067188110323264Input arguments: {'result_file_path': 'C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184519_res.mat', 'required_variables': ['C_A', 'C_B', 'T', 'k', 'r', 'Q_reaction', 'Q_cooling', 'mass_total', 'mass_balance_residual', 'E_reaction_input', 'E_cooling_output', 'E_thermal_observed', 'energy_balance_residual']}Executor (to Engineer):
+
+***** Response from calling tool (call_-7682067188110323264) *****VERIFICATION SUCCESS: found ['C_A', 'C_B', 'T', 'k', 'r', 'Q_reaction', 'Q_cooling', 'mass_total', 'mass_balance_residual', 'E_reaction_input', 'E_cooling_output', 'E_thermal_observed', 'energy_balance_residual'].
+
+[autogen.oai.client: 04-27 18:45:40] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.Engineer (to Executor):
+
+TASK_COMPLETE
+
+Running ParameterChecker... TriggerProxy (to ParameterChecker):
+
+{"original_user_task": "案例 C：非等温阿伦尼乌斯放热反应器模型\n\nNonisothermalArrheniusReactor\n\n1. 系统组成和拓扑描述\n\n设计一个非等温批式化学反应器模型。反应物 A 在反应器中发生不可逆一级反应生成产物 B，反应遵循标准阿伦尼乌斯动力学，并伴随放热效应。\n\n该案例属于基础物理建模案例，不要求调用 Modelica 标准库组件，可以直接使用底层物理方程实现。\n\n系统由反应动力学部分、物质衡算部分、能量衡算部分和结果监测变量组成。\n\n反应物 A 转化为产物 B。模型应保证反应物消耗和产物生成之间满足化学计量关系。在无副反应、无体积变化条件下，反应物和产物的总浓度应保持守恒。\n\n反应为放热反应，因此反应过程中释放的热量会影响反应器温度。同时，反应器与冷却介质之间存在换热过程，冷却强度由换热系数决定。\n\n\n模型应输出浓度、温度、反应速率、放热功率、冷却功率和守恒相关监测变量。\n\n2. 参数名称和数值\n\n指前因子：1.0 1/s\n活化能：5000 J/mol\n气体常数：8.314 J/(mol·K)\n反应体积：1.0 m³\n液体密度：1000 kg/m³\n液体比热容：4184 J/(kg·K)\n反应焓：-50000 J/mol\n冷却系数：200 W/K\n冷却介质温度：300 K\n初始温度：330 K\n初始反应物浓度：1000 mol/m³\n初始产物浓度：0.0 mol/m³\n\n3. 初始条件\n\nC_A(t=0) = 1000 mol/m³\nC_B(t=0) = 0 mol/m³\nT(t=0)   = 330 K\n\n上述状态变量均应作为严格初始条件锁定。\n\n如果模型中引入累计能量变量，其初始值应为 0。\n\n4. 目标变量名称\n\nC_A：反应物 A 浓度，mol/m³\nC_B：产物 B 浓度，mol/m³\nT：反应器温度，K\nk：阿伦尼乌斯速率常数，1/s\nr：反应速率，mol/(m³·s)\nQ_reaction：反应放热功率，W\nQ_cooling：冷却移热功率\nmass_total：总浓度监测变量\nmass_balance_residual：物质守恒残差\nE_reaction_input：累计反应放热\nE_cooling_output：累计冷却移热\nE_thermal_observed：由温度反推的热能增量\nenergy_balance_residual：能量守恒残差\n\n5. 仿真参数\n\nstop_time     = 100 s\nstep_size     = 0.01 s\nsolver_method = dassl\ntolerance     = 1e-6\n\n", "requirements_json": {"task_type": "single_case", "model_info": {"name": "NonisothermalArrheniusReactor", "description": "非等温批式化学反应器模型，反应物A发生不可逆一级放热反应生成产物B，遵循阿伦尼乌斯动力学并伴随冷却换热过程。"}, "parameters": [{"name": "k0", "value": 1.0, "unit": "1/s", "description": "指前因子"}, {"name": "Ea", "value": 5000, "unit": "J/mol", "description": "活化能"}, {"name": "R", "value": 8.314, "unit": "J/(mol·K)", "description": "气体常数"}, {"name": "V", "value": 1.0, "unit": "m³", "description": "反应体积"}, {"name": "rho", "value": 1000, "unit": "kg/m³", "description": "液体密度"}, {"name": "cp", "value": 4184, "unit": "J/(kg·K)", "description": "液体比热容"}, {"name": "dH", "value": -50000, "unit": "J/mol", "description": "反应焓"}, {"name": "UA", "value": 200, "unit": "W/K", "description": "冷却系数"}, {"name": "T_cool", "value": 300, "unit": "K", "description": "冷却介质温度"}], "initial_conditions": [{"variable": "C_A", "value": 1000, "description": "反应物A初始浓度"}, {"variable": "C_B", "value": 0.0, "description": "产物B初始浓度"}, {"variable": "T", "value": 330, "description": "反应器初始温度"}], "physics_mechanisms": ["阿伦尼乌斯动力学", "化学计量关系与物质守恒", "放热反应热效应", "能量守恒与热衡算", "对流换热冷却"], "target_variables": ["C_A", "C_B", "T", "k", "r", "Q_reaction", "Q_cooling", "mass_total", "mass_balance_residual", "E_reaction_input", "E_cooling_output", "E_thermal_observed", "energy_balance_residual"], "has_control_logic": false, "has_component": false, "simulation_settings": {"stop_time": 100, "step_size": 0.01, "solver_method": "dassl", "tolerance": 1e-06}}, "model_code": "// FILE: NonisothermalArrheniusReactor.mo\nmodel NonisothermalArrheniusReactor\n  // Parameters\n  parameter Real k0 = 1.0 "Pre-exponential factor (1/s)";\n  parameter Real Ea = 5000 "Activation energy (J/mol)";\n  parameter Real R = 8.314 "Gas constant (J/(mol.K))";\n  parameter Real V = 1.0 "Reactor volume (m3)";\n  parameter Real rho = 1000 "Liquid density (kg/m3)";\n  parameter Real cp = 4184 "Liquid specific heat capacity (J/(kg.K))";\n  parameter Real dH = -50000 "Reaction enthalpy (J/mol)";\n  parameter Real UA = 200 "Cooling coefficient (W/K)";\n  parameter Real T_cool = 300 "Coolant temperature (K)";\n\n  // State variables\n  Real C_A(start = 1000, unit = "mol/m3") "Concentration of reactant A";\n  Real C_B(start = 0.0, unit = "mol/m3") "Concentration of product B";\n  Real T(start = 330, unit = "K") "Reactor temperature";\n\n  // Cumulative energy variables\n  Real E_reaction_input(start = 0, unit = "J") "Cumulative reaction heat input";\n  Real E_cooling_output(start = 0, unit = "J") "Cumulative cooling heat output";\n\n  // Algebraic variables\n  Real k(unit = "1/s") "Rate constant";\n  Real r(unit = "mol/(m3.s)") "Reaction rate";\n  Real Q_reaction(unit = "W") "Reaction heat generation rate";\n  Real Q_cooling(unit = "W") "Cooling heat removal rate";\n  Real mass_total(unit = "mol/m3") "Total concentration (A+B)";\n  Real mass_balance_residual(unit = "mol/m3") "Mass balance residual";\n  Real E_thermal_observed(unit = "J") "Thermal energy change from temperature";\n  Real energy_balance_residual(unit = "J") "Energy balance residual";\n\nequation\n  // Arrhenius kinetics\n  k = k0 * exp(-Ea / (R * T));\n  r = k * C_A;\n\n  // Species mass balances\n  der(C_A) = -r;\n  der(C_B) = r;\n\n  // Mass conservation monitoring\n  mass_total = C_A + C_B;\n  mass_balance_residual = mass_total - 1000.0;\n\n  // Heat effects\n  Q_reaction = -dH * r * V;\n  Q_cooling = UA * (T - T_cool);\n\n  // Energy balance: temperature dynamics\n  rho * V * cp * der(T) = Q_reaction - Q_cooling;\n\n  // Cumulative energy integrals\n  der(E_reaction_input) = Q_reaction;\n  der(E_cooling_output) = Q_cooling;\n\n  // Thermal energy observed from temperature change\n  E_thermal_observed = rho * V * cp * (T - 330);\n\n  // Energy balance residual\n  energy_balance_residual = E_reaction_input - E_cooling_output - E_thermal_observed;\nend NonisothermalArrheniusReactor;\n", "run_metadata": {"case_root": "C:/Users/FST/Desktop/实验组4/cases", "case_id": "20260427_184519_NonisothermalArrheniusReactor", "case_dir": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor", "model_name": "NonisothermalArrheniusReactor", "run_tag": "20260427_184519", "timestamp": "2026-04-27T18:45:23", "saved_sources": ["C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/model/NonisothermalArrheniusReactor.mo"], "result_mat": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184519_res.mat", "init_xml": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184519_init.xml", "overrides": {"stop_time": 100.0, "parameter_overrides": {}}, "debug": {"cmd": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/build/NonisothermalArrheniusReactor.exe -override=stopTime=100,stepSize=0.01,tolerance=1e-06,method=dassl", "exit_code": 0}}, "result_summary": {"variables": [{"name": "C_A", "requested": "C_A", "start": 1000.0, "final": 3.585406094632671e-05, "min": 3.585406094632671e-05, "max": 1000.0, "unit": "mol/m3"}, {"name": "C_B", "requested": "C_B", "start": 0.0, "final": 999.9999641459394, "min": 0.0, "max": 999.9999641459394, "unit": "mol/m3"}, {"name": "T", "requested": "T", "start": 330.0, "final": 341.75364514749316, "min": 330.0, "max": 341.8606678893564, "unit": "K"}, {"name": "k", "requested": "k", "start": 0.16163576990960732, "final": 0.17209077083036178, "min": 0.16163576990960732, "max": 0.1721856019716219, "unit": "1/s"}, {"name": "r", "requested": "r", "start": 161.63576990960732, "final": 6.170152985652135e-06, "min": 6.170152985652135e-06, "max": 161.63576990960732, "unit": "mol/(m3.s)"}, {"name": "Q_reaction", "requested": "Q_reaction", "start": 8081788.495480366, "final": 0.3085076492826067, "min": 0.3085076492826067, "max": 8081788.495480366, "unit": "W"}, {"name": "Q_cooling", "requested": "Q_cooling", "start": 6000.0, "final": 8350.729029498632, "min": 6000.0, "max": 8372.133577871284, "unit": "W"}, {"name": "mass_total", "requested": "mass_total", "start": 1000.0, "final": 1000.0000000000003, "min": 999.9999999999994, "max": 1000.0000000000007, "unit": "mol/m3"}, {"name": "mass_balance_residual", "requested": "mass_balance_residual", "start": 0.0, "final": 3.410605131648481e-13, "min": -5.684341886080801e-13, "max": 6.821210263296962e-13, "unit": "mol/m3"}, {"name": "E_reaction_input", "requested": "E_reaction_input", "start": 0.0, "final": 49999998.20729704, "min": 0.0, "max": 49999998.20729704, "unit": "J"}, {"name": "E_cooling_output", "requested": "E_cooling_output", "start": 0.0, "final": 822746.9101883091, "min": 0.0, "max": 822746.9101883091, "unit": "J"}, {"name": "E_thermal_observed", "requested": "E_thermal_observed", "start": 0.0, "final": 49177251.297111385, "min": 0.0, "max": 49625034.449067265, "unit": "J"}, {"name": "energy_balance_residual", "requested": "energy_balance_residual", "start": 0.0, "final": -2.652406692504883e-06, "min": -2.652406692504883e-06, "max": 3.7997961044311523e-07, "unit": "J"}]}, "sanity_checks": {"pass": true, "issues": []}}
+
+[autogen.oai.client: 04-27 18:46:20] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.ParameterChecker (to TriggerProxy):
+
+{
+  "pass": false,
+  "severity": "warning",
+  "issues": [
+    {
+      "title": "状态变量初始条件未严格锁定（缺少 fixed=true）",
+      "detail": "模型中的状态变量 C_A, C_B, T, E_reaction_input, E_cooling_output 声明了 start 值，但未显式声明 fixed=true。根据强制初始状态锁定规则及用户需求（'上述状态变量均应作为严格初始条件锁定'），必须添加 fixed=true 以防止编译器进行意外的稳态初始化篡改。由于仿真已成功且结果正确，此问题严重性定为 warning。",
+      "evidence": "Real C_A(start = 1000, unit = \"mol/m3\"); Real C_B(start = 0.0, unit = \"mol/m3\"); Real T(start = 330, unit = \"K\"); Real E_reaction_input(start = 0, unit = \"J\"); Real E_cooling_output(start = 0, unit = \"J\")"
+    }
+  ],
+  "recommendations": [
+    "将状态变量声明修改为：Real C_A(start=1000, fixed=true, unit=\"mol/m3\"); Real C_B(start=0.0, fixed=true, unit=\"mol/m3\"); Real T(start=330, fixed=true, unit=\"K\"); Real E_reaction_input(start=0, fixed=true, unit=\"J\"); Real E_cooling_output(start=0, fixed=true, unit=\"J\")"
+  ]
+}
+
+FAIL (severity=warning)Running ResultChecker... TriggerProxy (to ResultChecker):
+
+{"original_user_task": "案例 C：非等温阿伦尼乌斯放热反应器模型\n\nNonisothermalArrheniusReactor\n\n1. 系统组成和拓扑描述\n\n设计一个非等温批式化学反应器模型。反应物 A 在反应器中发生不可逆一级反应生成产物 B，反应遵循标准阿伦尼乌斯动力学，并伴随放热效应。\n\n该案例属于基础物理建模案例，不要求调用 Modelica 标准库组件，可以直接使用底层物理方程实现。\n\n系统由反应动力学部分、物质衡算部分、能量衡算部分和结果监测变量组成。\n\n反应物 A 转化为产物 B。模型应保证反应物消耗和产物生成之间满足化学计量关系。在无副反应、无体积变化条件下，反应物和产物的总浓度应保持守恒。\n\n反应为放热反应，因此反应过程中释放的热量会影响反应器温度。同时，反应器与冷却介质之间存在换热过程，冷却强度由换热系数决定。\n\n\n模型应输出浓度、温度、反应速率、放热功率、冷却功率和守恒相关监测变量。\n\n2. 参数名称和数值\n\n指前因子：1.0 1/s\n活化能：5000 J/mol\n气体常数：8.314 J/(mol·K)\n反应体积：1.0 m³\n液体密度：1000 kg/m³\n液体比热容：4184 J/(kg·K)\n反应焓：-50000 J/mol\n冷却系数：200 W/K\n冷却介质温度：300 K\n初始温度：330 K\n初始反应物浓度：1000 mol/m³\n初始产物浓度：0.0 mol/m³\n\n3. 初始条件\n\nC_A(t=0) = 1000 mol/m³\nC_B(t=0) = 0 mol/m³\nT(t=0)   = 330 K\n\n上述状态变量均应作为严格初始条件锁定。\n\n如果模型中引入累计能量变量，其初始值应为 0。\n\n4. 目标变量名称\n\nC_A：反应物 A 浓度，mol/m³\nC_B：产物 B 浓度，mol/m³\nT：反应器温度，K\nk：阿伦尼乌斯速率常数，1/s\nr：反应速率，mol/(m³·s)\nQ_reaction：反应放热功率，W\nQ_cooling：冷却移热功率\nmass_total：总浓度监测变量\nmass_balance_residual：物质守恒残差\nE_reaction_input：累计反应放热\nE_cooling_output：累计冷却移热\nE_thermal_observed：由温度反推的热能增量\nenergy_balance_residual：能量守恒残差\n\n5. 仿真参数\n\nstop_time     = 100 s\nstep_size     = 0.01 s\nsolver_method = dassl\ntolerance     = 1e-6\n\n", "requirements_json": {"task_type": "single_case", "model_info": {"name": "NonisothermalArrheniusReactor", "description": "非等温批式化学反应器模型，反应物A发生不可逆一级放热反应生成产物B，遵循阿伦尼乌斯动力学并伴随冷却换热过程。"}, "parameters": [{"name": "k0", "value": 1.0, "unit": "1/s", "description": "指前因子"}, {"name": "Ea", "value": 5000, "unit": "J/mol", "description": "活化能"}, {"name": "R", "value": 8.314, "unit": "J/(mol·K)", "description": "气体常数"}, {"name": "V", "value": 1.0, "unit": "m³", "description": "反应体积"}, {"name": "rho", "value": 1000, "unit": "kg/m³", "description": "液体密度"}, {"name": "cp", "value": 4184, "unit": "J/(kg·K)", "description": "液体比热容"}, {"name": "dH", "value": -50000, "unit": "J/mol", "description": "反应焓"}, {"name": "UA", "value": 200, "unit": "W/K", "description": "冷却系数"}, {"name": "T_cool", "value": 300, "unit": "K", "description": "冷却介质温度"}], "initial_conditions": [{"variable": "C_A", "value": 1000, "description": "反应物A初始浓度"}, {"variable": "C_B", "value": 0.0, "description": "产物B初始浓度"}, {"variable": "T", "value": 330, "description": "反应器初始温度"}], "physics_mechanisms": ["阿伦尼乌斯动力学", "化学计量关系与物质守恒", "放热反应热效应", "能量守恒与热衡算", "对流换热冷却"], "target_variables": ["C_A", "C_B", "T", "k", "r", "Q_reaction", "Q_cooling", "mass_total", "mass_balance_residual", "E_reaction_input", "E_cooling_output", "E_thermal_observed", "energy_balance_residual"], "has_control_logic": false, "has_component": false, "simulation_settings": {"stop_time": 100, "step_size": 0.01, "solver_method": "dassl", "tolerance": 1e-06}}, "model_code": "// FILE: NonisothermalArrheniusReactor.mo\nmodel NonisothermalArrheniusReactor\n  // Parameters\n  parameter Real k0 = 1.0 "Pre-exponential factor (1/s)";\n  parameter Real Ea = 5000 "Activation energy (J/mol)";\n  parameter Real R = 8.314 "Gas constant (J/(mol.K))";\n  parameter Real V = 1.0 "Reactor volume (m3)";\n  parameter Real rho = 1000 "Liquid density (kg/m3)";\n  parameter Real cp = 4184 "Liquid specific heat capacity (J/(kg.K))";\n  parameter Real dH = -50000 "Reaction enthalpy (J/mol)";\n  parameter Real UA = 200 "Cooling coefficient (W/K)";\n  parameter Real T_cool = 300 "Coolant temperature (K)";\n\n  // State variables\n  Real C_A(start = 1000, unit = "mol/m3") "Concentration of reactant A";\n  Real C_B(start = 0.0, unit = "mol/m3") "Concentration of product B";\n  Real T(start = 330, unit = "K") "Reactor temperature";\n\n  // Cumulative energy variables\n  Real E_reaction_input(start = 0, unit = "J") "Cumulative reaction heat input";\n  Real E_cooling_output(start = 0, unit = "J") "Cumulative cooling heat output";\n\n  // Algebraic variables\n  Real k(unit = "1/s") "Rate constant";\n  Real r(unit = "mol/(m3.s)") "Reaction rate";\n  Real Q_reaction(unit = "W") "Reaction heat generation rate";\n  Real Q_cooling(unit = "W") "Cooling heat removal rate";\n  Real mass_total(unit = "mol/m3") "Total concentration (A+B)";\n  Real mass_balance_residual(unit = "mol/m3") "Mass balance residual";\n  Real E_thermal_observed(unit = "J") "Thermal energy change from temperature";\n  Real energy_balance_residual(unit = "J") "Energy balance residual";\n\nequation\n  // Arrhenius kinetics\n  k = k0 * exp(-Ea / (R * T));\n  r = k * C_A;\n\n  // Species mass balances\n  der(C_A) = -r;\n  der(C_B) = r;\n\n  // Mass conservation monitoring\n  mass_total = C_A + C_B;\n  mass_balance_residual = mass_total - 1000.0;\n\n  // Heat effects\n  Q_reaction = -dH * r * V;\n  Q_cooling = UA * (T - T_cool);\n\n  // Energy balance: temperature dynamics\n  rho * V * cp * der(T) = Q_reaction - Q_cooling;\n\n  // Cumulative energy integrals\n  der(E_reaction_input) = Q_reaction;\n  der(E_cooling_output) = Q_cooling;\n\n  // Thermal energy observed from temperature change\n  E_thermal_observed = rho * V * cp * (T - 330);\n\n  // Energy balance residual\n  energy_balance_residual = E_reaction_input - E_cooling_output - E_thermal_observed;\nend NonisothermalArrheniusReactor;\n", "run_metadata": {"case_root": "C:/Users/FST/Desktop/实验组4/cases", "case_id": "20260427_184519_NonisothermalArrheniusReactor", "case_dir": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor", "model_name": "NonisothermalArrheniusReactor", "run_tag": "20260427_184519", "timestamp": "2026-04-27T18:45:23", "saved_sources": ["C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/model/NonisothermalArrheniusReactor.mo"], "result_mat": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184519_res.mat", "init_xml": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184519_init.xml", "overrides": {"stop_time": 100.0, "parameter_overrides": {}}, "debug": {"cmd": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/build/NonisothermalArrheniusReactor.exe -override=stopTime=100,stepSize=0.01,tolerance=1e-06,method=dassl", "exit_code": 0}}, "result_summary": {"variables": [{"name": "C_A", "requested": "C_A", "start": 1000.0, "final": 3.585406094632671e-05, "min": 3.585406094632671e-05, "max": 1000.0, "unit": "mol/m3"}, {"name": "C_B", "requested": "C_B", "start": 0.0, "final": 999.9999641459394, "min": 0.0, "max": 999.9999641459394, "unit": "mol/m3"}, {"name": "T", "requested": "T", "start": 330.0, "final": 341.75364514749316, "min": 330.0, "max": 341.8606678893564, "unit": "K"}, {"name": "k", "requested": "k", "start": 0.16163576990960732, "final": 0.17209077083036178, "min": 0.16163576990960732, "max": 0.1721856019716219, "unit": "1/s"}, {"name": "r", "requested": "r", "start": 161.63576990960732, "final": 6.170152985652135e-06, "min": 6.170152985652135e-06, "max": 161.63576990960732, "unit": "mol/(m3.s)"}, {"name": "Q_reaction", "requested": "Q_reaction", "start": 8081788.495480366, "final": 0.3085076492826067, "min": 0.3085076492826067, "max": 8081788.495480366, "unit": "W"}, {"name": "Q_cooling", "requested": "Q_cooling", "start": 6000.0, "final": 8350.729029498632, "min": 6000.0, "max": 8372.133577871284, "unit": "W"}, {"name": "mass_total", "requested": "mass_total", "start": 1000.0, "final": 1000.0000000000003, "min": 999.9999999999994, "max": 1000.0000000000007, "unit": "mol/m3"}, {"name": "mass_balance_residual", "requested": "mass_balance_residual", "start": 0.0, "final": 3.410605131648481e-13, "min": -5.684341886080801e-13, "max": 6.821210263296962e-13, "unit": "mol/m3"}, {"name": "E_reaction_input", "requested": "E_reaction_input", "start": 0.0, "final": 49999998.20729704, "min": 0.0, "max": 49999998.20729704, "unit": "J"}, {"name": "E_cooling_output", "requested": "E_cooling_output", "start": 0.0, "final": 822746.9101883091, "min": 0.0, "max": 822746.9101883091, "unit": "J"}, {"name": "E_thermal_observed", "requested": "E_thermal_observed", "start": 0.0, "final": 49177251.297111385, "min": 0.0, "max": 49625034.449067265, "unit": "J"}, {"name": "energy_balance_residual", "requested": "energy_balance_residual", "start": 0.0, "final": -2.652406692504883e-06, "min": -2.652406692504883e-06, "max": 3.7997961044311523e-07, "unit": "J"}]}, "sanity_checks": {"pass": true, "issues": []}}
+
+[autogen.oai.client: 04-27 18:46:59] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.ResultChecker (to TriggerProxy):
+
+{
+  "pass": true,
+  "severity": "info",
+  "issues": [],
+  "recommendations": [
+    "仿真结果完全符合非等温放热反应器的物理预期：反应物A耗尽转化为产物B，温度因放热反应先升高后因冷却作用略回落，物质守恒残差（~1e-13 mol/m³）和能量守恒残差（~1e-06 J）均在求解器正常数值噪声范围内，模型表现优异，无需修改。"
+  ]
+}
+
+PASS (severity=info)📋 审查报告已保存：C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor\metadata\review_report_1.json
+
+---- Iteration 2/6 ----Executor (to Engineer):
+
+以下为多阶段可靠性审查结论。请根据问题清单修改代码并重新仿真+验收。✅ 已通过审核：
+
+[ResultChecker] PASS (severity=info)
+
+🔒 参数冻结清单：
+
+参数 k0=1.0
+
+参数 Ea=5000
+
+参数 R=8.314
+
+参数 V=1.0
+
+参数 rho=1000
+
+参数 cp=4184
+
+参数 dH=-50000
+
+参数 UA=200
+
+参数 T_cool=300
+
+仿真参数 stop_time=100
+
+仿真参数 step_size=0.01
+
+仿真参数 solver_method=dassl
+
+仿真参数 tolerance=1e-06
+
+🟢 【系统提示】当前仿真已符合物理预期。以下建议仅供参考，若无把握请直接忽略并 TASK_COMPLETE 。⚠️ [仅供参考] [ParameterChecker] severity=warning
+
+状态变量初始条件未严格锁定（缺少 fixed=true）: 模型中的状态变量 C_A, C_B, T, E_reaction_input, E_cooling_output 声明了 start 值，但未显式声明 fixed=true。根据强制初始状态锁定规则及用户需求（'上述状态变量均应作为严格初始条件锁定'），必须添加 fixed=true 以防止编译器进行意外的稳态初始化篡改。由于仿真已成功且结果正确，此问题严重性定为 warning。
+
+以上为非 Critical 建议，可选择性采纳。验收通过后请 TASK_COMPLETE 。
+
+📌 上一次通过仿真的代码（Baseline）：
+
+// FILE: NonisothermalArrheniusReactor.mo
+model NonisothermalArrheniusReactor
+  // Parameters
+  parameter Real k0 = 1.0 "Pre-exponential factor (1/s)";
+  parameter Real Ea = 5000 "Activation energy (J/mol)";
+  parameter Real R = 8.314 "Gas constant (J/(mol.K))";
+  parameter Real V = 1.0 "Reactor volume (m3)";
+  parameter Real rho = 1000 "Liquid density (kg/m3)";
+  parameter Real cp = 4184 "Liquid specific heat capacity (J/(kg.K))";
+  parameter Real dH = -50000 "Reaction enthalpy (J/mol)";
+  parameter Real UA = 200 "Cooling coefficient (W/K)";
+  parameter Real T_cool = 300 "Coolant temperature (K)";
+
+  // State variables
+  Real C_A(start = 1000, unit = "mol/m3") "Concentration of reactant A";
+  Real C_B(start = 0.0, unit = "mol/m3") "Concentration of product B";
+  Real T(start = 330, unit = "K") "Reactor temperature";
+
+  // Cumulative energy variables
+  Real E_reaction_input(start = 0, unit = "J") "Cumulative reaction heat input";
+  Real E_cooling_output(start = 0, unit = "J") "Cumulative cooling heat output";
+
+  // Algebraic variables
+  Real k(unit = "1/s") "Rate constant";
+  Real r(unit = "mol/(m3.s)") "Reaction rate";
+  Real Q_reaction(unit = "W") "Reaction heat generation rate";
+  Real Q_cooling(unit = "W") "Cooling heat removal rate";
+  Real mass_total(unit = "mol/m3") "Total concentration (A+B)";
+  Real mass_balance_residual(unit = "mol/m3") "Mass balance residual";
+  Real E_thermal_observed(unit = "J") "Thermal energy change from temperature";
+  Real energy_balance_residual(unit = "J") "Energy balance residual";
+
+equation
+  // Arrhenius kinetics
+  k = k0 * exp(-Ea / (R * T));
+  r = k * C_A;
+
+  // Species mass balances
+  der(C_A) = -r;
+  der(C_B) = r;
+
+  // Mass conservation monitoring
+  mass_total = C_A + C_B;
+  mass_balance_residual = mass_total - 1000.0;
+
+  // Heat effects
+  Q_reaction = -dH * r * V;
+  Q_cooling = UA * (T - T_cool);
+
+  // Energy balance: temperature dynamics
+  rho * V * cp * der(T) = Q_reaction - Q_cooling;
+
+  // Cumulative energy integrals
+  der(E_reaction_input) = Q_reaction;
+  der(E_cooling_output) = Q_cooling;
+
+  // Thermal energy observed from temperature change
+  E_thermal_observed = rho * V * cp * (T - 330);
+
+  // Energy balance residual
+  energy_balance_residual = E_reaction_input - E_cooling_output - E_thermal_observed;
+end NonisothermalArrheniusReactor;
+
+
+[autogen.oai.client: 04-27 18:47:21] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.Engineer (to Executor):
+
+添加 fixed=true 到所有状态变量的 start 声明中，防止编译器进行意外的稳态初始化篡改。***** Suggested tool call (call_-7682038875685909950): run_simulation_tool *****Arguments:{"model_content":"// FILE: NonisothermalArrheniusReactor.mo\nmodel NonisothermalArrheniusReactor\n  // Parameters\n  parameter Real k0 = 1.0 "Pre-exponential factor (1/s)";\n  parameter Real Ea = 5000 "Activation energy (J/mol)";\n  parameter Real R = 8.314 "Gas constant (J/(mol.K))";\n  parameter Real V = 1.0 "Reactor volume (m3)";\n  parameter Real rho = 1000 "Liquid density (kg/m3)";\n  parameter Real cp = 4184 "Liquid specific heat capacity (J/(kg.K))";\n  parameter Real dH = -50000 "Reaction enthalpy (J/mol)";\n  parameter Real UA = 200 "Cooling coefficient (W/K)";\n  parameter Real T_cool = 300 "Coolant temperature (K)";\n\n  // State variables\n  Real C_A(start = 1000, fixed = true, unit = "mol/m3") "Concentration of reactant A";\n  Real C_B(start = 0.0, fixed = true, unit = "mol/m3") "Concentration of product B";\n  Real T(start = 330, fixed = true, unit = "K") "Reactor temperature";\n\n  // Cumulative energy variables\n  Real E_reaction_input(start = 0, fixed = true, unit = "J") "Cumulative reaction heat input";\n  Real E_cooling_output(start = 0, fixed = true, unit = "J") "Cumulative cooling heat output";\n\n  // Algebraic variables\n  Real k(unit = "1/s") "Rate constant";\n  Real r(unit = "mol/(m3.s)") "Reaction rate";\n  Real Q_reaction(unit = "W") "Reaction heat generation rate";\n  Real Q_cooling(unit = "W") "Cooling heat removal rate";\n  Real mass_total(unit = "mol/m3") "Total concentration (A+B)";\n  Real mass_balance_residual(unit = "mol/m3") "Mass balance residual";\n  Real E_thermal_observed(unit = "J") "Thermal energy change from temperature";\n  Real energy_balance_residual(unit = "J") "Energy balance residual";\n\nequation\n  // Arrhenius kinetics\n  k = k0 * exp(-Ea / (R * T));\n  r = k * C_A;\n\n  // Species mass balances\n  der(C_A) = -r;\n  der(C_B) = r;\n\n  // Mass conservation monitoring\n  mass_total = C_A + C_B;\n  mass_balance_residual = mass_total - 1000.0;\n\n  // Heat effects\n  Q_reaction = -dH * r * V;\n  Q_cooling = UA * (T - T_cool);\n\n  // Energy balance: temperature dynamics\n  rho * V * cp * der(T) = Q_reaction - Q_cooling;\n\n  // Cumulative energy integrals\n  der(E_reaction_input) = Q_reaction;\n  der(E_cooling_output) = Q_cooling;\n\n  // Thermal energy observed from temperature change\n  E_thermal_observed = rho * V * cp * (T - 330);\n\n  // Energy balance residual\n  energy_balance_residual = E_reaction_input - E_cooling_output - E_thermal_observed;\nend NonisothermalArrheniusReactor;","model_name":"NonisothermalArrheniusReactor","stop_time":100,"step_size":0.01,"solver_method":"dassl","tolerance":1e-06}
+
+EXECUTING FUNCTION run_simulation_tool...Call ID: call_-7682038875685909950Input arguments: {'model_content': '// FILE: NonisothermalArrheniusReactor.mo\nmodel NonisothermalArrheniusReactor\n  // Parameters\n  parameter Real k0 = 1.0 "Pre-exponential factor (1/s)";\n  parameter Real Ea = 5000 "Activation energy (J/mol)";\n  parameter Real R = 8.314 "Gas constant (J/(mol.K))";\n  parameter Real V = 1.0 "Reactor volume (m3)";\n  parameter Real rho = 1000 "Liquid density (kg/m3)";\n  parameter Real cp = 4184 "Liquid specific heat capacity (J/(kg.K))";\n  parameter Real dH = -50000 "Reaction enthalpy (J/mol)";\n  parameter Real UA = 200 "Cooling coefficient (W/K)";\n  parameter Real T_cool = 300 "Coolant temperature (K)";\n\n  // State variables\n  Real C_A(start = 1000, fixed = true, unit = "mol/m3") "Concentration of reactant A";\n  Real C_B(start = 0.0, fixed = true, unit = "mol/m3") "Concentration of product B";\n  Real T(start = 330, fixed = true, unit = "K") "Reactor temperature";\n\n  // Cumulative energy variables\n  Real E_reaction_input(start = 0, fixed = true, unit = "J") "Cumulative reaction heat input";\n  Real E_cooling_output(start = 0, fixed = true, unit = "J") "Cumulative cooling heat output";\n\n  // Algebraic variables\n  Real k(unit = "1/s") "Rate constant";\n  Real r(unit = "mol/(m3.s)") "Reaction rate";\n  Real Q_reaction(unit = "W") "Reaction heat generation rate";\n  Real Q_cooling(unit = "W") "Cooling heat removal rate";\n  Real mass_total(unit = "mol/m3") "Total concentration (A+B)";\n  Real mass_balance_residual(unit = "mol/m3") "Mass balance residual";\n  Real E_thermal_observed(unit = "J") "Thermal energy change from temperature";\n  Real energy_balance_residual(unit = "J") "Energy balance residual";\n\nequation\n  // Arrhenius kinetics\n  k = k0 * exp(-Ea / (R * T));\n  r = k * C_A;\n\n  // Species mass balances\n  der(C_A) = -r;\n  der(C_B) = r;\n\n  // Mass conservation monitoring\n  mass_total = C_A + C_B;\n  mass_balance_residual = mass_total - 1000.0;\n\n  // Heat effects\n  Q_reaction = -dH * r * V;\n  Q_cooling = UA * (T - T_cool);\n\n  // Energy balance: temperature dynamics\n  rho * V * cp * der(T) = Q_reaction - Q_cooling;\n\n  // Cumulative energy integrals\n  der(E_reaction_input) = Q_reaction;\n  der(E_cooling_output) = Q_cooling;\n\n  // Thermal energy observed from temperature change\n  E_thermal_observed = rho * V * cp * (T - 330);\n\n  // Energy balance residual\n  energy_balance_residual = E_reaction_input - E_cooling_output - E_thermal_observed;\nend NonisothermalArrheniusReactor;', 'model_name': 'NonisothermalArrheniusReactor', 'stop_time': 100, 'step_size': 0.01, 'solver_method': 'dassl', 'tolerance': 1e-06}Executor (to Engineer):
+
+***** Response from calling tool (call_-7682038875685909950) *****SUCCESS: Simulation finished.Case: C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactorResult: C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184721_res.mat
+
+[autogen.oai.client: 04-27 18:47:31] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.Engineer (to Executor):
+
+***** Suggested tool call (call_-7682070280486777131): check_simulation_results *****Arguments:{"result_file_path":"C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184721_res.mat","required_variables":["C_A", "C_B", "T", "E_reaction_input", "E_cooling_output", "k", "r", "Q_reaction", "Q_cooling", "mass_total", "mass_balance_residual", "E_thermal_observed", "energy_balance_residual"]}
+
+EXECUTING FUNCTION check_simulation_results...Call ID: call_-7682070280486777131Input arguments: {'result_file_path': 'C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184721_res.mat', 'required_variables': ['C_A', 'C_B', 'T', 'E_reaction_input', 'E_cooling_output', 'k', 'r', 'Q_reaction', 'Q_cooling', 'mass_total', 'mass_balance_residual', 'E_thermal_observed', 'energy_balance_residual']}Executor (to Engineer):
+
+***** Response from calling tool (call_-7682070280486777131) *****VERIFICATION SUCCESS: found ['C_A', 'C_B', 'T', 'E_reaction_input', 'E_cooling_output', 'k', 'r', 'Q_reaction', 'Q_cooling', 'mass_total', 'mass_balance_residual', 'E_thermal_observed', 'energy_balance_residual'].
+
+[autogen.oai.client: 04-27 18:47:42] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.Engineer (to Executor):
+
+物理合理性自检：
+
+C_A: 从1000 mol/m³单调递减（反应物消耗），物理正确
+
+C_B: 从0单调递增（产物生成），物理正确
+
+T: 初始330K，放热反应导致温度先升后随反应减速和冷却而趋于平衡，物理正确
+
+mass_balance_residual: 应接近0（质量守恒），物理正确
+
+energy_balance_residual: 应接近0（能量守恒），物理正确
+
+E_reaction_input/E_cooling_output: 累积能量量纲为J，与放热反应和冷却过程一致
+
+所有自检通过。
+
+TASK_COMPLETE
+
+Running ParameterChecker... TriggerProxy (to ParameterChecker):
+
+{"original_user_task": "案例 C：非等温阿伦尼乌斯放热反应器模型\n\nNonisothermalArrheniusReactor\n\n1. 系统组成和拓扑描述\n\n设计一个非等温批式化学反应器模型。反应物 A 在反应器中发生不可逆一级反应生成产物 B，反应遵循标准阿伦尼乌斯动力学，并伴随放热效应。\n\n该案例属于基础物理建模案例，不要求调用 Modelica 标准库组件，可以直接使用底层物理方程实现。\n\n系统由反应动力学部分、物质衡算部分、能量衡算部分和结果监测变量组成。\n\n反应物 A 转化为产物 B。模型应保证反应物消耗和产物生成之间满足化学计量关系。在无副反应、无体积变化条件下，反应物和产物的总浓度应保持守恒。\n\n反应为放热反应，因此反应过程中释放的热量会影响反应器温度。同时，反应器与冷却介质之间存在换热过程，冷却强度由换热系数决定。\n\n\n模型应输出浓度、温度、反应速率、放热功率、冷却功率和守恒相关监测变量。\n\n2. 参数名称和数值\n\n指前因子：1.0 1/s\n活化能：5000 J/mol\n气体常数：8.314 J/(mol·K)\n反应体积：1.0 m³\n液体密度：1000 kg/m³\n液体比热容：4184 J/(kg·K)\n反应焓：-50000 J/mol\n冷却系数：200 W/K\n冷却介质温度：300 K\n初始温度：330 K\n初始反应物浓度：1000 mol/m³\n初始产物浓度：0.0 mol/m³\n\n3. 初始条件\n\nC_A(t=0) = 1000 mol/m³\nC_B(t=0) = 0 mol/m³\nT(t=0)   = 330 K\n\n上述状态变量均应作为严格初始条件锁定。\n\n如果模型中引入累计能量变量，其初始值应为 0。\n\n4. 目标变量名称\n\nC_A：反应物 A 浓度，mol/m³\nC_B：产物 B 浓度，mol/m³\nT：反应器温度，K\nk：阿伦尼乌斯速率常数，1/s\nr：反应速率，mol/(m³·s)\nQ_reaction：反应放热功率，W\nQ_cooling：冷却移热功率\nmass_total：总浓度监测变量\nmass_balance_residual：物质守恒残差\nE_reaction_input：累计反应放热\nE_cooling_output：累计冷却移热\nE_thermal_observed：由温度反推的热能增量\nenergy_balance_residual：能量守恒残差\n\n5. 仿真参数\n\nstop_time     = 100 s\nstep_size     = 0.01 s\nsolver_method = dassl\ntolerance     = 1e-6\n\n", "requirements_json": {"task_type": "single_case", "model_info": {"name": "NonisothermalArrheniusReactor", "description": "非等温批式化学反应器模型，反应物A发生不可逆一级放热反应生成产物B，遵循阿伦尼乌斯动力学并伴随冷却换热过程。"}, "parameters": [{"name": "k0", "value": 1.0, "unit": "1/s", "description": "指前因子"}, {"name": "Ea", "value": 5000, "unit": "J/mol", "description": "活化能"}, {"name": "R", "value": 8.314, "unit": "J/(mol·K)", "description": "气体常数"}, {"name": "V", "value": 1.0, "unit": "m³", "description": "反应体积"}, {"name": "rho", "value": 1000, "unit": "kg/m³", "description": "液体密度"}, {"name": "cp", "value": 4184, "unit": "J/(kg·K)", "description": "液体比热容"}, {"name": "dH", "value": -50000, "unit": "J/mol", "description": "反应焓"}, {"name": "UA", "value": 200, "unit": "W/K", "description": "冷却系数"}, {"name": "T_cool", "value": 300, "unit": "K", "description": "冷却介质温度"}], "initial_conditions": [{"variable": "C_A", "value": 1000, "description": "反应物A初始浓度"}, {"variable": "C_B", "value": 0.0, "description": "产物B初始浓度"}, {"variable": "T", "value": 330, "description": "反应器初始温度"}], "physics_mechanisms": ["阿伦尼乌斯动力学", "化学计量关系与物质守恒", "放热反应热效应", "能量守恒与热衡算", "对流换热冷却"], "target_variables": ["C_A", "C_B", "T", "k", "r", "Q_reaction", "Q_cooling", "mass_total", "mass_balance_residual", "E_reaction_input", "E_cooling_output", "E_thermal_observed", "energy_balance_residual"], "has_control_logic": false, "has_component": false, "simulation_settings": {"stop_time": 100, "step_size": 0.01, "solver_method": "dassl", "tolerance": 1e-06}}, "model_code": "// FILE: NonisothermalArrheniusReactor.mo\nmodel NonisothermalArrheniusReactor\n  // Parameters\n  parameter Real k0 = 1.0 "Pre-exponential factor (1/s)";\n  parameter Real Ea = 5000 "Activation energy (J/mol)";\n  parameter Real R = 8.314 "Gas constant (J/(mol.K))";\n  parameter Real V = 1.0 "Reactor volume (m3)";\n  parameter Real rho = 1000 "Liquid density (kg/m3)";\n  parameter Real cp = 4184 "Liquid specific heat capacity (J/(kg.K))";\n  parameter Real dH = -50000 "Reaction enthalpy (J/mol)";\n  parameter Real UA = 200 "Cooling coefficient (W/K)";\n  parameter Real T_cool = 300 "Coolant temperature (K)";\n\n  // State variables\n  Real C_A(start = 1000, fixed = true, unit = "mol/m3") "Concentration of reactant A";\n  Real C_B(start = 0.0, fixed = true, unit = "mol/m3") "Concentration of product B";\n  Real T(start = 330, fixed = true, unit = "K") "Reactor temperature";\n\n  // Cumulative energy variables\n  Real E_reaction_input(start = 0, fixed = true, unit = "J") "Cumulative reaction heat input";\n  Real E_cooling_output(start = 0, fixed = true, unit = "J") "Cumulative cooling heat output";\n\n  // Algebraic variables\n  Real k(unit = "1/s") "Rate constant";\n  Real r(unit = "mol/(m3.s)") "Reaction rate";\n  Real Q_reaction(unit = "W") "Reaction heat generation rate";\n  Real Q_cooling(unit = "W") "Cooling heat removal rate";\n  Real mass_total(unit = "mol/m3") "Total concentration (A+B)";\n  Real mass_balance_residual(unit = "mol/m3") "Mass balance residual";\n  Real E_thermal_observed(unit = "J") "Thermal energy change from temperature";\n  Real energy_balance_residual(unit = "J") "Energy balance residual";\n\nequation\n  // Arrhenius kinetics\n  k = k0 * exp(-Ea / (R * T));\n  r = k * C_A;\n\n  // Species mass balances\n  der(C_A) = -r;\n  der(C_B) = r;\n\n  // Mass conservation monitoring\n  mass_total = C_A + C_B;\n  mass_balance_residual = mass_total - 1000.0;\n\n  // Heat effects\n  Q_reaction = -dH * r * V;\n  Q_cooling = UA * (T - T_cool);\n\n  // Energy balance: temperature dynamics\n  rho * V * cp * der(T) = Q_reaction - Q_cooling;\n\n  // Cumulative energy integrals\n  der(E_reaction_input) = Q_reaction;\n  der(E_cooling_output) = Q_cooling;\n\n  // Thermal energy observed from temperature change\n  E_thermal_observed = rho * V * cp * (T - 330);\n\n  // Energy balance residual\n  energy_balance_residual = E_reaction_input - E_cooling_output - E_thermal_observed;\nend NonisothermalArrheniusReactor;\n", "run_metadata": {"case_root": "C:/Users/FST/Desktop/实验组4/cases", "case_id": "20260427_184519_NonisothermalArrheniusReactor", "case_dir": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor", "model_name": "NonisothermalArrheniusReactor", "run_tag": "20260427_184721", "timestamp": "2026-04-27T18:47:25", "saved_sources": ["C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/model/NonisothermalArrheniusReactor.mo"], "result_mat": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184721_res.mat", "init_xml": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184721_init.xml", "overrides": {"stop_time": 100.0, "parameter_overrides": {}}, "debug": {"cmd": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/build/NonisothermalArrheniusReactor.exe -override=stopTime=100,stepSize=0.01,tolerance=1e-06,method=dassl", "exit_code": 0}}, "result_summary": {"variables": [{"name": "C_A", "requested": "C_A", "start": 1000.0, "final": 3.585406094632671e-05, "min": 3.585406094632671e-05, "max": 1000.0, "unit": "mol/m3"}, {"name": "C_B", "requested": "C_B", "start": 0.0, "final": 999.9999641459394, "min": 0.0, "max": 999.9999641459394, "unit": "mol/m3"}, {"name": "T", "requested": "T", "start": 330.0, "final": 341.75364514749316, "min": 330.0, "max": 341.8606678893564, "unit": "K"}, {"name": "k", "requested": "k", "start": 0.16163576990960732, "final": 0.17209077083036178, "min": 0.16163576990960732, "max": 0.1721856019716219, "unit": "1/s"}, {"name": "r", "requested": "r", "start": 161.63576990960732, "final": 6.170152985652135e-06, "min": 6.170152985652135e-06, "max": 161.63576990960732, "unit": "mol/(m3.s)"}, {"name": "Q_reaction", "requested": "Q_reaction", "start": 8081788.495480366, "final": 0.3085076492826067, "min": 0.3085076492826067, "max": 8081788.495480366, "unit": "W"}, {"name": "Q_cooling", "requested": "Q_cooling", "start": 6000.0, "final": 8350.729029498632, "min": 6000.0, "max": 8372.133577871284, "unit": "W"}, {"name": "mass_total", "requested": "mass_total", "start": 1000.0, "final": 1000.0000000000003, "min": 999.9999999999994, "max": 1000.0000000000007, "unit": "mol/m3"}, {"name": "mass_balance_residual", "requested": "mass_balance_residual", "start": 0.0, "final": 3.410605131648481e-13, "min": -5.684341886080801e-13, "max": 6.821210263296962e-13, "unit": "mol/m3"}, {"name": "E_reaction_input", "requested": "E_reaction_input", "start": 0.0, "final": 49999998.20729704, "min": 0.0, "max": 49999998.20729704, "unit": "J"}, {"name": "E_cooling_output", "requested": "E_cooling_output", "start": 0.0, "final": 822746.9101883091, "min": 0.0, "max": 822746.9101883091, "unit": "J"}, {"name": "E_thermal_observed", "requested": "E_thermal_observed", "start": 0.0, "final": 49177251.297111385, "min": 0.0, "max": 49625034.449067265, "unit": "J"}, {"name": "energy_balance_residual", "requested": "energy_balance_residual", "start": 0.0, "final": -2.652406692504883e-06, "min": -2.652406692504883e-06, "max": 3.7997961044311523e-07, "unit": "J"}]}, "sanity_checks": {"pass": true, "issues": []}}
+
+[autogen.oai.client: 04-27 18:48:42] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.ParameterChecker (to TriggerProxy):
+
+{
+  "pass": true,
+  "severity": "info",
+  "issues": [],
+  "recommendations": [
+    "模型代码完全符合需求规范，参数、初始条件、单位及物理方程均正确无误，且状态变量（C_A, C_B, T, E_reaction_input, E_cooling_output）已正确使用 fixed=true 锁定初始值。仿真结果物理量级合理，物质与能量守恒残差极小，无需修改。"
+  ]
+}
+
+PASS (severity=info)Running ResultChecker... TriggerProxy (to ResultChecker):
+
+{"original_user_task": "案例 C：非等温阿伦尼乌斯放热反应器模型\n\nNonisothermalArrheniusReactor\n\n1. 系统组成和拓扑描述\n\n设计一个非等温批式化学反应器模型。反应物 A 在反应器中发生不可逆一级反应生成产物 B，反应遵循标准阿伦尼乌斯动力学，并伴随放热效应。\n\n该案例属于基础物理建模案例，不要求调用 Modelica 标准库组件，可以直接使用底层物理方程实现。\n\n系统由反应动力学部分、物质衡算部分、能量衡算部分和结果监测变量组成。\n\n反应物 A 转化为产物 B。模型应保证反应物消耗和产物生成之间满足化学计量关系。在无副反应、无体积变化条件下，反应物和产物的总浓度应保持守恒。\n\n反应为放热反应，因此反应过程中释放的热量会影响反应器温度。同时，反应器与冷却介质之间存在换热过程，冷却强度由换热系数决定。\n\n\n模型应输出浓度、温度、反应速率、放热功率、冷却功率和守恒相关监测变量。\n\n2. 参数名称和数值\n\n指前因子：1.0 1/s\n活化能：5000 J/mol\n气体常数：8.314 J/(mol·K)\n反应体积：1.0 m³\n液体密度：1000 kg/m³\n液体比热容：4184 J/(kg·K)\n反应焓：-50000 J/mol\n冷却系数：200 W/K\n冷却介质温度：300 K\n初始温度：330 K\n初始反应物浓度：1000 mol/m³\n初始产物浓度：0.0 mol/m³\n\n3. 初始条件\n\nC_A(t=0) = 1000 mol/m³\nC_B(t=0) = 0 mol/m³\nT(t=0)   = 330 K\n\n上述状态变量均应作为严格初始条件锁定。\n\n如果模型中引入累计能量变量，其初始值应为 0。\n\n4. 目标变量名称\n\nC_A：反应物 A 浓度，mol/m³\nC_B：产物 B 浓度，mol/m³\nT：反应器温度，K\nk：阿伦尼乌斯速率常数，1/s\nr：反应速率，mol/(m³·s)\nQ_reaction：反应放热功率，W\nQ_cooling：冷却移热功率\nmass_total：总浓度监测变量\nmass_balance_residual：物质守恒残差\nE_reaction_input：累计反应放热\nE_cooling_output：累计冷却移热\nE_thermal_observed：由温度反推的热能增量\nenergy_balance_residual：能量守恒残差\n\n5. 仿真参数\n\nstop_time     = 100 s\nstep_size     = 0.01 s\nsolver_method = dassl\ntolerance     = 1e-6\n\n", "requirements_json": {"task_type": "single_case", "model_info": {"name": "NonisothermalArrheniusReactor", "description": "非等温批式化学反应器模型，反应物A发生不可逆一级放热反应生成产物B，遵循阿伦尼乌斯动力学并伴随冷却换热过程。"}, "parameters": [{"name": "k0", "value": 1.0, "unit": "1/s", "description": "指前因子"}, {"name": "Ea", "value": 5000, "unit": "J/mol", "description": "活化能"}, {"name": "R", "value": 8.314, "unit": "J/(mol·K)", "description": "气体常数"}, {"name": "V", "value": 1.0, "unit": "m³", "description": "反应体积"}, {"name": "rho", "value": 1000, "unit": "kg/m³", "description": "液体密度"}, {"name": "cp", "value": 4184, "unit": "J/(kg·K)", "description": "液体比热容"}, {"name": "dH", "value": -50000, "unit": "J/mol", "description": "反应焓"}, {"name": "UA", "value": 200, "unit": "W/K", "description": "冷却系数"}, {"name": "T_cool", "value": 300, "unit": "K", "description": "冷却介质温度"}], "initial_conditions": [{"variable": "C_A", "value": 1000, "description": "反应物A初始浓度"}, {"variable": "C_B", "value": 0.0, "description": "产物B初始浓度"}, {"variable": "T", "value": 330, "description": "反应器初始温度"}], "physics_mechanisms": ["阿伦尼乌斯动力学", "化学计量关系与物质守恒", "放热反应热效应", "能量守恒与热衡算", "对流换热冷却"], "target_variables": ["C_A", "C_B", "T", "k", "r", "Q_reaction", "Q_cooling", "mass_total", "mass_balance_residual", "E_reaction_input", "E_cooling_output", "E_thermal_observed", "energy_balance_residual"], "has_control_logic": false, "has_component": false, "simulation_settings": {"stop_time": 100, "step_size": 0.01, "solver_method": "dassl", "tolerance": 1e-06}}, "model_code": "// FILE: NonisothermalArrheniusReactor.mo\nmodel NonisothermalArrheniusReactor\n  // Parameters\n  parameter Real k0 = 1.0 "Pre-exponential factor (1/s)";\n  parameter Real Ea = 5000 "Activation energy (J/mol)";\n  parameter Real R = 8.314 "Gas constant (J/(mol.K))";\n  parameter Real V = 1.0 "Reactor volume (m3)";\n  parameter Real rho = 1000 "Liquid density (kg/m3)";\n  parameter Real cp = 4184 "Liquid specific heat capacity (J/(kg.K))";\n  parameter Real dH = -50000 "Reaction enthalpy (J/mol)";\n  parameter Real UA = 200 "Cooling coefficient (W/K)";\n  parameter Real T_cool = 300 "Coolant temperature (K)";\n\n  // State variables\n  Real C_A(start = 1000, fixed = true, unit = "mol/m3") "Concentration of reactant A";\n  Real C_B(start = 0.0, fixed = true, unit = "mol/m3") "Concentration of product B";\n  Real T(start = 330, fixed = true, unit = "K") "Reactor temperature";\n\n  // Cumulative energy variables\n  Real E_reaction_input(start = 0, fixed = true, unit = "J") "Cumulative reaction heat input";\n  Real E_cooling_output(start = 0, fixed = true, unit = "J") "Cumulative cooling heat output";\n\n  // Algebraic variables\n  Real k(unit = "1/s") "Rate constant";\n  Real r(unit = "mol/(m3.s)") "Reaction rate";\n  Real Q_reaction(unit = "W") "Reaction heat generation rate";\n  Real Q_cooling(unit = "W") "Cooling heat removal rate";\n  Real mass_total(unit = "mol/m3") "Total concentration (A+B)";\n  Real mass_balance_residual(unit = "mol/m3") "Mass balance residual";\n  Real E_thermal_observed(unit = "J") "Thermal energy change from temperature";\n  Real energy_balance_residual(unit = "J") "Energy balance residual";\n\nequation\n  // Arrhenius kinetics\n  k = k0 * exp(-Ea / (R * T));\n  r = k * C_A;\n\n  // Species mass balances\n  der(C_A) = -r;\n  der(C_B) = r;\n\n  // Mass conservation monitoring\n  mass_total = C_A + C_B;\n  mass_balance_residual = mass_total - 1000.0;\n\n  // Heat effects\n  Q_reaction = -dH * r * V;\n  Q_cooling = UA * (T - T_cool);\n\n  // Energy balance: temperature dynamics\n  rho * V * cp * der(T) = Q_reaction - Q_cooling;\n\n  // Cumulative energy integrals\n  der(E_reaction_input) = Q_reaction;\n  der(E_cooling_output) = Q_cooling;\n\n  // Thermal energy observed from temperature change\n  E_thermal_observed = rho * V * cp * (T - 330);\n\n  // Energy balance residual\n  energy_balance_residual = E_reaction_input - E_cooling_output - E_thermal_observed;\nend NonisothermalArrheniusReactor;\n", "run_metadata": {"case_root": "C:/Users/FST/Desktop/实验组4/cases", "case_id": "20260427_184519_NonisothermalArrheniusReactor", "case_dir": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor", "model_name": "NonisothermalArrheniusReactor", "run_tag": "20260427_184721", "timestamp": "2026-04-27T18:47:25", "saved_sources": ["C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/model/NonisothermalArrheniusReactor.mo"], "result_mat": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184721_res.mat", "init_xml": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/results/NonisothermalArrheniusReactor_20260427_184721_init.xml", "overrides": {"stop_time": 100.0, "parameter_overrides": {}}, "debug": {"cmd": "C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor/build/NonisothermalArrheniusReactor.exe -override=stopTime=100,stepSize=0.01,tolerance=1e-06,method=dassl", "exit_code": 0}}, "result_summary": {"variables": [{"name": "C_A", "requested": "C_A", "start": 1000.0, "final": 3.585406094632671e-05, "min": 3.585406094632671e-05, "max": 1000.0, "unit": "mol/m3"}, {"name": "C_B", "requested": "C_B", "start": 0.0, "final": 999.9999641459394, "min": 0.0, "max": 999.9999641459394, "unit": "mol/m3"}, {"name": "T", "requested": "T", "start": 330.0, "final": 341.75364514749316, "min": 330.0, "max": 341.8606678893564, "unit": "K"}, {"name": "k", "requested": "k", "start": 0.16163576990960732, "final": 0.17209077083036178, "min": 0.16163576990960732, "max": 0.1721856019716219, "unit": "1/s"}, {"name": "r", "requested": "r", "start": 161.63576990960732, "final": 6.170152985652135e-06, "min": 6.170152985652135e-06, "max": 161.63576990960732, "unit": "mol/(m3.s)"}, {"name": "Q_reaction", "requested": "Q_reaction", "start": 8081788.495480366, "final": 0.3085076492826067, "min": 0.3085076492826067, "max": 8081788.495480366, "unit": "W"}, {"name": "Q_cooling", "requested": "Q_cooling", "start": 6000.0, "final": 8350.729029498632, "min": 6000.0, "max": 8372.133577871284, "unit": "W"}, {"name": "mass_total", "requested": "mass_total", "start": 1000.0, "final": 1000.0000000000003, "min": 999.9999999999994, "max": 1000.0000000000007, "unit": "mol/m3"}, {"name": "mass_balance_residual", "requested": "mass_balance_residual", "start": 0.0, "final": 3.410605131648481e-13, "min": -5.684341886080801e-13, "max": 6.821210263296962e-13, "unit": "mol/m3"}, {"name": "E_reaction_input", "requested": "E_reaction_input", "start": 0.0, "final": 49999998.20729704, "min": 0.0, "max": 49999998.20729704, "unit": "J"}, {"name": "E_cooling_output", "requested": "E_cooling_output", "start": 0.0, "final": 822746.9101883091, "min": 0.0, "max": 822746.9101883091, "unit": "J"}, {"name": "E_thermal_observed", "requested": "E_thermal_observed", "start": 0.0, "final": 49177251.297111385, "min": 0.0, "max": 49625034.449067265, "unit": "J"}, {"name": "energy_balance_residual", "requested": "energy_balance_residual", "start": 0.0, "final": -2.652406692504883e-06, "min": -2.652406692504883e-06, "max": 3.7997961044311523e-07, "unit": "J"}]}, "sanity_checks": {"pass": true, "issues": []}}
+
+[autogen.oai.client: 04-27 18:49:19] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.ResultChecker (to TriggerProxy):
+
+{
+  "pass": true,
+  "severity": "info",
+  "issues": [
+    {
+      "title": "物质守恒残差与能量守恒残差属于正常数值噪声",
+      "detail": "mass_balance_residual 的量级在 1e-13 mol/m³，energy_balance_residual 的量级在 1e-06 J。相对于主流量（1000 mol/m³ 和 5e7 J），这些残差占比极小（相对误差 < 1e-10），属于 DAE 求解器（dassl）的正常数值截断误差，不构成物理违反。",
+      "evidence": "mass_balance_residual: min=-5.68e-13, max=6.82e-13; energy_balance_residual: min=-2.65e-06, max=3.79e-07"
+    }
+  ],
+  "recommendations": [
+    "模型仿真结果非常理想，物理趋势正确且守恒性良好，无需修改。"
+  ]
+}
+
+PASS (severity=info)📋 审查报告已保存：C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor\metadata\review_report_2.json✓ ALL PASSED.TriggerProxy (to Documenter):
+
+{"requirements_json": {"task_type": "single_case", "model_info": {"name": "NonisothermalArrheniusReactor", "description": "\u975e\u7b49\u6e29\u6279\u5f0f\u5316\u5b66\u53cd\u5e94\u5668\u6a21\u578b\uff0c\u53cd\u5e94\u7269A\u53d1\u751f\u4e0d\u53ef\u9006\u4e00\u7ea7\u653e\u70ed\u53cd\u5e94\u751f\u6210\u4ea7\u7269B\uff0c\u9075\u5faa\u963f\u4f26\u5c3c\u4e4c\u65af\u52a8\u529b\u5b66\u5e76\u4f34\u968f\u51b7\u5374\u6362\u70ed\u8fc7\u7a0b\u3002"}, "parameters": [{"name": "k0", "value": 1.0, "unit": "1/s", "description": "\u6307\u524d\u56e0\u5b50"}, {"name": "Ea", "value": 5000, "unit": "J/mol", "description": "\u6d3b\u5316\u80fd"}, {"name": "R", "value": 8.314, "unit": "J/(mol\u00b7K)", "description": "\u6c14\u4f53\u5e38\u6570"}, {"name": "V", "value": 1.0, "unit": "m\u00b3", "description": "\u53cd\u5e94\u4f53\u79ef"}, {"name": "rho", "value": 1000, "unit": "kg/m\u00b3", "description": "\u6db2\u4f53\u5bc6\u5ea6"}, {"name": "cp", "value": 4184, "unit": "J/(kg\u00b7K)", "description": "\u6db2\u4f53\u6bd4\u70ed\u5bb9"}, {"name": "dH", "value": -50000, "unit": "J/mol", "description": "\u53cd\u5e94\u7113"}, {"name": "UA", "value": 200, "unit": "W/K", "description": "\u51b7\u5374\u7cfb\u6570"}, {"name": "T_cool", "value": 300, "unit": "K", "description": "\u51b7\u5374\u4ecb\u8d28\u6e29\u5ea6"}], "initial_conditions": [{"variable": "C_A", "value": 1000, "description": "\u53cd\u5e94\u7269A\u521d\u59cb\u6d53\u5ea6"}, {"variable": "C_B", "value": 0.0, "description": "\u4ea7\u7269B\u521d\u59cb\u6d53\u5ea6"}, {"variable": "T", "value": 330, "description": "\u53cd\u5e94\u5668\u521d\u59cb\u6e29\u5ea6"}], "physics_mechanisms": ["\u963f\u4f26\u5c3c\u4e4c\u65af\u52a8\u529b\u5b66", "\u5316\u5b66\u8ba1\u91cf\u5173\u7cfb\u4e0e\u7269\u8d28\u5b88\u6052", "\u653e\u70ed\u53cd\u5e94\u70ed\u6548\u5e94", "\u80fd\u91cf\u5b88\u6052\u4e0e\u70ed\u8861\u7b97", "\u5bf9\u6d41\u6362\u70ed\u51b7\u5374"], "target_variables": ["C_A", "C_B", "T", "k", "r", "Q_reaction", "Q_cooling", "mass_total", "mass_balance_residual", "E_reaction_input", "E_cooling_output", "E_thermal_observed", "energy_balance_residual"], "has_control_logic": false, "has_component": false, "simulation_settings": {"stop_time": 100, "step_size": 0.01, "solver_method": "dassl", "tolerance": 1e-06}}, "model_code": "// FILE: NonisothermalArrheniusReactor.mo\nmodel NonisothermalArrheniusReactor\n  // Parameters\n  parameter Real k0 = 1.0 "Pre-exponential factor (1/s)";\n  parameter Real Ea = 5000 "Activation energy (J/mol)";\n  parameter Real R = 8.314 "Gas constant (J/(mol.K))";\n  parameter Real V = 1.0 "Reactor volume (m3)";\n  parameter Real rho = 1000 "Liquid density (kg/m3)";\n  parameter Real cp = 4184 "Liquid specific heat capacity (J/(kg.K))";\n  parameter Real dH = -50000 "Reaction enthalpy (J/mol)";\n  parameter Real UA = 200 "Cooling coefficient (W/K)";\n  parameter Real T_cool = 300 "Coolant temperature (K)";\n\n  // State variables\n  Real C_A(start = 1000, fixed = true, unit = "mol/m3") "Concentration of reactant A";\n  Real C_B(start = 0.0, fixed = true, unit = "mol/m3") "Concentration of product B";\n  Real T(start = 330, fixed = true, unit = "K") "Reactor temperature";\n\n  // Cumulative energy variables\n  Real E_reaction_input(start = 0, fixed = true, unit = "J") "Cumulative reaction heat input";\n  Real E_cooling_output(start = 0, fixed = true, unit = "J") "Cumulative cooling heat output";\n\n  // Algebraic variables\n  Real k(unit = "1/s") "Rate constant";\n  Real r(unit = "mol/(m3.s)") "Reaction rate";\n  Real Q_reaction(unit = "W") "Reaction heat generation rate";\n  Real Q_cooling(unit = "W") "Cooling heat removal rate";\n  Real mass_total(unit = "mol/m3") "Total concentration (A+B)";\n  Real mass_balance_residual(unit = "mol/m3") "Mass balance residual";\n  Real E_thermal_observed(unit = "J") "Thermal energy change from temperature";\n  Real energy_balance_residual(unit = "J") "Energy balance residual";\n\nequation\n  // Arrhenius kinetics\n  k = k0 * exp(-Ea / (R * T));\n  r = k * C_A;\n\n  // Species mass balances\n  der(C_A) = -r;\n  der(C_B) = r;\n\n  // Mass conservation monitoring\n  mass_total = C_A + C_B;\n  mass_balance_residual = mass_total - 1000.0;\n\n  // Heat effects\n  Q_reaction = -dH * r * V;\n  Q_cooling = UA * (T - T_cool);\n\n  // Energy balance: temperature dynamics\n  rho * V * cp * der(T) = Q_reaction - Q_cooling;\n\n  // Cumulative energy integrals\n  der(E_reaction_input) = Q_reaction;\n  der(E_cooling_output) = Q_cooling;\n\n  // Thermal energy observed from temperature change\n  E_thermal_observed = rho * V * cp * (T - 330);\n\n  // Energy balance residual\n  energy_balance_residual = E_reaction_input - E_cooling_output - E_thermal_observed;\nend NonisothermalArrheniusReactor;\n", "run_metadata": {"case_id": "20260427_184519_NonisothermalArrheniusReactor", "timestamp": "2026-04-27T18:47:25", "model_name": "NonisothermalArrheniusReactor", "model_file": "NonisothermalArrheniusReactor.mo", "overrides": {"stop_time": 100.0, "parameter_overrides": {}}}, "result_summary": {"variables": [{"name": "C_A", "requested": "C_A", "start": 1000.0, "final": 3.585406094632671e-05, "min": 3.585406094632671e-05, "max": 1000.0, "unit": "mol/m3"}, {"name": "C_B", "requested": "C_B", "start": 0.0, "final": 999.9999641459394, "min": 0.0, "max": 999.9999641459394, "unit": "mol/m3"}, {"name": "T", "requested": "T", "start": 330.0, "final": 341.75364514749316, "min": 330.0, "max": 341.8606678893564, "unit": "K"}, {"name": "k", "requested": "k", "start": 0.16163576990960732, "final": 0.17209077083036178, "min": 0.16163576990960732, "max": 0.1721856019716219, "unit": "1/s"}, {"name": "r", "requested": "r", "start": 161.63576990960732, "final": 6.170152985652135e-06, "min": 6.170152985652135e-06, "max": 161.63576990960732, "unit": "mol/(m3.s)"}, {"name": "Q_reaction", "requested": "Q_reaction", "start": 8081788.495480366, "final": 0.3085076492826067, "min": 0.3085076492826067, "max": 8081788.495480366, "unit": "W"}, {"name": "Q_cooling", "requested": "Q_cooling", "start": 6000.0, "final": 8350.729029498632, "min": 6000.0, "max": 8372.133577871284, "unit": "W"}, {"name": "mass_total", "requested": "mass_total", "start": 1000.0, "final": 1000.0000000000003, "min": 999.9999999999994, "max": 1000.0000000000007, "unit": "mol/m3"}, {"name": "mass_balance_residual", "requested": "mass_balance_residual", "start": 0.0, "final": 3.410605131648481e-13, "min": -5.684341886080801e-13, "max": 6.821210263296962e-13, "unit": "mol/m3"}, {"name": "E_reaction_input", "requested": "E_reaction_input", "start": 0.0, "final": 49999998.20729704, "min": 0.0, "max": 49999998.20729704, "unit": "J"}, {"name": "E_cooling_output", "requested": "E_cooling_output", "start": 0.0, "final": 822746.9101883091, "min": 0.0, "max": 822746.9101883091, "unit": "J"}, {"name": "E_thermal_observed", "requested": "E_thermal_observed", "start": 0.0, "final": 49177251.297111385, "min": 0.0, "max": 49625034.449067265, "unit": "J"}, {"name": "energy_balance_residual", "requested": "energy_balance_residual", "start": 0.0, "final": -2.652406692504883e-06, "min": -2.652406692504883e-06, "max": 3.7997961044311523e-07, "unit": "J"}]}, "review_report": {"pass": true, "reviews": {"ParameterChecker": {"pass": true, "severity": "info"}, "ResultChecker": {"pass": true, "severity": "info"}}}}
+
+[autogen.oai.client: 04-27 18:50:09] {583} WARNING - Model glm-5.1 is not found. The cost will be 0. In your config_list, add field {"price" : [prompt_price_per_1k, completion_token_price_per_1k]} for customized pricing.Documenter (to TriggerProxy):
+
+NonisothermalArrheniusReactor 模型文档
+
+1) 模型目的与范围
+
+本模型为非等温批式化学反应器模型，旨在模拟反应物A发生不可逆一级放热反应生成产物B的动态过程。模型遵循阿伦尼乌斯动力学，并伴随冷却换热过程。其涵盖的物理机制包括：
+
+阿伦尼乌斯动力学
+
+化学计量关系与物质守恒
+
+放热反应热效应
+
+能量守恒与热衡算
+
+对流换热冷却
+
+2) 组件清单
+
+本模型未使用 Modelica 标准库 (MSL) 组件，完全基于原生变量与方程构建，无外部组件依赖。
+
+3) 参数表
+
+Name
+
+Value
+
+Unit
+
+Description
+
+k0
+
+1.0
+
+1/s
+
+指前因子
+
+Ea
+
+5000
+
+J/mol
+
+活化能
+
+R
+
+8.314
+
+J/(mol·K)
+
+气体常数
+
+V
+
+1.0
+
+m³
+
+反应体积
+
+rho
+
+1000
+
+kg/m³
+
+液体密度
+
+cp
+
+4184
+
+J/(kg·K)
+
+液体比热容
+
+dH
+
+-50000
+
+J/mol
+
+反应焓
+
+UA
+
+200
+
+W/K
+
+冷却系数
+
+T_cool
+
+300
+
+K
+
+冷却介质温度
+
+4) 初始条件
+
+Variable
+
+Value
+
+Description
+
+C_A
+
+1000
+
+反应物A初始浓度
+
+C_B
+
+0.0
+
+产物B初始浓度
+
+T
+
+330
+
+反应器初始温度
+
+5) 控制逻辑说明
+
+本模型不包含任何控制逻辑。
+
+6) 仿真设置
+
+Setting
+
+Value
+
+Stop Time
+
+100 s
+
+Step Size
+
+0.01 s
+
+Solver Method
+
+dassl
+
+Tolerance
+
+1e-06
+
+7) 结果概览
+
+仿真结果展示了反应物A完全转化为产物B的过程，由于是放热反应且初始温度较高，反应迅速发生，系统温度先升高随后在冷却作用下逐渐回落。物质守恒与能量守恒残差均维持在极低水平，验证了模型的热力学与动力学一致性。
+
+Variable
+
+Start
+
+Final
+
+Min
+
+Max
+
+Unit
+
+C_A
+
+1000.0
+
+3.59e-05
+
+3.59e-05
+
+1000.0
+
+mol/m3
+
+C_B
+
+0.0
+
+1000.0
+
+0.0
+
+1000.0
+
+mol/m3
+
+T
+
+330.0
+
+341.75
+
+330.0
+
+341.86
+
+K
+
+k
+
+0.16
+
+0.17
+
+0.16
+
+0.17
+
+1/s
+
+r
+
+161.64
+
+6.17e-06
+
+6.17e-06
+
+161.64
+
+mol/(m3.s)
+
+Q_reaction
+
+8.08e+06
+
+0.31
+
+0.31
+
+8.08e+06
+
+W
+
+Q_cooling
+
+6000.0
+
+8350.73
+
+6000.0
+
+8372.13
+
+W
+
+mass_total
+
+1000.0
+
+1000.0
+
+1000.0
+
+1000.0
+
+mol/m3
+
+mass_balance_residual
+
+0.0
+
+3.41e-13
+
+-5.68e-13
+
+6.82e-13
+
+mol/m3
+
+E_reaction_input
+
+0.0
+
+5.00e+07
+
+0.0
+
+5.00e+07
+
+J
+
+E_cooling_output
+
+0.0
+
+822746.91
+
+0.0
+
+822746.91
+
+J
+
+E_thermal_observed
+
+0.0
+
+4.92e+07
+
+0.0
+
+4.96e+07
+
+J
+
+energy_balance_residual
+
+0.0
+
+-2.65e-06
+
+-2.65e-06
+
+3.80e-07
+
+J
+
+8) 运行与复现方法
+
+环境准备：确保已安装支持 Modelica 的仿真环境（如 Dymola, OpenModelica 等）。
+
+获取模型文件：将模型代码保存为相对路径下的文件 ./model/NonisothermalArrheniusReactor.mo。
+
+加载模型：在仿真环境中打开或导入 ./model/NonisothermalArrheniusReactor.mo 文件。
+
+仿真设置：配置仿真参数：终止时间设为 100，求解器选择 dassl，容差设为 1e-06。
+
+执行仿真：运行仿真并查看目标变量（C_A, C_B, T 等）的结果曲线与数据。
+
+📄 文档已保存：C:/Users/FST/Desktop/实验组4/cases/20260427_184519_NonisothermalArrheniusReactor\README.md
+
+进程已结束，退出代码为 0

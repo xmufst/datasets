@@ -1,0 +1,27 @@
+{
+  "pass": true,
+  "reviews": {
+    "ParameterChecker": {
+      "pass": true,
+      "severity": "info",
+      "issues": [
+        {
+          "title": "Parameter declarations missing `unit` attributes",
+          "detail": "Parameters such as m_liquid and cp_liquid specify their units in the string comments but lack the formal `unit` attribute in the declaration. While this does not affect the simulation results, adding the `unit` attribute improves model introspection and enables Modelica tools to perform unit consistency checking.",
+          "evidence": "parameter Real m_liquid = 10 \"liquid mass (kg)\""
+        }
+      ],
+      "recommendations": [
+        "Add `unit` attributes to parameter declarations for better Modelica tooling support, e.g., `parameter Real m_liquid(unit=\"kg\") = 10` and `parameter Real cp_liquid(unit=\"J/(kg.K)\") = 4184`."
+      ]
+    },
+    "EquationChecker": {
+      "pass": true,
+      "severity": "info",
+      "issues": [],
+      "recommendations": [
+        "模型守恒方程与边界条件完全自洽，能量残差（energy_residual）终值约1.5e-9 J，属于DAE求解器正常数值噪声，验证了能量守恒。无需修改。"
+      ]
+    }
+  }
+}

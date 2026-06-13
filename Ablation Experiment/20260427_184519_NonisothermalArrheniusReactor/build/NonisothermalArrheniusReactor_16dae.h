@@ -1,4 +1,0 @@
-#ifndef NonisothermalArrheniusReactor_16DAE_H
-#define NonisothermalArrheniusReactor_16DAE_H
-#endif
-

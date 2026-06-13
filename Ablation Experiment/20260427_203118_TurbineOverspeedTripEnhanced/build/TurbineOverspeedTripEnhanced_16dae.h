@@ -1,4 +1,0 @@
-#ifndef TurbineOverspeedTripEnhanced_16DAE_H
-#define TurbineOverspeedTripEnhanced_16DAE_H
-#endif
-

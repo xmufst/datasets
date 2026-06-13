@@ -1,0 +1,53 @@
+// BoilerFeedwaterRatio_run_all.mos — C16
+system("mkdir build 2>NUL");
+cd("build"); loadFile("../BoilerFeedwaterRatio.mo"); getErrorString();
+buildModel(BoilerFeedwaterRatio, stopTime=500, stepSize=0.01, tolerance=1e-6, method="dassl", outputFormat="mat"); getErrorString();
+cd("..");
+
+// Run 01: R_set=0.80
+system("mkdir C16_run_01 2>NUL"); system("copy BoilerFeedwaterRatio.mo C16_run_01\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C16_run_01/BoilerFeedwaterRatio.mo', [Text.Encoding]::UTF8); $content = $content -replace '(R_set\\s*=\\s*)[\\d.]+', '$1 0.80'; [IO.File]::WriteAllText('C16_run_01/BoilerFeedwaterRatio.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("BoilerFeedwaterRatio.exe -override R_set=0.80,ratioSetpoint.k=0.80 -outputPath ../C16_run_01"); cd(".."); getErrorString();
+
+// Run 02: R_set=0.85
+system("mkdir C16_run_02 2>NUL"); system("copy BoilerFeedwaterRatio.mo C16_run_02\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C16_run_02/BoilerFeedwaterRatio.mo', [Text.Encoding]::UTF8); $content = $content -replace '(R_set\\s*=\\s*)[\\d.]+', '$1 0.85'; [IO.File]::WriteAllText('C16_run_02/BoilerFeedwaterRatio.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("BoilerFeedwaterRatio.exe -override R_set=0.85,ratioSetpoint.k=0.85 -outputPath ../C16_run_02"); cd(".."); getErrorString();
+
+// Run 03: R_set=0.90
+system("mkdir C16_run_03 2>NUL"); system("copy BoilerFeedwaterRatio.mo C16_run_03\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C16_run_03/BoilerFeedwaterRatio.mo', [Text.Encoding]::UTF8); $content = $content -replace '(R_set\\s*=\\s*)[\\d.]+', '$1 0.90'; [IO.File]::WriteAllText('C16_run_03/BoilerFeedwaterRatio.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("BoilerFeedwaterRatio.exe -override R_set=0.90,ratioSetpoint.k=0.90 -outputPath ../C16_run_03"); cd(".."); getErrorString();
+
+// Run 04: R_set=0.95
+system("mkdir C16_run_04 2>NUL"); system("copy BoilerFeedwaterRatio.mo C16_run_04\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C16_run_04/BoilerFeedwaterRatio.mo', [Text.Encoding]::UTF8); $content = $content -replace '(R_set\\s*=\\s*)[\\d.]+', '$1 0.95'; [IO.File]::WriteAllText('C16_run_04/BoilerFeedwaterRatio.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("BoilerFeedwaterRatio.exe -override R_set=0.95,ratioSetpoint.k=0.95 -outputPath ../C16_run_04"); cd(".."); getErrorString();
+
+// Run 05: R_set=1.00 (baseline)
+system("mkdir C16_run_05 2>NUL"); system("copy BoilerFeedwaterRatio.mo C16_run_05\\ >NUL");
+cd("build"); system("BoilerFeedwaterRatio.exe -override R_set=1.00,ratioSetpoint.k=1.00 -outputPath ../C16_run_05"); cd(".."); getErrorString();
+
+// Run 06: R_set=1.05
+system("mkdir C16_run_06 2>NUL"); system("copy BoilerFeedwaterRatio.mo C16_run_06\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C16_run_06/BoilerFeedwaterRatio.mo', [Text.Encoding]::UTF8); $content = $content -replace '(R_set\\s*=\\s*)[\\d.]+', '$1 1.05'; [IO.File]::WriteAllText('C16_run_06/BoilerFeedwaterRatio.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("BoilerFeedwaterRatio.exe -override R_set=1.05,ratioSetpoint.k=1.05 -outputPath ../C16_run_06"); cd(".."); getErrorString();
+
+// Run 07: R_set=1.10
+system("mkdir C16_run_07 2>NUL"); system("copy BoilerFeedwaterRatio.mo C16_run_07\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C16_run_07/BoilerFeedwaterRatio.mo', [Text.Encoding]::UTF8); $content = $content -replace '(R_set\\s*=\\s*)[\\d.]+', '$1 1.10'; [IO.File]::WriteAllText('C16_run_07/BoilerFeedwaterRatio.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("BoilerFeedwaterRatio.exe -override R_set=1.10,ratioSetpoint.k=1.10 -outputPath ../C16_run_07"); cd(".."); getErrorString();
+
+// Run 08: R_set=1.15
+system("mkdir C16_run_08 2>NUL"); system("copy BoilerFeedwaterRatio.mo C16_run_08\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C16_run_08/BoilerFeedwaterRatio.mo', [Text.Encoding]::UTF8); $content = $content -replace '(R_set\\s*=\\s*)[\\d.]+', '$1 1.15'; [IO.File]::WriteAllText('C16_run_08/BoilerFeedwaterRatio.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("BoilerFeedwaterRatio.exe -override R_set=1.15,ratioSetpoint.k=1.15 -outputPath ../C16_run_08"); cd(".."); getErrorString();
+
+// Run 09: R_set=1.20
+system("mkdir C16_run_09 2>NUL"); system("copy BoilerFeedwaterRatio.mo C16_run_09\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C16_run_09/BoilerFeedwaterRatio.mo', [Text.Encoding]::UTF8); $content = $content -replace '(R_set\\s*=\\s*)[\\d.]+', '$1 1.20'; [IO.File]::WriteAllText('C16_run_09/BoilerFeedwaterRatio.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("BoilerFeedwaterRatio.exe -override R_set=1.20,ratioSetpoint.k=1.20 -outputPath ../C16_run_09"); cd(".."); getErrorString();
+
+// Run 10: R_set=1.00 (repeat baseline)
+system("mkdir C16_run_10 2>NUL"); system("copy BoilerFeedwaterRatio.mo C16_run_10\\ >NUL");
+cd("build"); system("BoilerFeedwaterRatio.exe -override R_set=1.00,ratioSetpoint.k=1.00 -outputPath ../C16_run_10"); cd(".."); getErrorString();

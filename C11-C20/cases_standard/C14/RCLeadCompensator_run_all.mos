@@ -1,0 +1,54 @@
+// RCLeadCompensator_run_all.mos — C14
+system("mkdir build 2>NUL");
+cd("build"); loadFile("../RCLeadCompensator.mo"); getErrorString();
+buildModel(RCLeadCompensator, stopTime=5, stepSize=0.01, tolerance=1e-6, method="dassl", outputFormat="mat"); getErrorString();
+cd("..");
+
+// Run 01: V_ref=1.0
+system("mkdir C14_run_01 2>NUL"); system("copy RCLeadCompensator.mo C14_run_01\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C14_run_01/RCLeadCompensator.mo', [Text.Encoding]::UTF8); $content = $content -replace '(V_ref\\s*=\\s*)[\\d.]+', '$1 1.0'; [IO.File]::WriteAllText('C14_run_01/RCLeadCompensator.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("RCLeadCompensator.exe -override V_ref=1.0,reference.height=1.0 -outputPath ../C14_run_01"); cd(".."); getErrorString();
+
+// Run 02: V_ref=2.0
+system("mkdir C14_run_02 2>NUL"); system("copy RCLeadCompensator.mo C14_run_02\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C14_run_02/RCLeadCompensator.mo', [Text.Encoding]::UTF8); $content = $content -replace '(V_ref\\s*=\\s*)[\\d.]+', '$1 2.0'; [IO.File]::WriteAllText('C14_run_02/RCLeadCompensator.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("RCLeadCompensator.exe -override V_ref=2.0,reference.height=2.0 -outputPath ../C14_run_02"); cd(".."); getErrorString();
+
+// Run 03: V_ref=3.0
+system("mkdir C14_run_03 2>NUL"); system("copy RCLeadCompensator.mo C14_run_03\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C14_run_03/RCLeadCompensator.mo', [Text.Encoding]::UTF8); $content = $content -replace '(V_ref\\s*=\\s*)[\\d.]+', '$1 3.0'; [IO.File]::WriteAllText('C14_run_03/RCLeadCompensator.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("RCLeadCompensator.exe -override V_ref=3.0,reference.height=3.0 -outputPath ../C14_run_03"); cd(".."); getErrorString();
+
+// Run 04: V_ref=4.0
+system("mkdir C14_run_04 2>NUL"); system("copy RCLeadCompensator.mo C14_run_04\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C14_run_04/RCLeadCompensator.mo', [Text.Encoding]::UTF8); $content = $content -replace '(V_ref\\s*=\\s*)[\\d.]+', '$1 4.0'; [IO.File]::WriteAllText('C14_run_04/RCLeadCompensator.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("RCLeadCompensator.exe -override V_ref=4.0,reference.height=4.0 -outputPath ../C14_run_04"); cd(".."); getErrorString();
+
+// Run 05: V_ref=5.0 (baseline)
+system("mkdir C14_run_05 2>NUL"); system("copy RCLeadCompensator.mo C14_run_05\\ >NUL");
+cd("build"); system("RCLeadCompensator.exe -override V_ref=5.0,reference.height=5.0 -outputPath ../C14_run_05"); cd(".."); getErrorString();
+
+// Run 06: V_ref=6.0
+system("mkdir C14_run_06 2>NUL"); system("copy RCLeadCompensator.mo C14_run_06\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C14_run_06/RCLeadCompensator.mo', [Text.Encoding]::UTF8); $content = $content -replace '(V_ref\\s*=\\s*)[\\d.]+', '$1 6.0'; [IO.File]::WriteAllText('C14_run_06/RCLeadCompensator.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("RCLeadCompensator.exe -override V_ref=6.0,reference.height=6.0 -outputPath ../C14_run_06"); cd(".."); getErrorString();
+
+// Run 07: V_ref=7.0
+system("mkdir C14_run_07 2>NUL"); system("copy RCLeadCompensator.mo C14_run_07\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C14_run_07/RCLeadCompensator.mo', [Text.Encoding]::UTF8); $content = $content -replace '(V_ref\\s*=\\s*)[\\d.]+', '$1 7.0'; [IO.File]::WriteAllText('C14_run_07/RCLeadCompensator.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("RCLeadCompensator.exe -override V_ref=7.0,reference.height=7.0 -outputPath ../C14_run_07"); cd(".."); getErrorString();
+
+// Run 08: V_ref=8.0
+system("mkdir C14_run_08 2>NUL"); system("copy RCLeadCompensator.mo C14_run_08\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C14_run_08/RCLeadCompensator.mo', [Text.Encoding]::UTF8); $content = $content -replace '(V_ref\\s*=\\s*)[\\d.]+', '$1 8.0'; [IO.File]::WriteAllText('C14_run_08/RCLeadCompensator.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("RCLeadCompensator.exe -override V_ref=8.0,reference.height=8.0 -outputPath ../C14_run_08"); cd(".."); getErrorString();
+
+// Run 09: V_ref=9.0
+system("mkdir C14_run_09 2>NUL"); system("copy RCLeadCompensator.mo C14_run_09\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C14_run_09/RCLeadCompensator.mo', [Text.Encoding]::UTF8); $content = $content -replace '(V_ref\\s*=\\s*)[\\d.]+', '$1 9.0'; [IO.File]::WriteAllText('C14_run_09/RCLeadCompensator.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("RCLeadCompensator.exe -override V_ref=9.0,reference.height=9.0 -outputPath ../C14_run_09"); cd(".."); getErrorString();
+
+// Run 10: V_ref=10.0
+system("mkdir C14_run_10 2>NUL"); system("copy RCLeadCompensator.mo C14_run_10\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C14_run_10/RCLeadCompensator.mo', [Text.Encoding]::UTF8); $content = $content -replace '(V_ref\\s*=\\s*)[\\d.]+', '$1 10.0'; [IO.File]::WriteAllText('C14_run_10/RCLeadCompensator.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("RCLeadCompensator.exe -override V_ref=10.0,reference.height=10.0 -outputPath ../C14_run_10"); cd(".."); getErrorString();

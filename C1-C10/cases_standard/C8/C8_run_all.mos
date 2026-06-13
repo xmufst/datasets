@@ -1,0 +1,58 @@
+// C8_run_all.mos — C8
+// Build artifacts → build/    Runtime output → C8_run_XX/
+// Usage: cd to C8重力排放水箱/, then: omc C8_run_all.mos
+
+system("mkdir build 2>NUL");
+cd("build");
+loadFile("../GravityTank.mo"); getErrorString();
+buildModel(GravityTank, stopTime=10, stepSize=0.01, method="dassl", tolerance=1e-6, outputFormat="mat"); getErrorString();
+cd("..");
+
+// Run 01: Baseline pure drain (nearly empties at 10.47s)
+system("mkdir C8_run_01 2>NUL"); system("copy GravityTank.mo C8_run_01\\ >NUL");
+cd("build"); system("GravityTank.exe -override A_tank=0.1,A_orifice=0.01,Cd=0.61,g=9.81,h0=2.0,Q_in=0.0 -outputPath ../C8_run_01"); cd(".."); getErrorString();
+
+// Run 02: Low initial level (empties at ~7.4s)
+system("mkdir C8_run_02 2>NUL"); system("copy GravityTank.mo C8_run_02\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C8_run_02/GravityTank.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h0\\s*=\\s*)[\\d.]+', '$1 1.0'; [IO.File]::WriteAllText('C8_run_02/GravityTank.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("GravityTank.exe -override h0=1.0 -outputPath ../C8_run_02"); cd(".."); getErrorString();
+
+// Run 03: High initial level (still draining at 10s)
+system("mkdir C8_run_03 2>NUL"); system("copy GravityTank.mo C8_run_03\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C8_run_03/GravityTank.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h0\\s*=\\s*)[\\d.]+', '$1 4.0'; [IO.File]::WriteAllText('C8_run_03/GravityTank.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("GravityTank.exe -override h0=4.0 -outputPath ../C8_run_03"); cd(".."); getErrorString();
+
+// Run 04: Large orifice, fast drain (empties at ~5.2s)
+system("mkdir C8_run_04 2>NUL"); system("copy GravityTank.mo C8_run_04\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C8_run_04/GravityTank.mo', [Text.Encoding]::UTF8); $content = $content -replace '(A_orifice\\s*=\\s*)[\\d.]+', '$1 0.02'; [IO.File]::WriteAllText('C8_run_04/GravityTank.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("GravityTank.exe -override A_orifice=0.02 -outputPath ../C8_run_04"); cd(".."); getErrorString();
+
+// Run 05: Small orifice, slow drain
+system("mkdir C8_run_05 2>NUL"); system("copy GravityTank.mo C8_run_05\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C8_run_05/GravityTank.mo', [Text.Encoding]::UTF8); $content = $content -replace '(A_orifice\\s*=\\s*)[\\d.]+', '$1 0.005'; [IO.File]::WriteAllText('C8_run_05/GravityTank.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("GravityTank.exe -override A_orifice=0.005 -outputPath ../C8_run_05"); cd(".."); getErrorString();
+
+// Run 06: Large tank, slow drain (same h curve as Run05)
+system("mkdir C8_run_06 2>NUL"); system("copy GravityTank.mo C8_run_06\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C8_run_06/GravityTank.mo', [Text.Encoding]::UTF8); $content = $content -replace '(A_tank\\s*=\\s*)[\\d.]+', '$1 0.2'; [IO.File]::WriteAllText('C8_run_06/GravityTank.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("GravityTank.exe -override A_tank=0.2 -outputPath ../C8_run_06"); cd(".."); getErrorString();
+
+// Run 07: Drain with inflow (h0=2.0 drains to h_ss=0.308)
+system("mkdir C8_run_07 2>NUL"); system("copy GravityTank.mo C8_run_07\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C8_run_07/GravityTank.mo', [Text.Encoding]::UTF8); $content = $content -replace '(Q_in\\s*=\\s*)[\\d.]+', '$1 0.015'; [IO.File]::WriteAllText('C8_run_07/GravityTank.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("GravityTank.exe -override Q_in=0.015 -outputPath ../C8_run_07"); cd(".."); getErrorString();
+
+// Run 08: Fill up with inflow (h0=0.2 fills to h_ss=0.548)
+system("mkdir C8_run_08 2>NUL"); system("copy GravityTank.mo C8_run_08\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C8_run_08/GravityTank.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h0\\s*=\\s*)[\\d.]+', '$1 0.2' -replace '(Q_in\\s*=\\s*)[\\d.]+', '$1 0.02'; [IO.File]::WriteAllText('C8_run_08/GravityTank.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("GravityTank.exe -override h0=0.2,Q_in=0.02 -outputPath ../C8_run_08"); cd(".."); getErrorString();
+
+// Run 09: Small tank, fast drain (empties at ~5.2s)
+system("mkdir C8_run_09 2>NUL"); system("copy GravityTank.mo C8_run_09\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C8_run_09/GravityTank.mo', [Text.Encoding]::UTF8); $content = $content -replace '(A_tank\\s*=\\s*)[\\d.]+', '$1 0.05'; [IO.File]::WriteAllText('C8_run_09/GravityTank.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("GravityTank.exe -override A_tank=0.05 -outputPath ../C8_run_09"); cd(".."); getErrorString();
+
+// Run 10: Combined (large tank, small orifice, with inflow)
+system("mkdir C8_run_10 2>NUL"); system("copy GravityTank.mo C8_run_10\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C8_run_10/GravityTank.mo', [Text.Encoding]::UTF8); $content = $content -replace '(A_tank\\s*=\\s*)[\\d.]+', '$1 0.15' -replace '(A_orifice\\s*=\\s*)[\\d.]+', '$1 0.005' -replace '(h0\\s*=\\s*)[\\d.]+', '$1 3.0' -replace '(Q_in\\s*=\\s*)[\\d.]+', '$1 0.008'; [IO.File]::WriteAllText('C8_run_10/GravityTank.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("GravityTank.exe -override A_tank=0.15,A_orifice=0.005,h0=3.0,Q_in=0.008 -outputPath ../C8_run_10"); cd(".."); getErrorString();

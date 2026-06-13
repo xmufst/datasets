@@ -1,0 +1,58 @@
+// C5_run_all.mos — C5
+// Build artifacts → build/    Runtime output → C5_run_XX/
+// Usage: cd to C5双弹簧串联系统/, then: omc C5_run_all.mos
+
+system("mkdir build 2>NUL");
+cd("build");
+loadFile("../DualSpringMass.mo"); getErrorString();
+buildModel(DualSpringMass, stopTime=10, stepSize=0.01, method="dassl", tolerance=1e-6, outputFormat="mat"); getErrorString();
+cd("..");
+
+// Run 01: Baseline (equal masses, only m1 displaced)
+system("mkdir C5_run_01 2>NUL"); system("copy DualSpringMass.mo C5_run_01\\ >NUL");
+cd("build"); system("DualSpringMass.exe -override m1=1.0,m2=1.0,k1=100.0,k2=50.0,x1_0=0.5,x2_0=0.0,v1_0=0.0,v2_0=0.0 -outputPath ../C5_run_01"); cd(".."); getErrorString();
+
+// Run 02: Only m2 displaced (energy starts in m2)
+system("mkdir C5_run_02 2>NUL"); system("copy DualSpringMass.mo C5_run_02\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C5_run_02/DualSpringMass.mo', [Text.Encoding]::UTF8); $content = $content -replace '(x1_0\\s*=\\s*)[\\d.]+', '$1 0.0' -replace '(x2_0\\s*=\\s*)[\\d.]+', '$1 0.5'; [IO.File]::WriteAllText('C5_run_02/DualSpringMass.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("DualSpringMass.exe -override x1_0=0.0,x2_0=0.5 -outputPath ../C5_run_02"); cd(".."); getErrorString();
+
+// Run 03: Both displaced in same direction
+system("mkdir C5_run_03 2>NUL"); system("copy DualSpringMass.mo C5_run_03\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C5_run_03/DualSpringMass.mo', [Text.Encoding]::UTF8); $content = $content -replace '(x1_0\\s*=\\s*)[\\d.]+', '$1 0.3' -replace '(x2_0\\s*=\\s*)[\\d.]+', '$1 0.3'; [IO.File]::WriteAllText('C5_run_03/DualSpringMass.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("DualSpringMass.exe -override x1_0=0.3,x2_0=0.3 -outputPath ../C5_run_03"); cd(".."); getErrorString();
+
+// Run 04: Both displaced in opposite directions
+system("mkdir C5_run_04 2>NUL"); system("copy DualSpringMass.mo C5_run_04\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C5_run_04/DualSpringMass.mo', [Text.Encoding]::UTF8); $content = $content -replace '(x1_0\\s*=\\s*)[\\d.]+', '$1 0.3' -replace '(x2_0\\s*=\\s*)[\\d.]+', '$1 -0.3'; [IO.File]::WriteAllText('C5_run_04/DualSpringMass.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("DualSpringMass.exe -override x1_0=0.3,x2_0=-0.3 -outputPath ../C5_run_04"); cd(".."); getErrorString();
+
+// Run 05: Unequal masses (m2 heavier)
+system("mkdir C5_run_05 2>NUL"); system("copy DualSpringMass.mo C5_run_05\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C5_run_05/DualSpringMass.mo', [Text.Encoding]::UTF8); $content = $content -replace '(m2\\s*=\\s*)[\\d.]+', '$1 3.0'; [IO.File]::WriteAllText('C5_run_05/DualSpringMass.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("DualSpringMass.exe -override m2=3.0 -outputPath ../C5_run_05"); cd(".."); getErrorString();
+
+// Run 06: Equal springs
+system("mkdir C5_run_06 2>NUL"); system("copy DualSpringMass.mo C5_run_06\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C5_run_06/DualSpringMass.mo', [Text.Encoding]::UTF8); $content = $content -replace '(k2\\s*=\\s*)[\\d.]+', '$1 100.0'; [IO.File]::WriteAllText('C5_run_06/DualSpringMass.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("DualSpringMass.exe -override k2=100.0 -outputPath ../C5_run_06"); cd(".."); getErrorString();
+
+// Run 07: Weak coupling spring (k2 << k1)
+system("mkdir C5_run_07 2>NUL"); system("copy DualSpringMass.mo C5_run_07\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C5_run_07/DualSpringMass.mo', [Text.Encoding]::UTF8); $content = $content -replace '(k2\\s*=\\s*)[\\d.]+', '$1 10.0'; [IO.File]::WriteAllText('C5_run_07/DualSpringMass.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("DualSpringMass.exe -override k2=10.0 -outputPath ../C5_run_07"); cd(".."); getErrorString();
+
+// Run 08: Initial velocity on m2
+system("mkdir C5_run_08 2>NUL"); system("copy DualSpringMass.mo C5_run_08\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C5_run_08/DualSpringMass.mo', [Text.Encoding]::UTF8); $content = $content -replace '(v2_0\\s*=\\s*)[\\d.]+', '$1 5.0'; [IO.File]::WriteAllText('C5_run_08/DualSpringMass.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("DualSpringMass.exe -override v2_0=5.0 -outputPath ../C5_run_08"); cd(".."); getErrorString();
+
+// Run 09: Combined A (heavy m1, stiff coupling)
+system("mkdir C5_run_09 2>NUL"); system("copy DualSpringMass.mo C5_run_09\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C5_run_09/DualSpringMass.mo', [Text.Encoding]::UTF8); $content = $content -replace '(m1\\s*=\\s*)[\\d.]+', '$1 2.0' -replace '(k2\\s*=\\s*)[\\d.]+', '$1 80.0' -replace '(x1_0\\s*=\\s*)[\\d.]+', '$1 0.3'; [IO.File]::WriteAllText('C5_run_09/DualSpringMass.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("DualSpringMass.exe -override m1=2.0,k2=80.0,x1_0=0.3 -outputPath ../C5_run_09"); cd(".."); getErrorString();
+
+// Run 10: Combined B (light m2, weak coupling, both displaced)
+system("mkdir C5_run_10 2>NUL"); system("copy DualSpringMass.mo C5_run_10\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C5_run_10/DualSpringMass.mo', [Text.Encoding]::UTF8); $content = $content -replace '(m2\\s*=\\s*)[\\d.]+', '$1 0.5' -replace '(k2\\s*=\\s*)[\\d.]+', '$1 20.0' -replace '(x1_0\\s*=\\s*)[\\d.]+', '$1 0.4' -replace '(x2_0\\s*=\\s*)[\\d.]+', '$1 0.2'; [IO.File]::WriteAllText('C5_run_10/DualSpringMass.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("DualSpringMass.exe -override m2=0.5,k2=20.0,x1_0=0.4,x2_0=0.2 -outputPath ../C5_run_10"); cd(".."); getErrorString();

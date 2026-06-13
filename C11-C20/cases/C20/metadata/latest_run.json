@@ -1,0 +1,21 @@
+{
+  "case_root": "C:/Users/FST/Desktop/AFM/cases",
+  "case_id": "20260410_154723_CascadeTankPI",
+  "case_dir": "C:/Users/FST/Desktop/AFM/cases/20260410_154723_CascadeTankPI",
+  "model_name": "CascadeTankPI",
+  "run_tag": "20260410_155147",
+  "timestamp": "2026-04-10T15:51:53",
+  "saved_sources": [
+    "C:/Users/FST/Desktop/AFM/cases/20260410_154723_CascadeTankPI/model/CascadeTankPI.mo"
+  ],
+  "result_mat": "C:/Users/FST/Desktop/AFM/cases/20260410_154723_CascadeTankPI/results/CascadeTankPI_20260410_155147_res.mat",
+  "init_xml": "C:/Users/FST/Desktop/AFM/cases/20260410_154723_CascadeTankPI/results/CascadeTankPI_20260410_155147_init.xml",
+  "overrides": {
+    "stop_time": 600.0,
+    "parameter_overrides": {}
+  },
+  "debug": {
+    "cmd": "C:/Users/FST/Desktop/AFM/cases/20260410_154723_CascadeTankPI/build/CascadeTankPI.exe -override=stopTime=600,numberOfIntervals=600,tolerance=1e-06,method=dassl",
+    "exit_code": 0
+  }
+}

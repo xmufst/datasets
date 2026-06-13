@@ -1,0 +1,367 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+
+<!-- description of the model interface using an extention of the FMI standard -->
+<fmiModelDescription
+  fmiVersion                          = "1.0"
+
+  modelName                           = "TurbineOverspeedTripEnhanced"
+  modelIdentifier                     = "TurbineOverspeedTripEnhanced"
+
+  OPENMODELICAHOME                    = "D:/software/OpenModelica1.25.5-64bit"
+
+  guid                                = "{bea7262c-49dc-492f-b434-dc02de642726}"
+
+  description                         = ""
+  generationTool                      = "OpenModelica Compiler OpenModelica v1.25.5 (64-bit)"
+  generationDateAndTime               = "2026-04-27T20:36:05Z"
+
+  variableNamingConvention            = "structured"
+
+  numberOfEventIndicators             = "3"  cmt_numberOfEventIndicators             = "NG:       number of zero crossings,                           FMI"
+  numberOfTimeEvents                  = "0"  cmt_numberOfTimeEvents                  = "NG_SAM:   number of zero crossings that are samples,          OMC"
+
+  numberOfInputVariables              = "0"  cmt_numberOfInputVariables              = "NI:       number of inputvar on topmodel,                     OMC"
+  numberOfOutputVariables             = "0"  cmt_numberOfOutputVariables             = "NO:       number of outputvar on topmodel,                    OMC"
+
+  numberOfExternalObjects             = "0"  cmt_numberOfExternalObjects             = "NEXT:     number of external objects,                         OMC"
+  numberOfFunctions                   = "0"  cmt_numberOfFunctions                   = "NFUNC:    number of functions used by the simulation,         OMC"
+
+  numberOfContinuousStates            = "3"  cmt_numberOfContinuousStates            = "NX:       number of states,                                   FMI"
+  numberOfRealAlgebraicVariables      = "4"  cmt_numberOfRealAlgebraicVariables      = "NY:       number of real variables,                           OMC"
+  numberOfRealAlgebraicAliasVariables = "0"  cmt_numberOfRealAlgebraicAliasVariables = "NA:       number of alias variables,                          OMC"
+  numberOfRealParameters              = "11"  cmt_numberOfRealParameters              = "NP:       number of parameters,                               OMC"
+
+  numberOfIntegerAlgebraicVariables   = "0"  cmt_numberOfIntegerAlgebraicVariables   = "NYINT:    number of alg. int variables,                       OMC"
+  numberOfIntegerAliasVariables       = "0"  cmt_numberOfIntegerAliasVariables       = "NAINT:    number of alias int variables,                      OMC"
+  numberOfIntegerParameters           = "0"  cmt_numberOfIntegerParameters           = "NPINT:    number of int parameters,                           OMC"
+
+  numberOfStringAlgebraicVariables    = "0"  cmt_numberOfStringAlgebraicVariables    = "NYSTR:    number of alg. string variables,                    OMC"
+  numberOfStringAliasVariables        = "0"  cmt_numberOfStringAliasVariables        = "NASTR:    number of alias string variables,                   OMC"
+  numberOfStringParameters            = "0"  cmt_numberOfStringParameters            = "NPSTR:    number of string parameters,                        OMC"
+
+  numberOfBooleanAlgebraicVariables   = "4"  cmt_numberOfBooleanAlgebraicVariables   = "NYBOOL:   number of alg. bool variables,                      OMC"
+  numberOfBooleanAliasVariables       = "0"  cmt_numberOfBooleanAliasVariables       = "NABOOL:   number of alias bool variables,                     OMC"
+  numberOfBooleanParameters           = "0"  cmt_numberOfBooleanParameters           = "NPBOOL:   number of bool parameters,                          OMC" >
+
+
+  <!-- startTime, stopTime, tolerance are FMI specific, all others are OMC specific -->
+  <DefaultExperiment
+    startTime      = "0"
+    stopTime       = "20"
+    stepSize       = "0.001"
+    tolerance      = "1e-06"
+    solver         = "dassl"
+    outputFormat   = "mat"
+    variableFilter = ".*" />
+
+  <!-- variables in the model -->
+  <ModelVariables>
+
+  <ScalarVariable
+    name = "omega"
+    valueReference = "1000"
+    description = "Turbine speed"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "14" startColumn = "3" endLine = "14" endColumn = "72" fileWritable = "true">
+    <Real start="100.0" fixed="true" useNominal="false" unit="rad/s" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "trip_timer"
+    valueReference = "1001"
+    description = "Overspeed duration timer"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "1" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "16" startColumn = "3" endLine = "16" endColumn = "82" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" unit="s" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "valve_opening"
+    valueReference = "1002"
+    description = "Main steam valve actual opening"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "2" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "15" startColumn = "3" endLine = "15" endColumn = "94" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" unit="1" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(omega)"
+    valueReference = "1003"
+    description = "der(Turbine speed)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "14" startColumn = "3" endLine = "14" endColumn = "72" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="s-2" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(trip_timer)"
+    valueReference = "1004"
+    description = "der(Overspeed duration timer)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "16" startColumn = "3" endLine = "16" endColumn = "82" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="1" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(valve_opening)"
+    valueReference = "1005"
+    description = "der(Main steam valve actual opening)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "15" startColumn = "3" endLine = "15" endColumn = "94" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="Hz" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "tau_disturb"
+    valueReference = "1006"
+    description = "Equivalent disturbance torque"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "22" startColumn = "3" endLine = "22" endColumn = "65" fileWritable = "true">
+    <Real start="0.0" fixed="false" useNominal="false" unit="N.m" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "tau_in"
+    valueReference = "1007"
+    description = "Steam input torque"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "20" startColumn = "3" endLine = "20" endColumn = "49" fileWritable = "true">
+    <Real start="1400.0" fixed="false" useNominal="false" unit="N.m" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "tau_load"
+    valueReference = "1008"
+    description = "Load torque"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "21" startColumn = "3" endLine = "21" endColumn = "44" fileWritable = "true">
+    <Real start="1000.0" fixed="false" useNominal="false" unit="N.m" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "valve_target"
+    valueReference = "1009"
+    description = "Valve target opening"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "3" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "19" startColumn = "3" endLine = "19" endColumn = "55" fileWritable = "true">
+    <Real start="1.0" fixed="false" useNominal="false" unit="1" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "J"
+    valueReference = "1010"
+    description = "Rotor inertia (kg.m2)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "5" startColumn = "3" endLine = "5" endColumn = "48" fileWritable = "true">
+    <Real start="10.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "T_valve"
+    valueReference = "1011"
+    description = "Valve time constant (s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "1" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "8" startColumn = "3" endLine = "8" endColumn = "58" fileWritable = "true">
+    <Real start="0.05" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "d_load"
+    valueReference = "1012"
+    description = "Load damping coefficient (N.m.s/rad)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "2" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "7" startColumn = "3" endLine = "7" endColumn = "68" fileWritable = "true">
+    <Real start="10.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "omega_rated"
+    valueReference = "1013"
+    description = "Rated speed (rad/s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "3" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "2" startColumn = "3" endLine = "2" endColumn = "57" fileWritable = "true">
+    <Real start="100.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "omega_trip"
+    valueReference = "1014"
+    description = "Overspeed trip threshold (rad/s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "4" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "3" startColumn = "3" endLine = "3" endColumn = "69" fileWritable = "true">
+    <Real start="110.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "t_long_dur"
+    valueReference = "1015"
+    description = "Long overspeed test duration (s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "5" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "12" startColumn = "3" endLine = "12" endColumn = "69" fileWritable = "true">
+    <Real start="0.3" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "t_long_start"
+    valueReference = "1016"
+    description = "Long overspeed test start time (s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "6" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "11" startColumn = "3" endLine = "11" endColumn = "73" fileWritable = "true">
+    <Real start="3.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "t_short_dur"
+    valueReference = "1017"
+    description = "Short overspeed test duration (s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "7" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "10" startColumn = "3" endLine = "10" endColumn = "72" fileWritable = "true">
+    <Real start="0.05" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "t_short_start"
+    valueReference = "1018"
+    description = "Short overspeed test start time (s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "8" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "9" startColumn = "3" endLine = "9" endColumn = "75" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "tau_steam_rated"
+    valueReference = "1019"
+    description = "Rated steam torque (N.m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "9" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "6" startColumn = "3" endLine = "6" endColumn = "67" fileWritable = "true">
+    <Real start="1400.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "trip_delay"
+    valueReference = "1020"
+    description = "Trip delay time (s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "10" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "4" startColumn = "3" endLine = "4" endColumn = "56" fileWritable = "true">
+    <Real start="0.1" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition1"
+    valueReference = "1021"
+    description = "trip_timer &gt;= trip_delay and not pre(trip_latched)"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "bAlg"
+    isProtected = "true" hideResult = "true" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "55" startColumn = "5" endLine = "55" endColumn = "24" fileWritable = "true">
+    <Boolean start="false" fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "$whenCondition2"
+    valueReference = "1022"
+    description = "not overspeed and not pre(trip_latched)"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "bAlg"
+    isProtected = "true" hideResult = "true" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "50" startColumn = "5" endLine = "50" endColumn = "26" fileWritable = "true">
+    <Boolean fixed="true" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "overspeed"
+    valueReference = "1023"
+    description = "Overspeed detection signal"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "bAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "18" startColumn = "3" endLine = "18" endColumn = "49" fileWritable = "true">
+    <Boolean start="false" fixed="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "trip_latched"
+    valueReference = "1024"
+    description = "Trip latch signal"
+    variability = "discrete" isDiscrete = "true"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "3" classType = "bAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/实验组6/cases/20260427_203118_TurbineOverspeedTripEnhanced/build/src/TurbineOverspeedTripEnhanced.mo" startLine = "17" startColumn = "3" endLine = "17" endColumn = "72" fileWritable = "true">
+    <Boolean start="false" fixed="true" />
+  </ScalarVariable>
+
+
+
+  </ModelVariables>
+
+
+</fmiModelDescription>
+

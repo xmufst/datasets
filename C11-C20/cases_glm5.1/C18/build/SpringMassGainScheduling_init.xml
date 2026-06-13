@@ -1,0 +1,379 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+
+<!-- description of the model interface using an extention of the FMI standard -->
+<fmiModelDescription
+  fmiVersion                          = "1.0"
+
+  modelName                           = "SpringMassGainScheduling"
+  modelIdentifier                     = "SpringMassGainScheduling"
+
+  OPENMODELICAHOME                    = "D:/software/OpenModelica1.25.5-64bit"
+
+  guid                                = "{4fc5dbcd-4c0b-4774-b470-836f0ce3d3f2}"
+
+  description                         = ""
+  generationTool                      = "OpenModelica Compiler OpenModelica v1.25.5 (64-bit)"
+  generationDateAndTime               = "2026-04-09T14:49:25Z"
+
+  variableNamingConvention            = "structured"
+
+  numberOfEventIndicators             = "3"  cmt_numberOfEventIndicators             = "NG:       number of zero crossings,                           FMI"
+  numberOfTimeEvents                  = "0"  cmt_numberOfTimeEvents                  = "NG_SAM:   number of zero crossings that are samples,          OMC"
+
+  numberOfInputVariables              = "0"  cmt_numberOfInputVariables              = "NI:       number of inputvar on topmodel,                     OMC"
+  numberOfOutputVariables             = "0"  cmt_numberOfOutputVariables             = "NO:       number of outputvar on topmodel,                    OMC"
+
+  numberOfExternalObjects             = "0"  cmt_numberOfExternalObjects             = "NEXT:     number of external objects,                         OMC"
+  numberOfFunctions                   = "0"  cmt_numberOfFunctions                   = "NFUNC:    number of functions used by the simulation,         OMC"
+
+  numberOfContinuousStates            = "2"  cmt_numberOfContinuousStates            = "NX:       number of states,                                   FMI"
+  numberOfRealAlgebraicVariables      = "7"  cmt_numberOfRealAlgebraicVariables      = "NY:       number of real variables,                           OMC"
+  numberOfRealAlgebraicAliasVariables = "1"  cmt_numberOfRealAlgebraicAliasVariables = "NA:       number of alias variables,                          OMC"
+  numberOfRealParameters              = "14"  cmt_numberOfRealParameters              = "NP:       number of parameters,                               OMC"
+
+  numberOfIntegerAlgebraicVariables   = "0"  cmt_numberOfIntegerAlgebraicVariables   = "NYINT:    number of alg. int variables,                       OMC"
+  numberOfIntegerAliasVariables       = "0"  cmt_numberOfIntegerAliasVariables       = "NAINT:    number of alias int variables,                      OMC"
+  numberOfIntegerParameters           = "0"  cmt_numberOfIntegerParameters           = "NPINT:    number of int parameters,                           OMC"
+
+  numberOfStringAlgebraicVariables    = "0"  cmt_numberOfStringAlgebraicVariables    = "NYSTR:    number of alg. string variables,                    OMC"
+  numberOfStringAliasVariables        = "0"  cmt_numberOfStringAliasVariables        = "NASTR:    number of alias string variables,                   OMC"
+  numberOfStringParameters            = "0"  cmt_numberOfStringParameters            = "NPSTR:    number of string parameters,                        OMC"
+
+  numberOfBooleanAlgebraicVariables   = "0"  cmt_numberOfBooleanAlgebraicVariables   = "NYBOOL:   number of alg. bool variables,                      OMC"
+  numberOfBooleanAliasVariables       = "0"  cmt_numberOfBooleanAliasVariables       = "NABOOL:   number of alias bool variables,                     OMC"
+  numberOfBooleanParameters           = "0"  cmt_numberOfBooleanParameters           = "NPBOOL:   number of bool parameters,                          OMC" >
+
+
+  <!-- startTime, stopTime, tolerance are FMI specific, all others are OMC specific -->
+  <DefaultExperiment
+    startTime      = "0"
+    stopTime       = "20"
+    stepSize       = "0.01"
+    tolerance      = "1e-06"
+    solver         = "dassl"
+    outputFormat   = "mat"
+    variableFilter = ".*" />
+
+  <!-- variables in the model -->
+  <ModelVariables>
+
+  <ScalarVariable
+    name = "v"
+    valueReference = "1000"
+    description = "Mass velocity"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "17" startColumn = "3" endLine = "17" endColumn = "52" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" unit="m/s" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "x"
+    valueReference = "1001"
+    description = "Mass position"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "1" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "16" startColumn = "3" endLine = "16" endColumn = "50" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" unit="m" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(v)"
+    valueReference = "1002"
+    description = "der(Mass velocity)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "17" startColumn = "3" endLine = "17" endColumn = "52" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="m.s-2" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(x)"
+    valueReference = "1003"
+    description = "der(Mass position)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "16" startColumn = "3" endLine = "16" endColumn = "50" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="m.s-1" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "E_kinetic"
+    valueReference = "1004"
+    description = "Kinetic energy"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "23" startColumn = "3" endLine = "23" endColumn = "46" fileWritable = "true">
+    <Real start="0.0" fixed="false" useNominal="false" unit="J" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "F_control"
+    valueReference = "1005"
+    description = "Control force"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "20" startColumn = "3" endLine = "20" endColumn = "45" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="N" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "F_spring"
+    valueReference = "1006"
+    description = "Nonlinear spring force"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "21" startColumn = "3" endLine = "21" endColumn = "53" fileWritable = "true">
+    <Real start="0.0" fixed="false" useNominal="false" unit="N" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Kp_current"
+    valueReference = "1007"
+    description = "Current proportional gain"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "3" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "22" startColumn = "3" endLine = "22" endColumn = "60" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="N/m" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "a"
+    valueReference = "1008"
+    description = "Acceleration"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "4" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "18" startColumn = "3" endLine = "18" endColumn = "40" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="m/s^2" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "x_error"
+    valueReference = "1009"
+    description = "Position tracking error"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "5" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "19" startColumn = "3" endLine = "19" endColumn = "53" fileWritable = "true">
+    <Real start="1.0" fixed="false" useNominal="false" unit="m" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "x_ref_signal"
+    valueReference = "1010"
+    description = "Reference position signal from Step block"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "6" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "32" startColumn = "3" endLine = "32" endColumn = "64" fileWritable = "true">
+    <Real start="1.0" fixed="false" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Kd"
+    valueReference = "1011"
+    description = "Derivative gain (unified) (N·s/m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "11" startColumn = "3" endLine = "11" endColumn = "63" fileWritable = "true">
+    <Real start="5.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Kp_high"
+    valueReference = "1012"
+    description = "High zone proportional gain (|x| ≥ 1.5 m) (N/m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "1" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "10" startColumn = "3" endLine = "10" endColumn = "84" fileWritable = "true">
+    <Real start="80.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Kp_low"
+    valueReference = "1013"
+    description = "Low zone proportional gain (|x| &lt; 0.5 m) (N/m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "2" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "8" startColumn = "3" endLine = "8" endColumn = "80" fileWritable = "true">
+    <Real start="30.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "Kp_mid"
+    valueReference = "1014"
+    description = "Mid zone proportional gain (0.5 ≤ |x| &lt; 1.5 m) (N/m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "3" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "9" startColumn = "3" endLine = "9" endColumn = "88" fileWritable = "true">
+    <Real start="50.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "c"
+    valueReference = "1015"
+    description = "Damping coefficient (N·s/m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "4" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "6" startColumn = "3" endLine = "6" endColumn = "56" fileWritable = "true">
+    <Real start="2.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "k_base"
+    valueReference = "1016"
+    description = "Base spring stiffness (N/m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "5" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "4" startColumn = "3" endLine = "4" endColumn = "61" fileWritable = "true">
+    <Real start="10.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "k_nl"
+    valueReference = "1017"
+    description = "Nonlinear spring coefficient (cubic term) (N/m^3)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "6" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "5" startColumn = "3" endLine = "5" endColumn = "80" fileWritable = "true">
+    <Real start="5.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "m"
+    valueReference = "1018"
+    description = "Mass (kg)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "7" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "3" startColumn = "3" endLine = "3" endColumn = "37" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "step_ref.height"
+    valueReference = "1019"
+    description = "Height of step"
+    variability = "parameter" isDiscrete = "true"
+    causality = "calculatedParameter" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "8" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Sources.mo" startLine = "205" startColumn = "5" endLine = "206" endColumn = "98" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "step_ref.offset"
+    valueReference = "1020"
+    description = "Offset of output signal y"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "9" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "479" startColumn = "5" endLine = "479" endColumn = "56" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "step_ref.startTime"
+    valueReference = "1021"
+    description = "Output y = offset for time &lt; startTime"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "10" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "480" startColumn = "5" endLine = "480" endColumn = "75" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" unit="s" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "x_ref"
+    valueReference = "1022"
+    description = "Reference position step amplitude (m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "11" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "7" startColumn = "3" endLine = "7" endColumn = "69" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "zone1"
+    valueReference = "1023"
+    description = "Low/mid zone boundary (m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "12" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "12" startColumn = "3" endLine = "12" endColumn = "57" fileWritable = "true">
+    <Real start="0.5" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "zone2"
+    valueReference = "1024"
+    description = "Mid/high zone boundary (m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "13" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260407_172759_SpringMassGainScheduling/model/SpringMassGainScheduling.mo" startLine = "13" startColumn = "3" endLine = "13" endColumn = "58" fileWritable = "true">
+    <Real start="1.5" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "step_ref.y"
+    valueReference = "1025"
+    description = "Connector of Real output signal"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "alias" aliasVariable="x_ref_signal" aliasVariableId="10"
+    classIndex = "0" classType = "rAli"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/AppData/Roaming/.openmodelica/libraries/Modelica 4.0.0+maint.om/Blocks/Interfaces.mo" startLine = "300" startColumn = "5" endLine = "301" endColumn = "56" fileWritable = "true">
+    <Real fixed="false" useNominal="false" />
+  </ScalarVariable>
+
+
+
+  </ModelVariables>
+
+
+</fmiModelDescription>
+

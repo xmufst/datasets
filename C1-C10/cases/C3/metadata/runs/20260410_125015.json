@@ -1,0 +1,21 @@
+{
+  "case_root": "C:/Users/FST/Desktop/AFM/cases",
+  "case_id": "20260410_125015_SpringMassDamper",
+  "case_dir": "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper",
+  "model_name": "SpringMassDamper",
+  "run_tag": "20260410_125015",
+  "timestamp": "2026-04-10T12:50:18",
+  "saved_sources": [
+    "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/model/SpringMassDamper.mo"
+  ],
+  "result_mat": "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/results/SpringMassDamper_20260410_125015_res.mat",
+  "init_xml": "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/results/SpringMassDamper_20260410_125015_init.xml",
+  "overrides": {
+    "stop_time": 10.0,
+    "parameter_overrides": {}
+  },
+  "debug": {
+    "cmd": "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/SpringMassDamper.exe -override=stopTime=10,stepSize=0.01,tolerance=1e-06,method=dassl",
+    "exit_code": 0
+  }
+}

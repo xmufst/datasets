@@ -1,0 +1,54 @@
+{
+  "pass": true,
+  "reviews": {
+    "ParameterChecker": {
+      "pass": true,
+      "severity": "info",
+      "issues": [
+        {
+          "title": "参数声明缺少 unit 属性",
+          "detail": "需求中明确定义了参数的单位（如 omega_trip 为 rad/s，J 为 kg.m2 等），但模型代码中的 parameter 声明仅在注释中包含了单位，未显式使用 unit 属性。虽然这不会影响仿真计算结果，但不符合 Modelica 最佳实践，且会导致结果文件中参数单位缺失。",
+          "evidence": "parameter Real omega_trip = 110 \"Overspeed trip threshold (rad/s)\"; parameter Real J = 10 \"Rotor inertia (kg.m2)\";",
+          "severity": "info"
+        },
+        {
+          "title": "状态变量终值存在微小数值噪声",
+          "detail": "停机后阀门完全关闭，转速及力矩理论上应降至0。仿真结果显示 omega 最终值为 3.47e-06 rad/s，valve_opening 最小值为 -1.86e-10。这些数值的绝对值均极小（<1e-5），属于 DAE 求解器正常的数值噪声，不构成物理约束违反。",
+          "evidence": "omega final: 3.4677172700090167e-06, valve_opening min: -1.8644180163310453e-10",
+          "severity": "info"
+        }
+      ],
+      "recommendations": [
+        "建议为所有 parameter 变量补充 unit 属性，例如将 `parameter Real omega_trip = 110` 修改为 `parameter Real omega_trip(unit=\"rad/s\") = 110`，以增强模型的自文档化和结果的可读性。"
+      ]
+    },
+    "EquationChecker": {
+      "pass": true,
+      "severity": "info",
+      "issues": [
+        {
+          "title": "阀门开度与蒸汽力矩存在微小数值下冲",
+          "detail": "在停机保持阶段，主蒸汽阀门关闭时，求解器产生极微小的数值下冲（valve_opening最小值约为-1.86e-10，tau_in最小值约为-2.61e-07）。根据审查原则，位置/长度类变量|min_value| < 1e-6属于DAE求解器正常噪声，不构成物理约束违反，判定为通过。",
+          "evidence": "result_summary中valve_opening的min为-1.8644180163310453e-10，tau_in的min为-2.6101852228634635e-07"
+        }
+      ],
+      "recommendations": [
+        "当前模型物理方程自洽，守恒方程与边界条件符合要求，且仿真结果健全。若需在视觉或后处理中严格保证非负，可考虑在力矩计算中加入max(valve_opening, 0)保护，但当前数值噪声在1e-6容差范围内，非必须修改项。"
+      ]
+    },
+    "ResultChecker": {
+      "pass": true,
+      "severity": "info",
+      "issues": [
+        {
+          "title": "阀门开度与输入力矩存在微小数值噪声",
+          "detail": "变量 valve_opening 的最小值为 -1.86e-10，tau_in 的最小值为 -2.61e-07。这些微小的负值属于 DAE 求解器在处理一阶动态及离散状态切换时的正常数值噪声，绝对量级远小于 1e-6，不构成物理穿透或违反物理约束，无需修复。",
+          "evidence": "valve_opening min=-1.8644180163310453e-10, tau_in min=-2.6101852228634635e-07"
+        }
+      ],
+      "recommendations": [
+        "当前仿真结果符合物理预期与需求定义，短暂超速未触发停机，持续超速正确触发停机并保持，转子最终停转，无需修改。"
+      ]
+    }
+  }
+}

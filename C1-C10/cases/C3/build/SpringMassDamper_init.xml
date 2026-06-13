@@ -1,0 +1,271 @@
+<?xml version = "1.0" encoding="UTF-8"?>
+
+<!-- description of the model interface using an extention of the FMI standard -->
+<fmiModelDescription
+  fmiVersion                          = "1.0"
+
+  modelName                           = "SpringMassDamper"
+  modelIdentifier                     = "SpringMassDamper"
+
+  OPENMODELICAHOME                    = "D:/software/OpenModelica1.25.5-64bit"
+
+  guid                                = "{cf70e2fa-4f98-4e29-a1e0-b12b95a2a034}"
+
+  description                         = "Simulate free vibration decay of a single-DOF spring-mass-damper system"
+  generationTool                      = "OpenModelica Compiler OpenModelica v1.25.5 (64-bit)"
+  generationDateAndTime               = "2026-04-10T12:50:17Z"
+
+  variableNamingConvention            = "structured"
+
+  numberOfEventIndicators             = "0"  cmt_numberOfEventIndicators             = "NG:       number of zero crossings,                           FMI"
+  numberOfTimeEvents                  = "0"  cmt_numberOfTimeEvents                  = "NG_SAM:   number of zero crossings that are samples,          OMC"
+
+  numberOfInputVariables              = "0"  cmt_numberOfInputVariables              = "NI:       number of inputvar on topmodel,                     OMC"
+  numberOfOutputVariables             = "0"  cmt_numberOfOutputVariables             = "NO:       number of outputvar on topmodel,                    OMC"
+
+  numberOfExternalObjects             = "0"  cmt_numberOfExternalObjects             = "NEXT:     number of external objects,                         OMC"
+  numberOfFunctions                   = "0"  cmt_numberOfFunctions                   = "NFUNC:    number of functions used by the simulation,         OMC"
+
+  numberOfContinuousStates            = "2"  cmt_numberOfContinuousStates            = "NX:       number of states,                                   FMI"
+  numberOfRealAlgebraicVariables      = "8"  cmt_numberOfRealAlgebraicVariables      = "NY:       number of real variables,                           OMC"
+  numberOfRealAlgebraicAliasVariables = "0"  cmt_numberOfRealAlgebraicAliasVariables = "NA:       number of alias variables,                          OMC"
+  numberOfRealParameters              = "5"  cmt_numberOfRealParameters              = "NP:       number of parameters,                               OMC"
+
+  numberOfIntegerAlgebraicVariables   = "0"  cmt_numberOfIntegerAlgebraicVariables   = "NYINT:    number of alg. int variables,                       OMC"
+  numberOfIntegerAliasVariables       = "0"  cmt_numberOfIntegerAliasVariables       = "NAINT:    number of alias int variables,                      OMC"
+  numberOfIntegerParameters           = "0"  cmt_numberOfIntegerParameters           = "NPINT:    number of int parameters,                           OMC"
+
+  numberOfStringAlgebraicVariables    = "0"  cmt_numberOfStringAlgebraicVariables    = "NYSTR:    number of alg. string variables,                    OMC"
+  numberOfStringAliasVariables        = "0"  cmt_numberOfStringAliasVariables        = "NASTR:    number of alias string variables,                   OMC"
+  numberOfStringParameters            = "0"  cmt_numberOfStringParameters            = "NPSTR:    number of string parameters,                        OMC"
+
+  numberOfBooleanAlgebraicVariables   = "0"  cmt_numberOfBooleanAlgebraicVariables   = "NYBOOL:   number of alg. bool variables,                      OMC"
+  numberOfBooleanAliasVariables       = "0"  cmt_numberOfBooleanAliasVariables       = "NABOOL:   number of alias bool variables,                     OMC"
+  numberOfBooleanParameters           = "0"  cmt_numberOfBooleanParameters           = "NPBOOL:   number of bool parameters,                          OMC" >
+
+
+  <!-- startTime, stopTime, tolerance are FMI specific, all others are OMC specific -->
+  <DefaultExperiment
+    startTime      = "0"
+    stopTime       = "1"
+    stepSize       = "0.002"
+    tolerance      = "1e-06"
+    solver         = "dassl"
+    outputFormat   = "mat"
+    variableFilter = ".*" />
+
+  <!-- variables in the model -->
+  <ModelVariables>
+
+  <ScalarVariable
+    name = "v"
+    valueReference = "1000"
+    description = "Mass velocity"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "11" startColumn = "3" endLine = "11" endColumn = "51" fileWritable = "true">
+    <Real fixed="true" useNominal="false" unit="m/s" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "x"
+    valueReference = "1001"
+    description = "Mass displacement"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rSta"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "10" startColumn = "3" endLine = "10" endColumn = "53" fileWritable = "true">
+    <Real fixed="true" useNominal="false" unit="m" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(v)"
+    valueReference = "1002"
+    description = "der(Mass velocity)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "11" startColumn = "3" endLine = "11" endColumn = "51" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="m.s-2" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "der(x)"
+    valueReference = "1003"
+    description = "der(Mass displacement)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rDer"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "10" startColumn = "3" endLine = "10" endColumn = "53" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="m.s-1" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "E_kinetic"
+    valueReference = "1004"
+    description = "Kinetic energy"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "0" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "15" startColumn = "3" endLine = "15" endColumn = "46" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="J" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "E_potential"
+    valueReference = "1005"
+    description = "Potential energy"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "1" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "16" startColumn = "3" endLine = "16" endColumn = "50" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="J" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "E_total"
+    valueReference = "1006"
+    description = "Total mechanical energy"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "2" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "17" startColumn = "3" endLine = "17" endColumn = "53" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="J" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "F_damper"
+    valueReference = "1007"
+    description = "Damper force"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "3" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "14" startColumn = "3" endLine = "14" endColumn = "43" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="N" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "F_spring"
+    valueReference = "1008"
+    description = "Spring force"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "4" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "13" startColumn = "3" endLine = "13" endColumn = "43" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="N" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "a"
+    valueReference = "1009"
+    description = "Mass acceleration"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "false"
+    alias = "noAlias"
+    classIndex = "5" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "12" startColumn = "3" endLine = "12" endColumn = "44" fileWritable = "true">
+    <Real fixed="false" useNominal="false" unit="m/s2" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "omega_n"
+    valueReference = "1010"
+    description = "Natural frequency"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "6" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "18" startColumn = "3" endLine = "18" endColumn = "51" fileWritable = "true">
+    <Real fixed="true" useNominal="false" unit="rad/s" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "zeta"
+    valueReference = "1011"
+    description = "Damping ratio (dimensionless)"
+    variability = "continuous" isDiscrete = "false"
+    causality = "local" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "7" classType = "rAlg"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "19" startColumn = "3" endLine = "19" endColumn = "44" fileWritable = "true">
+    <Real fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "c"
+    valueReference = "1012"
+    description = "Damping coefficient (N.s/m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "0" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "6" startColumn = "3" endLine = "6" endColumn = "55" fileWritable = "true">
+    <Real start="2.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "k"
+    valueReference = "1013"
+    description = "Spring stiffness (N/m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "1" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "5" startColumn = "3" endLine = "5" endColumn = "52" fileWritable = "true">
+    <Real start="100.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "m"
+    valueReference = "1014"
+    description = "Mass of the block (kg)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "2" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "4" startColumn = "3" endLine = "4" endColumn = "50" fileWritable = "true">
+    <Real start="1.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "v0"
+    valueReference = "1015"
+    description = "Initial velocity (m/s)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "3" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "8" startColumn = "3" endLine = "8" endColumn = "51" fileWritable = "true">
+    <Real start="0.0" fixed="true" useNominal="false" />
+  </ScalarVariable>
+  <ScalarVariable
+    name = "x0"
+    valueReference = "1016"
+    description = "Initial displacement (m)"
+    variability = "parameter" isDiscrete = "true"
+    causality = "parameter" isValueChangeable = "true"
+    alias = "noAlias"
+    classIndex = "4" classType = "rPar"
+    isProtected = "false" hideResult = "" isEncrypted = "false" initNonlinear = "false"
+    fileName = "C:/Users/FST/Desktop/AFM/cases/20260410_125015_SpringMassDamper/build/src/SpringMassDamper.mo" startLine = "7" startColumn = "3" endLine = "7" endColumn = "53" fileWritable = "true">
+    <Real start="0.5" fixed="true" useNominal="false" />
+  </ScalarVariable>
+
+
+
+  </ModelVariables>
+
+
+</fmiModelDescription>
+

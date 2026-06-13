@@ -1,0 +1,4 @@
+#ifndef SolarCollectorLoopEnhanced_16DAE_H
+#define SolarCollectorLoopEnhanced_16DAE_H
+#endif
+

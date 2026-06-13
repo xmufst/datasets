@@ -1,0 +1,32 @@
+{"format":"Transformational debugger info","version":1,
+"info":{"name":"BouncingBall","description":""},
+"variables":{
+"h":{"comment":"Height of ball","kind":"state","type":"Real","unit":"m","displayUnit":"","source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":17,"lineEnd":17,"colStart":3,"colEnd":46}}},
+"v":{"comment":"Velocity of ball","kind":"state","type":"Real","unit":"m/s","displayUnit":"","source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":18,"lineEnd":18,"colStart":3,"colEnd":50}}},
+"der(h)":{"comment":"der(Height of ball)","kind":"derivative","type":"Real","unit":"m.s-1","displayUnit":"","source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":17,"lineEnd":17,"colStart":3,"colEnd":46}}},
+"der(v)":{"comment":"der(Velocity of ball)","kind":"derivative","type":"Real","unit":"m.s-2","displayUnit":"","source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":18,"lineEnd":18,"colStart":3,"colEnd":50}}},
+"$whenCondition1":{"comment":"h <= 0.0","kind":"discrete","type":"Boolean","unit":"","displayUnit":"","source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":27,"lineEnd":27,"colStart":5,"colEnd":64}}},
+"e":{"comment":"","kind":"parameter","type":"Real","unit":"","displayUnit":"","source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":11,"lineEnd":11,"colStart":3,"colEnd":93}}},
+"g":{"comment":"","kind":"parameter","type":"Real","unit":"","displayUnit":"","source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":10,"lineEnd":10,"colStart":3,"colEnd":95}}},
+"h0":{"comment":"","kind":"parameter","type":"Real","unit":"","displayUnit":"","source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":12,"lineEnd":12,"colStart":3,"colEnd":94}}},
+"v0":{"comment":"","kind":"parameter","type":"Real","unit":"","displayUnit":"","source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":13,"lineEnd":13,"colStart":3,"colEnd":89}}},
+"v_threshold":{"comment":"","kind":"parameter","type":"Real","unit":"","displayUnit":"","source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":14,"lineEnd":14,"colStart":3,"colEnd":114}}}
+},
+"equations":[{"eqIndex":0,"tag":"dummy"},
+{"eqIndex":1,"section":"initial","tag":"assign","defines":["h"],"uses":["$START.h"],"equation":["$START.h"],"source":{"info":{"file":"","lineStart":0,"lineEnd":0,"colStart":0,"colEnd":0}}},
+{"eqIndex":2,"tag":"alias","equation":[7],"section":"initial"},
+{"eqIndex":3,"section":"initial","tag":"assign","defines":["v"],"uses":["$START.v"],"equation":["$START.v"],"source":{"info":{"file":"","lineStart":0,"lineEnd":0,"colStart":0,"colEnd":0}}},
+{"eqIndex":4,"tag":"alias","equation":[8],"section":"initial"},
+{"eqIndex":5,"tag":"alias","equation":[9],"section":"initial"},
+{"eqIndex":6,"section":"initial","tag":"assign","defines":["$PRE.v"],"uses":["v"],"equation":["v"],"source":{"info":{"file":"","lineStart":0,"lineEnd":0,"colStart":0,"colEnd":0}}},
+{"eqIndex":7,"section":"regular","tag":"assign","defines":["$whenCondition1"],"uses":["h"],"equation":["h <= 0.0"],"source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":27,"lineEnd":27,"colStart":5,"colEnd":64}}},
+{"eqIndex":8,"section":"regular","tag":"assign","defines":["der(v)"],"uses":["h","g","v"],"equation":["if h <= 0.0 and v < 0.0 then 0.0 else -g"],"source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":23,"lineEnd":23,"colStart":3,"colEnd":48}}},
+{"eqIndex":9,"section":"regular","tag":"assign","defines":["der(h)"],"uses":["v"],"equation":["v"],"source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":22,"lineEnd":22,"colStart":3,"colEnd":13}}},
+{"eqIndex":10,"section":"regular","tag":"when","defines":["v"],"uses":["$whenCondition1","e","v_threshold","$PRE.v"],"equation":["if pre(v) < (-v_threshold) then (-e) * pre(v) else 0.0"],"source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":27,"lineEnd":27,"colStart":5,"colEnd":64}}},
+{"eqIndex":11,"section":"regular","tag":"when","defines":["h"],"uses":["$whenCondition1"],"equation":["0.0"],"source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":28,"lineEnd":28,"colStart":5,"colEnd":17}}},
+{"eqIndex":12,"section":"start","tag":"assign","defines":["$START.v"],"uses":["v0"],"equation":["v0"],"source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":18,"lineEnd":18,"colStart":3,"colEnd":50}}},
+{"eqIndex":13,"section":"start","tag":"assign","defines":["$START.h"],"uses":["h0"],"equation":["h0"],"source":{"info":{"file":"C:/Users/FST/Desktop/AFM/cases/20260330_145611_BouncingBall/build/src/BouncingBall.mo","lineStart":17,"lineEnd":17,"colStart":3,"colEnd":46}}}
+],
+"functions":[
+]
+}

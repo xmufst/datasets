@@ -1,0 +1,54 @@
+// CascadeTankPI_run_all.mos — C20
+system("mkdir build 2>NUL");
+cd("build"); loadFile("../CascadeTankPI.mo"); getErrorString();
+buildModel(CascadeTankPI, stopTime=700, stepSize=0.01, tolerance=1e-6, method="dassl", outputFormat="mat"); getErrorString();
+cd("..");
+
+// Run 01: h2_ref=0.3
+system("mkdir C20_run_01 2>NUL"); system("copy CascadeTankPI.mo C20_run_01\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C20_run_01/CascadeTankPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h2_ref\\s*=\\s*)[\\d.]+', '$1 0.3'; [IO.File]::WriteAllText('C20_run_01/CascadeTankPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("CascadeTankPI.exe -override h2_ref=0.3,h2_ref_source.k=0.3 -outputPath ../C20_run_01"); cd(".."); getErrorString();
+
+// Run 02: h2_ref=0.4
+system("mkdir C20_run_02 2>NUL"); system("copy CascadeTankPI.mo C20_run_02\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C20_run_02/CascadeTankPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h2_ref\\s*=\\s*)[\\d.]+', '$1 0.4'; [IO.File]::WriteAllText('C20_run_02/CascadeTankPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("CascadeTankPI.exe -override h2_ref=0.4,h2_ref_source.k=0.4 -outputPath ../C20_run_02"); cd(".."); getErrorString();
+
+// Run 03: h2_ref=0.5
+system("mkdir C20_run_03 2>NUL"); system("copy CascadeTankPI.mo C20_run_03\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C20_run_03/CascadeTankPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h2_ref\\s*=\\s*)[\\d.]+', '$1 0.5'; [IO.File]::WriteAllText('C20_run_03/CascadeTankPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("CascadeTankPI.exe -override h2_ref=0.5,h2_ref_sourcec.k=0.5 -outputPath ../C20_run_03"); cd(".."); getErrorString();
+
+// Run 04: h2_ref=0.6
+system("mkdir C20_run_04 2>NUL"); system("copy CascadeTankPI.mo C20_run_04\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C20_run_04/CascadeTankPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h2_ref\\s*=\\s*)[\\d.]+', '$1 0.6'; [IO.File]::WriteAllText('C20_run_04/CascadeTankPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("CascadeTankPI.exe -override h2_ref=0.6,h2_ref_source.k=0.6 -outputPath ../C20_run_04"); cd(".."); getErrorString();
+
+// Run 05: h2_ref=0.7
+system("mkdir C20_run_05 2>NUL"); system("copy CascadeTankPI.mo C20_run_05\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C20_run_05/CascadeTankPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h2_ref\\s*=\\s*)[\\d.]+', '$1 0.7'; [IO.File]::WriteAllText('C20_run_05/CascadeTankPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("CascadeTankPI.exe -override h2_ref=0.7,h2_ref_source.k=0.7 -outputPath ../C20_run_05"); cd(".."); getErrorString();
+
+// Run 06: h2_ref=0.8 (baseline)
+system("mkdir C20_run_06 2>NUL"); system("copy CascadeTankPI.mo C20_run_06\\ >NUL");
+cd("build"); system("CascadeTankPI.exe -override h2_ref=0.8,h2_ref_source.k=0.8 -outputPath ../C20_run_06"); cd(".."); getErrorString();
+
+// Run 07: h2_ref=0.9
+system("mkdir C20_run_07 2>NUL"); system("copy CascadeTankPI.mo C20_run_07\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C20_run_07/CascadeTankPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h2_ref\\s*=\\s*)[\\d.]+', '$1 0.9'; [IO.File]::WriteAllText('C20_run_07/CascadeTankPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("CascadeTankPI.exe -override h2_ref=0.9,h2_ref_source.k=0.9 -outputPath ../C20_run_07"); cd(".."); getErrorString();
+
+// Run 08: h2_ref=1.0
+system("mkdir C20_run_08 2>NUL"); system("copy CascadeTankPI.mo C20_run_08\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C20_run_08/CascadeTankPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h2_ref\\s*=\\s*)[\\d.]+', '$1 1.0'; [IO.File]::WriteAllText('C20_run_08/CascadeTankPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("CascadeTankPI.exe -override h2_ref=1.0,h2_ref_source.k=1.0 -outputPath ../C20_run_08"); cd(".."); getErrorString();
+
+// Run 09: h2_ref=1.2
+system("mkdir C20_run_09 2>NUL"); system("copy CascadeTankPI.mo C20_run_09\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C20_run_09/CascadeTankPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h2_ref\\s*=\\s*)[\\d.]+', '$1 1.2'; [IO.File]::WriteAllText('C20_run_09/CascadeTankPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("CascadeTankPI.exe -override h2_ref=1.2,h2_ref_source.k=1.2 -outputPath ../C20_run_09"); cd(".."); getErrorString();
+
+// Run 10: h2_ref=1.5
+system("mkdir C20_run_10 2>NUL"); system("copy CascadeTankPI.mo C20_run_10\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C20_run_10/CascadeTankPI.mo', [Text.Encoding]::UTF8); $content = $content -replace '(h2_ref\\s*=\\s*)[\\d.]+', '$1 1.5'; [IO.File]::WriteAllText('C20_run_10/CascadeTankPI.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("CascadeTankPI.exe -override h2_ref=1.5,h2_ref_source.k=1.5 -outputPath ../C20_run_10"); cd(".."); getErrorString();

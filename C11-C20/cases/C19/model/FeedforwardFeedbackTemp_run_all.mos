@@ -1,0 +1,54 @@
+// FeedforwardFeedbackTemp_run_all.mos — C19
+system("mkdir build 2>NUL");
+cd("build"); loadFile("../FeedforwardFeedbackTemp.mo"); getErrorString();
+buildModel(FeedforwardFeedbackTemp, stopTime=500, stepSize=0.01, tolerance=1e-6, method="dassl", outputFormat="mat"); getErrorString();
+cd("..");
+
+// Run 01: Q_dist=50
+system("mkdir C19_run_01 2>NUL"); system("copy FeedforwardFeedbackTemp.mo C19_run_01\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C19_run_01/FeedforwardFeedbackTemp.mo', [Text.Encoding]::UTF8); $content = $content -replace '(Q_dist\\s*=\\s*)[\\d.]+', '$1 50.0'; [IO.File]::WriteAllText('C19_run_01/FeedforwardFeedbackTemp.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FeedforwardFeedbackTemp.exe -override Q_dist=50,disturbanceSignal.height=50 -outputPath ../C19_run_01"); cd(".."); getErrorString();
+
+// Run 02: Q_dist=100
+system("mkdir C19_run_02 2>NUL"); system("copy FeedforwardFeedbackTemp.mo C19_run_02\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C19_run_02/FeedforwardFeedbackTemp.mo', [Text.Encoding]::UTF8); $content = $content -replace '(Q_dist\\s*=\\s*)[\\d.]+', '$1 100.0'; [IO.File]::WriteAllText('C19_run_02/FeedforwardFeedbackTemp.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FeedforwardFeedbackTemp.exe -override Q_dist=100,disturbanceSignal.height=100 -outputPath ../C19_run_02"); cd(".."); getErrorString();
+
+// Run 03: Q_dist=150
+system("mkdir C19_run_03 2>NUL"); system("copy FeedforwardFeedbackTemp.mo C19_run_03\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C19_run_03/FeedforwardFeedbackTemp.mo', [Text.Encoding]::UTF8); $content = $content -replace '(Q_dist\\s*=\\s*)[\\d.]+', '$1 150.0'; [IO.File]::WriteAllText('C19_run_03/FeedforwardFeedbackTemp.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FeedforwardFeedbackTemp.exe -override Q_dist=150,disturbanceSignal.height=150 -outputPath ../C19_run_03"); cd(".."); getErrorString();
+
+// Run 04: Q_dist=200 (baseline)
+system("mkdir C19_run_04 2>NUL"); system("copy FeedforwardFeedbackTemp.mo C19_run_04\\ >NUL");
+cd("build"); system("FeedforwardFeedbackTemp.exe -override Q_dist=200,disturbanceSignal.height=200 -outputPath ../C19_run_04"); cd(".."); getErrorString();
+
+// Run 05: Q_dist=250
+system("mkdir C19_run_05 2>NUL"); system("copy FeedforwardFeedbackTemp.mo C19_run_05\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C19_run_05/FeedforwardFeedbackTemp.mo', [Text.Encoding]::UTF8); $content = $content -replace '(Q_dist\\s*=\\s*)[\\d.]+', '$1 250.0'; [IO.File]::WriteAllText('C19_run_05/FeedforwardFeedbackTemp.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FeedforwardFeedbackTemp.exe -override Q_dist=250,disturbanceSignal.height=250 -outputPath ../C19_run_05"); cd(".."); getErrorString();
+
+// Run 06: Q_dist=300
+system("mkdir C19_run_06 2>NUL"); system("copy FeedforwardFeedbackTemp.mo C19_run_06\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C19_run_06/FeedforwardFeedbackTemp.mo', [Text.Encoding]::UTF8); $content = $content -replace '(Q_dist\\s*=\\s*)[\\d.]+', '$1 300.0'; [IO.File]::WriteAllText('C19_run_06/FeedforwardFeedbackTemp.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FeedforwardFeedbackTemp.exe -override Q_dist=300,disturbanceSignal.height=300 -outputPath ../C19_run_06"); cd(".."); getErrorString();
+
+// Run 07: Q_dist=350
+system("mkdir C19_run_07 2>NUL"); system("copy FeedforwardFeedbackTemp.mo C19_run_07\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C19_run_07/FeedforwardFeedbackTemp.mo', [Text.Encoding]::UTF8); $content = $content -replace '(Q_dist\\s*=\\s*)[\\d.]+', '$1 350.0'; [IO.File]::WriteAllText('C19_run_07/FeedforwardFeedbackTemp.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FeedforwardFeedbackTemp.exe -override Q_dist=350,disturbanceSignal.height=350 -outputPath ../C19_run_07"); cd(".."); getErrorString();
+
+// Run 08: Q_dist=400
+system("mkdir C19_run_08 2>NUL"); system("copy FeedforwardFeedbackTemp.mo C19_run_08\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C19_run_08/FeedforwardFeedbackTemp.mo', [Text.Encoding]::UTF8); $content = $content -replace '(Q_dist\\s*=\\s*)[\\d.]+', '$1 400.0'; [IO.File]::WriteAllText('C19_run_08/FeedforwardFeedbackTemp.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FeedforwardFeedbackTemp.exe -override Q_dist=400,disturbanceSignal.height=400 -outputPath ../C19_run_08"); cd(".."); getErrorString();
+
+// Run 09: Q_dist=120
+system("mkdir C19_run_09 2>NUL"); system("copy FeedforwardFeedbackTemp.mo C19_run_09\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C19_run_09/FeedforwardFeedbackTemp.mo', [Text.Encoding]::UTF8); $content = $content -replace '(Q_dist\\s*=\\s*)[\\d.]+', '$1 120.0'; [IO.File]::WriteAllText('C19_run_09/FeedforwardFeedbackTemp.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FeedforwardFeedbackTemp.exe -override Q_dist=120,disturbanceSignal.height=120 -outputPath ../C19_run_09"); cd(".."); getErrorString();
+
+// Run 10: Q_dist=280
+system("mkdir C19_run_10 2>NUL"); system("copy FeedforwardFeedbackTemp.mo C19_run_10\\ >NUL");
+system("powershell -c \"$content = [IO.File]::ReadAllText('C19_run_10/FeedforwardFeedbackTemp.mo', [Text.Encoding]::UTF8); $content = $content -replace '(Q_dist\\s*=\\s*)[\\d.]+', '$1 280.0'; [IO.File]::WriteAllText('C19_run_10/FeedforwardFeedbackTemp.mo', $content, [Text.Encoding]::UTF8)\"");
+cd("build"); system("FeedforwardFeedbackTemp.exe -override Q_dist=280,disturbanceSignal.height=280 -outputPath ../C19_run_10"); cd(".."); getErrorString();

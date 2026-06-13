@@ -1,0 +1,21 @@
+{
+  "case_root": "C:/Users/FST/Desktop/AFM/cases",
+  "case_id": "20260407_145548_TankLevelPI",
+  "case_dir": "C:/Users/FST/Desktop/AFM/cases/20260407_145548_TankLevelPI",
+  "model_name": "TankLevelPI",
+  "run_tag": "20260407_150304",
+  "timestamp": "2026-04-07T15:03:09",
+  "saved_sources": [
+    "C:/Users/FST/Desktop/AFM/cases/20260407_145548_TankLevelPI/model/TankLevelPI.mo"
+  ],
+  "result_mat": "C:/Users/FST/Desktop/AFM/cases/20260407_145548_TankLevelPI/results/TankLevelPI_20260407_150304_res.mat",
+  "init_xml": "C:/Users/FST/Desktop/AFM/cases/20260407_145548_TankLevelPI/results/TankLevelPI_20260407_150304_init.xml",
+  "overrides": {
+    "stop_time": null,
+    "parameter_overrides": {}
+  },
+  "debug": {
+    "cmd": "C:/Users/FST/Desktop/AFM/cases/20260407_145548_TankLevelPI/build/TankLevelPI.exe",
+    "exit_code": 0
+  }
+}

@@ -1,4 +1,0 @@
-#ifndef SpringMassGainScheduling_16DAE_H
-#define SpringMassGainScheduling_16DAE_H
-#endif
-
